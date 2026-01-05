@@ -36,6 +36,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --primary-red:     #E11D2E;
+  --dark-base:       #0B0E14;
+  --electric-blue:   #38BDF8;
+  --cyber-purple:    #7C3AED;
+  --muted-light:     #E5E7EB;
 }
 
 .dark {
@@ -143,4 +148,12 @@
   .text-glow-red {
     text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
   }
+  .circuit-bg {
+  background:
+    linear-gradient(90deg, transparent 0%, #38BDF8 50%, transparent 100%),
+    linear-gradient(#38BDF8 1px, transparent 1px);
+  background-size: 200px 200px, 40px 40px;
+  opacity: 0.15;
+}
+
 }

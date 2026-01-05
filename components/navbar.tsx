@@ -65,9 +65,15 @@ export default function Navbar() {
           </div>
 
           {/* Mobile Toggle */}
-          <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+          {/* <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
             <Menu className="h-6 w-6" />
-          </button>
+          </button> */}
+          <Link
+              href="/contact"
+              className="md:hidden rounded-full bg-primary px-5 py-2 text-sm font-semibold text-black transition-all hover:bg-primary/80 hover:neon-glow-red"
+            >
+              Connect
+            </Link>
         </div>
       </nav>
 

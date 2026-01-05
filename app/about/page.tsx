@@ -5,60 +5,21 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Target, Eye, ShieldCheck, Twitter, Linkedin } from "lucide-react";
 import Image from "next/image";
-
-const values = [
-  {
-    icon: Target,
-    title: "Precision",
-    description:
-      "Every trace tells a story. We decode it with surgical precision.",
-  },
-  {
-    icon: Eye,
-    title: "Transparency",
-    description:
-      "Open communication and detailed reporting on every vulnerability found.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Integrity",
-    description:
-      "Unwavering commitment to ethical hacking and client confidentiality.",
-  },
-];
-
-const team = [
-  {
-    name: "Dr. Elena Vance",
-    role: "Chief Security Architect",
-    bio: "Former intelligence analyst specialized in advanced persistent threat (APT) research.",
-    avatar: "/professional-cybersecurity-expert-woman.jpg",
-  },
-  {
-    name: "Marcus Thorne",
-    role: "Head of Forensics",
-    bio: "Expert in cross-platform digital artifact recovery and memory forensics.",
-    avatar: "/cybersecurity-professional-man.jpg",
-  },
-  {
-    name: "Sarah Chen",
-    role: "Red Team Lead",
-    bio: "Offensive security specialist with over 15 years in cloud infrastructure penetration testing.",
-    avatar: "/tech-female-leader-portrait.jpg",
-  },
-  {
-    name: "Jaxson Reed",
-    role: "SOC Operations Director",
-    bio: "Pioneer in automated incident response systems and 24/7 threat hunting.",
-    avatar: "/cybersecurity-man-expert.jpg",
-  },
-];
+import {
+  values,
+  team,
+  missionText,
+  visionText,
+  aboutCompanyText,
+  breachesPrevented,
+  activeMonitoringHours,
+} from "@/lib/data";
 
 export default function About() {
   return (
     <div className="py-24">
-      {/* Mission Section */}
-      <section className="container mx-auto px-4">
+      {/* About company Section */}
+      <section className="container mx-auto px-4 lg:px-[80px]">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -68,26 +29,23 @@ export default function About() {
               We Trace. We Defend. <br />
               <span className="text-primary">We Secure.</span>
             </h1>
-            <p className="mb-6 text-lg text-muted-foreground">
-              Founded in 2021, RT-DS (Response Technology & Digital Security)
-              emerged from a collective of elite security researchers dedicated
-              to solving the most complex digital puzzles.
+            <p className="mb-8 text-lg text-muted-foreground  leading-relaxed whitespace-pre-line">
+              {aboutCompanyText}
             </p>
-            <p className="mb-8 text-muted-foreground">
-              Our vision is to build a future where digital innovation isn't
-              hampered by the fear of compromise. By staying "One Trace Ahead,"
-              we provide the clarity and armor businesses need to thrive in a
-              hostile cyber climate.
-            </p>
+
             <div className="flex gap-12">
               <div>
-                <div className="text-3xl font-bold text-primary">500+</div>
+                <div className="text-3xl font-bold text-primary">
+                  {breachesPrevented}+
+                </div>
                 <div className="text-sm text-muted-foreground uppercase tracking-widest">
                   Breaches Prevented
                 </div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-secondary">24/7</div>
+                <div className="text-3xl font-bold text-secondary">
+                  {activeMonitoringHours}
+                </div>
                 <div className="text-sm text-muted-foreground uppercase tracking-widest">
                   Active Monitoring
                 </div>
@@ -110,55 +68,50 @@ export default function About() {
         </div>
       </section>
 
-      <section className="container mx-auto mt-32 px-4">
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div 
-          className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur">
+      {/* Vision and mission section */}
+      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+        <div className="flex flex-col md:flex-row gap-12 mb-16 items-start md:items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur flex-1"
+          >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
               <Target className="h-6 w-6 text-primary" />
             </div>
 
             <h2 className="mb-4 text-3xl font-bold">Our Mission</h2>
 
-            <p className="text-muted-foreground leading-relaxed">
-              At RT-DS, we are dedicated to protecting organizations from
-              evolving cyber threats through advanced threat intelligence,
-              digital forensics, and proactive defense strategies. Our mission
-              is to empower businesses with the tools and expertise needed to
-              secure their digital infrastructure in an increasingly connected
-              world.
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+              {missionText}
             </p>
-            <p className="text-muted-foreground leading-relaxed mt-2">
-              We combine cutting-edge technology with deep domain expertise to
-              deliver comprehensive security solutions that adapt to the
-              ever-changing threat landscape.
-            </p>
-          </div>
+          </motion.div>
 
-          <div className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur">
+          <div className="hidden md:block w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent self-stretch" />
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur flex-1"
+          >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
               <Target className="h-6 w-6 text-primary" />
             </div>
 
             <h2 className="text-3xl font-bold text-white mb-4">Our Vision</h2>
-            <p className="text-muted-foreground leading-relaxed">
-              We envision a future where organizations can operate with
-              confidence, knowing their digital assets are protected by
-              intelligent, adaptive security systems. Through continuous
-              innovation and research, we strive to stay ahead of emerging
-              threats and set new standards in cybersecurity excellence.
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+              {visionText}
             </p>
-            <p className="text-muted-foreground leading-relaxed mt-2">
-              Our goal is to become the most trusted partner for enterprise
-              cybersecurity, known for our unwavering commitment to protecting
-              what matters most to our clients.
-            </p>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Values Section */}
-      <section className="container mx-auto mt-32 px-4">
+      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-purple-500 to-blue-500 bg-clip-text text-transparent">
           Our Values
         </h2>
@@ -179,7 +132,7 @@ export default function About() {
       </section>
 
       {/* Team Section */}
-      <section className="container mx-auto mt-32 px-4">
+      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">
             The Elite Team
@@ -191,7 +144,9 @@ export default function About() {
           </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div
+          className="grid gap-6 max-w-7xl mx-auto grid-cols-[repeat(auto-fit,minmax(260px,1fr))] place-content-center "
+        >
           {team.map((member, idx) => (
             <motion.div
               key={member.name}
@@ -239,4 +194,4 @@ export default function About() {
       </section>
     </div>
   );
-}
+};

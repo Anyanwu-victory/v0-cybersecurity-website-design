@@ -1,34 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-
-import { Shield, Lock, Search, Zap, ArrowRight, Github, Twitter, Linkedin } from "lucide-react"
+import { Zap, ArrowRight, } from "lucide-react"
 import Link from "next/link"
-import { motion } from "framer-motion"
-
-const services = [
-  {
-    title: "Threat Detection",
-    description:
-      "Real-time monitoring and AI-driven analysis to identify complex attack patterns before they breach your perimeter.",
-    icon: Shield,
-    color: "text-red-500",
-  },
-  {
-    title: "Digital Forensics",
-    description:
-      "Deep-dive analysis of security incidents to recover data, trace origins, and build legally sound forensic reports.",
-    icon: Search,
-    color: "text-blue-500",
-  },
-  {
-    title: "Cyber Defense",
-    description:
-      "Hardening infrastructure with zero-trust architecture and automated response protocols for maximum resilience.",
-    icon: Lock,
-    color: "text-purple-500",
-  },
-]
+import { motion } from "framer-motion";
+import { services, socials } from "@/lib/data";
 
 export default function Home() {
   return (
@@ -61,41 +37,32 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-white transition-all hover:bg-primary/90 hover:neon-glow-red sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-black transition-all hover:bg-primary/90 hover:neon-glow-red sm:w-auto"
             >
               Connect With Us
               <ArrowRight className="h-5 w-5" />
             </Link>
             <div className="flex gap-4">
-              <Link
-                href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <Linkedin className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <Github className="h-5 w-5" />
-              </Link>
+              {socials.map((social, idx) => (
+                <Link
+                  key={idx}
+                  href = {social.href}
+                   className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"   
+                  >
+                  <social.icon className="h-5 w-5" size={12}/>
+                  </Link>
+              ))}
             </div>
           </div>
         </motion.div>
 
         {/* Decorative Circuit Lines */}
-        <div className="pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-primary/50 to-transparent" />
+        <div className="pointer-events-none absolute circuit-bg left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-primary/50 to-transparent" />
         <div className="pointer-events-none absolute right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-secondary/50 to-transparent" />
       </section>
 
       {/* Features Grid */}
-      <section className="container mx-auto px-4 py-24">
+      <section className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Mission-Critical Services</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
@@ -105,25 +72,25 @@ export default function Home() {
         </div>
 
         <div className="grid gap-8 md:grid-cols-3">
-          {services.map((service, idx) => (
+          {services.map((s, i) => (
             <motion.div
-              key={service.title}
+              key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
+              transition={{ delay: i * 0.1 }}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-primary/50 hover:bg-white/5"
             >
               <div
                 className={cn(
                   "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
-                  service.color,
+                  s.color,
                 )}
               >
-                <service.icon className="h-7 w-7" />
+                <s.icon className="h-7 w-7" />
               </div>
-              <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
-              <p className="text-muted-foreground">{service.description}</p>
+              <h3 className="mb-3 text-xl font-bold">{s.title}</h3>
+              <p className="text-muted-foreground">{s.description}</p>
               <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary">
                 Explore Tech <ArrowRight className="h-4 w-4" />
               </div>
@@ -131,6 +98,7 @@ export default function Home() {
           ))}
         </div>
       </section>
+
     </div>
   )
 }
