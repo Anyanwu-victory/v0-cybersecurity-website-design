@@ -1,37 +1,10 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-
-import { Shield, Lock, Search, Zap, ArrowRight, Github, Twitter, Linkedin } from "lucide-react"
+import {  Zap, ArrowRight,} from "lucide-react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-
-const services = [
-  {
-    title: "Threat Detection",
-    description:
-      "Real-time monitoring and AI-driven analysis to identify complex attack patterns before they breach your perimeter.",
-    icon: Shield,
-    color: "text-[#E11D2E]",
-    glowClass: "neon-glow-red",
-  },
-  {
-    title: "Digital Forensics",
-    description:
-      "Deep-dive analysis of security incidents to recover data, trace origins, and build legally sound forensic reports.",
-    icon: Search,
-    color: "text-[#38BDF8]",
-    glowClass: "neon-glow-blue",
-  },
-  {
-    title: "Cyber Defense",
-    description:
-      "Hardening infrastructure with zero-trust architecture and automated response protocols for maximum resilience.",
-    icon: Lock,
-    color: "text-[#7C3AED]",
-    glowClass: "neon-glow-purple",
-  },
-]
+import { services, socials } from "@/lib/data"
 
 export default function Home() {
   return (
@@ -62,6 +35,7 @@ export default function Home() {
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+            
             <Link
               href="/contact"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-8 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
@@ -69,25 +43,18 @@ export default function Home() {
               Connect With Us
               <ArrowRight className="h-5 w-5" />
             </Link>
+            
             <div className="flex gap-4">
+            {socials.map((social, idx) => (
               <Link
-                href="#"
+                key={idx}
+                href={social.href}
                 className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
               >
-                <Linkedin className="h-5 w-5" />
+                <social.icon className="h-6 w-6 text-white" />
               </Link>
-              <Link
-                href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link
-                href="#"
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <Github className="h-5 w-5" />
-              </Link>
+            ))}
+              
             </div>
           </div>
         </motion.div>
@@ -98,7 +65,7 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="container mx-auto px-4 py-24">
+      <section className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Mission-Critical Services</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">

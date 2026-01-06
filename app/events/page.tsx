@@ -9,7 +9,7 @@ import { events } from "@/lib/data";
 
 export default function Events() {
   return (
-    <div className="container mx-auto px-4 py-24">
+    <div className="container mx-auto px-4 py-24 lg:px-[80px]">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16 text-center">
         <h1 className="mb-4 text-4xl font-bold md:text-6xl">Intelligence Briefings</h1>
         <p className="mx-auto max-w-2xl text-muted-foreground">

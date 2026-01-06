@@ -3,28 +3,32 @@ import { IconBrandLinkedin, IconBrandX, IconBrandGithub }  from '@tabler/icons-r
 
 //Home page data
 export const services = [
-    {
+  {
     title: "Threat Detection",
     description:
       "Real-time monitoring and AI-driven analysis to identify complex attack patterns before they breach your perimeter.",
     icon: Shield,
-    color: "text-red-500",
+    color: "text-[#E11D2E]",
+    glowClass: "neon-glow-red",
   },
-    {
+  {
     title: "Digital Forensics",
     description:
       "Deep-dive analysis of security incidents to recover data, trace origins, and build legally sound forensic reports.",
     icon: Search,
-    color: "text-blue-500",
+    color: "text-[#38BDF8]",
+    glowClass: "neon-glow-blue",
   },
   {
     title: "Cyber Defense",
     description:
       "Hardening infrastructure with zero-trust architecture and automated response protocols for maximum resilience.",
     icon: Lock,
-    color: "text-purple-500",
+    color: "text-[#7C3AED]",
+    glowClass: "neon-glow-purple",
   },
-];
+]
+
 
 export const socials = [
     {
