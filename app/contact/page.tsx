@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Mail, Phone, MapPin, Send, Github, Twitter, Linkedin } from "lucide-react"
+import Link from "next/link"
 
 export default function Contact() {
   return (
@@ -10,7 +11,7 @@ export default function Contact() {
         {/* Info Side */}
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
           <h1 className="mb-6 text-4xl font-bold md:text-6xl">
-            Establish Secure <span className="text-primary">Comms.</span>
+            Establish Secure <span className="text-[#E11D2E]">Comms.</span>
           </h1>
           <p className="mb-12 text-lg text-muted-foreground">
             Whether you're currently facing a security incident or looking to harden your infrastructure, our
@@ -19,8 +20,8 @@ export default function Contact() {
 
           <div className="space-y-8">
             <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
-                <Mail className="h-6 w-6 text-primary" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E11D2E]/10">
+                <Mail className="h-6 w-6 text-[#E11D2E]" />
               </div>
               <div>
                 <h3 className="text-lg font-bold">Encrypted Email</h3>
@@ -28,8 +29,8 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary/10">
-                <Phone className="h-6 w-6 text-secondary" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#38BDF8]/10">
+                <Phone className="h-6 w-6 text-[#38BDF8]" />
               </div>
               <div>
                 <h3 className="text-lg font-bold">Direct Hotline</h3>
@@ -37,8 +38,8 @@ export default function Contact() {
               </div>
             </div>
             <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-purple-500/10">
-                <MapPin className="h-6 w-6 text-purple-500" />
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#7C3AED]/10">
+                <MapPin className="h-6 w-6 text-[#7C3AED]" />
               </div>
               <div>
                 <h3 className="text-lg font-bold">HQ Coordinates</h3>
@@ -56,7 +57,7 @@ export default function Contact() {
                 <Link
                   key={idx}
                   href="#"
-                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:bg-primary"
+                  className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:bg-[#E11D2E]"
                 >
                   <Icon className="h-5 w-5" />
                 </Link>
@@ -80,7 +81,7 @@ export default function Contact() {
                 <input
                   type="text"
                   placeholder="John Doe"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
                 />
               </div>
               <div className="space-y-2">
@@ -90,7 +91,7 @@ export default function Contact() {
                 <input
                   type="email"
                   placeholder="john@company.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
                 />
               </div>
             </div>
@@ -101,10 +102,10 @@ export default function Contact() {
               <textarea
                 rows={5}
                 placeholder="Briefly describe the security challenge or inquiry..."
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50"
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
               />
             </div>
-            <button className="flex items-center justify-center gap-2 rounded-xl bg-primary py-4 text-lg font-bold text-white transition-all hover:neon-glow-red">
+            <button className="flex items-center justify-center gap-2 rounded-xl bg-[#E11D2E] py-4 text-lg font-bold text-white transition-all hover:neon-glow-red">
               Transmission Send
               <Send className="h-5 w-5" />
             </button>
@@ -117,5 +118,3 @@ export default function Contact() {
     </div>
   )
 }
-
-import Link from "next/link"
