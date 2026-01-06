@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Target } from "lucide-react";
-import { IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
+import { IconBrandLinkedin, IconBrandX , IconWorld} from "@tabler/icons-react";
 import {
   aboutCompanyText,
   breachesPrevented,
@@ -101,7 +101,7 @@ export default function About() {
             className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
           >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
-              <Target className="h-6 w-6 text-primary" />
+              <IconWorld className="h-6 w-6 text-primary" />
             </div>
 
             <h2 className="mb-4 text-3xl font-bold">Our Vision</h2>
