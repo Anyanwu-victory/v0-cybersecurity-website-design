@@ -115,6 +115,11 @@ export default function About() {
 
       {/* Values Section */}
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+        <div className="mb-16 text-center">
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+            Our Values
+          </h2>
+        </div>
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((v, i) => (
             <div
