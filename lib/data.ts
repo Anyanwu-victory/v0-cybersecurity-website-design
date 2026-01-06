@@ -48,7 +48,7 @@ export const socials = [
 
 // About page data
 export const aboutCompanyText = ` Founded in 2021, RT-DS (Response Technology & Digital Security) emerged from a collective of elite security researchers dedicated to solving the most complex digital puzzles.
-xxz
+
  Our vision is to build a future where digital innovation isn't hampered by the fear of compromise. By staying "One Trace Ahead," we provide the clarity and armor businesses need to thrive in a hostile cyber climate.`;
 
  export const missionText = `At RT-DS, we are dedicated to protecting organizations from evolving cyber threats through advanced threat intelligence, digital forensics, and proactive defense strategies. Our mission is to empower businesses with the tools and expertise needed to secure their digital infrastructure in an increasingly connected world.

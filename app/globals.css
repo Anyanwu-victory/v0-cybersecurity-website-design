@@ -131,11 +131,13 @@
 
 /* Custom Cybersecurity Utilities */
 @layer utilities {
-  .cyber-grid {
-    background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 40px 40px;
-  }
+.cyber-grid {
+  background-image: 
+    linear-gradient(to right, #38bdf8 1px, transparent 1px),
+    linear-gradient(to bottom, #38bdf8 1px, transparent 2px);
+  background-size: 40px 40px;
+}
+
 
   .neon-glow-red {
     box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), 0 0 40px rgba(255, 0, 0, 0.1);
@@ -150,10 +152,14 @@
   }
   .circuit-bg {
   background:
-    linear-gradient(90deg, transparent 0%, #38BDF8 50%, transparent 100%),
+    linear-gradient(90deg, transparent 0%, #38bdf8 50%, transparent 100%),
     linear-gradient(#38BDF8 1px, transparent 1px);
   background-size: 200px 200px, 40px 40px;
   opacity: 0.15;
+}
+.cyber-red {
+  background-color: #E11D2E;
+  color: #ffffff;
 }
 
 }

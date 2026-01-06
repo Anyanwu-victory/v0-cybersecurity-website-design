@@ -2,38 +2,10 @@
 
 import { motion } from "framer-motion"
 import { Calendar, MapPin, ArrowUpRight, Shield } from "lucide-react"
-import Link from "next/link"
+import Link from "next/link";
+import { events } from "@/lib/data";
 
-const events = [
-  {
-    title: "Zero-Trust Architecture Summit",
-    date: "March 15, 2026",
-    location: "Online / Virtual",
-    description: "A deep dive into implementing zero-trust security models for distributed enterprise teams.",
-    tag: "Workshop",
-  },
-  {
-    title: "Advanced Threat Hunting & Forensic Analysis",
-    date: "April 02, 2026",
-    location: "Washington D.C.",
-    description: "Exclusive 2-day workshop on modern forensic techniques and tracing APT movements.",
-    tag: "Exclusive",
-  },
-  {
-    title: "The Future of Cyber Defense in the AI Era",
-    date: "May 12, 2026",
-    location: "London, UK",
-    description: "Keynote presentation on how machine learning is revolutionizing both attacks and defense.",
-    tag: "Conference",
-  },
-  {
-    title: "Cloud Infrastructure Hardening",
-    date: "June 20, 2026",
-    location: "Singapore",
-    description: "Hands-on session for securing multi-cloud environments against lateral movement.",
-    tag: "Seminar",
-  },
-]
+
 
 export default function Events() {
   return (

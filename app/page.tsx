@@ -11,7 +11,7 @@ export default function Home() {
     <div className="relative overflow-hidden">
       {/* Hero Section */}
       <section className="cyber-grid relative flex min-h-[90vh] flex-col items-center justify-center px-4 py-24 text-center">
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+        <div className="absolute  inset-0 z-0 bg-gradient-to-b from-transparent via-background/50 to-[#0B0E14]" />
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -25,7 +25,7 @@ export default function Home() {
           </div>
           <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl">
             Securing the{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Future</span>,{" "}
+            <span className="bg-gradient-to-r from-[#38BDF8] to-secondary bg-clip-text text-transparent">Future</span>,{" "}
             <br />
             One Trace at a Time
           </h1>
@@ -37,7 +37,8 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-bold text-black transition-all hover:bg-primary/90 hover:neon-glow-red sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-8 py-4 
+              text-lg font-bold text-black transition-all hover:bg-primary/90 hover:neon-glow-red sm:w-auto"
             >
               Connect With Us
               <ArrowRight className="h-5 w-5" />
@@ -58,7 +59,7 @@ export default function Home() {
 
         {/* Decorative Circuit Lines */}
         <div className="pointer-events-none absolute circuit-bg left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-primary/50 to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-secondary/50 to-transparent" />
+        <div className="pointer-events-none absolute circuit-bg right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-secondary/50 to-transparent" />
       </section>
 
       {/* Features Grid */}
