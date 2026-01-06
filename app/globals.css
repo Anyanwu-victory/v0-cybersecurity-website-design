@@ -4,6 +4,13 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
+  /* Added specific cybersecurity brand colors */
+  --primary-red: #e11d2e;
+  --electric-blue: #38bdf8;
+  --cyber-purple: #7c3aed;
+  --dark-base: #0b0e14;
+  --muted-light: #e5e7eb;
+
   /* Updated to a dark-first cybersecurity theme */
   --background: oklch(0.1 0 0);
   --foreground: oklch(0.985 0 0);
@@ -11,17 +18,17 @@
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.1 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.55 0.25 25); /* Deep Red from Logo */
+  --primary: var(--primary-red);
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.6 0.2 250); /* Electric Blue */
+  --secondary: var(--electric-blue);
   --secondary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.2 0.02 250);
   --muted-foreground: oklch(0.7 0.02 250);
-  --accent: oklch(0.45 0.2 280); /* Dark Purple */
+  --accent: var(--cyber-purple);
   --accent-foreground: oklch(0.985 0 0);
   --border: oklch(0.25 0.02 250);
   --input: oklch(0.25 0.02 250);
-  --ring: oklch(0.55 0.25 25);
+  --ring: var(--primary-red);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -36,11 +43,6 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
-  --primary-red:     #E11D2E;
-  --dark-base:       #0B0E14;
-  --electric-blue:   #38BDF8;
-  --cyber-purple:    #7C3AED;
-  --muted-light:     #E5E7EB;
 }
 
 .dark {
@@ -89,7 +91,6 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  /* Added custom utilities for cyber effects */
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -137,23 +138,28 @@
     background-size: 40px 40px;
   }
 
+  /* Updated neon glows to use brand colors */
   .neon-glow-red {
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3), 0 0 40px rgba(255, 0, 0, 0.1);
+    box-shadow: 0 0 20px rgba(225, 29, 46, 0.3), 0 0 40px rgba(225, 29, 46, 0.1);
   }
 
   .neon-glow-blue {
-    box-shadow: 0 0 20px rgba(0, 150, 255, 0.3), 0 0 40px rgba(0, 150, 255, 0.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.3), 0 0 40px rgba(56, 189, 248, 0.1);
+  }
+
+  .neon-glow-purple {
+    box-shadow: 0 0 20px rgba(124, 58, 237, 0.3), 0 0 40px rgba(124, 58, 237, 0.1);
   }
 
   .text-glow-red {
-    text-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
+    text-shadow: 0 0 10px rgba(225, 29, 46, 0.5);
   }
-  .circuit-bg {
-  background:
-    linear-gradient(90deg, transparent 0%, #38BDF8 50%, transparent 100%),
-    linear-gradient(#38BDF8 1px, transparent 1px);
-  background-size: 200px 200px, 40px 40px;
-  opacity: 0.15;
-}
 
+  .text-glow-blue {
+    text-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+  }
+
+  .accent-gradient {
+    background: linear-gradient(135deg, var(--primary-red), var(--cyber-purple));
+  }
 }
