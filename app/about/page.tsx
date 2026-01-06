@@ -69,7 +69,7 @@ export default function About() {
       </section>
 
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
+        <div className="grid gap-12 mb-16 md:grid-cols-[1fr_auto_1fr]">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -87,7 +87,11 @@ export default function About() {
               {missionText}
             </p>
           </motion.div>
-          <div className="my-16 hidden md:block h-px w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+
+          {/* Divider */}
+         <div className="hidden md:flex items-center">
+  <div className="h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+</div>
 
           <motion.div
             initial={{ opacity: 0, x: 40 }}
