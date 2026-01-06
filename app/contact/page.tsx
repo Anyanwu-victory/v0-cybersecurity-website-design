@@ -1,12 +1,13 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send, Github, Twitter, Linkedin } from "lucide-react"
-import Link from "next/link"
+import { Mail, Phone, MapPin, Send, } from "lucide-react"
+import Link from "next/link";
+import { socials, contactMethods } from "@/lib/data";
 
 export default function Contact() {
   return (
-    <div className="container mx-auto px-4 py-24">
+    <div className="container mx-auto px-4 py-24 lg:px-[80px]">
       <div className="grid gap-16 lg:grid-cols-2">
         {/* Info Side */}
         <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
@@ -19,33 +20,17 @@ export default function Contact() {
           </p>
 
           <div className="space-y-8">
-            <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#E11D2E]/10">
-                <Mail className="h-6 w-6 text-[#E11D2E]" />
+            {contactMethods.map((method, idx) => (
+              <div key={idx} className="flex items-start gap-6">
+                <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-${method.color}/10`}>
+                  <method.icon className={`h-6 w-6 text-${method.color}`} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold">{method.type}</h3>
+                  <p className="text-muted-foreground">{method.detail}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-lg font-bold">Encrypted Email</h3>
-                <p className="text-muted-foreground">ops@rt-ds.secure</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#38BDF8]/10">
-                <Phone className="h-6 w-6 text-[#38BDF8]" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold">Direct Hotline</h3>
-                <p className="text-muted-foreground">+1 (888) TRACE-OPS</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-6">
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#7C3AED]/10">
-                <MapPin className="h-6 w-6 text-[#7C3AED]" />
-              </div>
-              <div>
-                <h3 className="text-lg font-bold">HQ Coordinates</h3>
-                <p className="text-muted-foreground">7th Fl, Cyber Hub, Austin TX, USA</p>
-              </div>
-            </div>
+            ))}
           </div>
 
           <div className="mt-16">
@@ -53,13 +38,13 @@ export default function Contact() {
               Social Intelligence
             </h4>
             <div className="flex gap-4">
-              {[Linkedin, Twitter, Github].map((Icon, idx) => (
+              {socials.map((social, idx) => (
                 <Link
                   key={idx}
-                  href="#"
+                  href={social.href}
                   className="flex h-12 w-12 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-all hover:bg-[#E11D2E]"
                 >
-                  <Icon className="h-5 w-5" />
+                  <social.icon className="h-5 w-5" />
                 </Link>
               ))}
             </div>

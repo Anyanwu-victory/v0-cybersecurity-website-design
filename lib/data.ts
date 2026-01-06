@@ -1,4 +1,4 @@
-import { Target, Eye, ShieldCheck, Shield, Lock, Search, } from "lucide-react";
+import { Target, Eye, ShieldCheck, Shield, Lock, Search, Mail, Phone, MapPin, Send,  } from "lucide-react";
 import { IconBrandLinkedin, IconBrandX, IconBrandGithub }  from '@tabler/icons-react';
 
 //Home page data
@@ -146,4 +146,26 @@ export const events = [
     description: "Hands-on session for securing multi-cloud environments against lateral movement.",
     tag: "Seminar",
   },
-]
+];
+
+// Contact page data starts here
+export const contactMethods = [
+  {
+    icon: Mail,
+    type: "Encrypted Email",
+    detail: "ops@rt-ds.secure",
+    color: "[#E11D2E]",
+  },
+  {
+    icon: Phone,
+    type: "Direct Hotline",
+    detail: "+1 (888) TRACE-OPS",
+    color: "[#38BDF8]",
+  },
+  {
+    icon: MapPin,
+    type: "HQ Coordinates",
+    detail: "7th Fl, Cyber Hub, Austin TX, USA",
+    color: "[#7C3AED]"
+  }
+];
