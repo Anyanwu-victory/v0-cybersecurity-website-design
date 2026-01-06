@@ -1,11 +1,20 @@
-"use client"
+"use client";
 
-import Link from "next/link"
+import Link from "next/link";
 
-import { motion } from "framer-motion"
-import Image from "next/image"
-import { IconBrandLinkedin, IconBrandX }  from '@tabler/icons-react';
-import { aboutCompanyText, breachesPrevented, activeMonitoringHours, values, team} from "@/lib/data"
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Target } from "lucide-react";
+import { IconBrandLinkedin, IconBrandX } from "@tabler/icons-react";
+import {
+  aboutCompanyText,
+  breachesPrevented,
+  activeMonitoringHours,
+  values,
+  team,
+  missionText,
+  visionText,
+} from "@/lib/data";
 
 export default function About() {
   return (
@@ -13,22 +22,33 @@ export default function About() {
       {/* Mission Section */}
       <section className="container mx-auto px-4 lg:px-[80px]">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <motion.div initial={{ opacity: 0, x: -30 }} animate={{ opacity: 1, x: 0 }}>
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
             <h1 className="mb-6 text-4xl font-bold md:text-6xl">
               We Trace. We Defend. <br />
               <span className="text-[#E11D2E]">We Secure.</span>
             </h1>
             <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line">
-            {aboutCompanyText}
+              {aboutCompanyText}
             </p>
             <div className="flex gap-12">
               <div>
-                <div className="text-3xl font-bold text-[#E11D2E]">{breachesPrevented}+</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-widest">Breaches Prevented</div>
+                <div className="text-3xl font-bold text-[#E11D2E]">
+                  {breachesPrevented}+
+                </div>
+                <div className="text-sm text-muted-foreground uppercase tracking-widest">
+                  Breaches Prevented
+                </div>
               </div>
               <div>
-                <div className="text-3xl font-bold text-[#38BDF8]">{activeMonitoringHours}</div>
-                <div className="text-sm text-muted-foreground uppercase tracking-widest">Active Monitoring</div>
+                <div className="text-3xl font-bold text-[#38BDF8]">
+                  {activeMonitoringHours}
+                </div>
+                <div className="text-sm text-muted-foreground uppercase tracking-widest">
+                  Active Monitoring
+                </div>
               </div>
             </div>
           </motion.div>
@@ -42,8 +62,49 @@ export default function About() {
               alt="RT-DS Red Logo"
               width={600}
               height={600}
-             className="rounded-2xl"
+              className="rounded-2xl"
             />
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+        <div className="grid md:grid-cols-2 gap-12 mb-16">
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
+          >
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
+              <Target className="h-6 w-6 text-primary" />
+            </div>
+
+            <h2 className="mb-4 text-3xl font-bold">Our Mission</h2>
+
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+              {missionText}
+            </p>
+          </motion.div>
+          <div className="my-16 hidden md:block h-px w-full bg-gradient-to-r from-transparent via-primary/50 to-transparent" />
+
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
+            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
+          >
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
+              <Target className="h-6 w-6 text-primary" />
+            </div>
+
+            <h2 className="mb-4 text-3xl font-bold">Our Vision</h2>
+
+            <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
+              {visionText}
+            </p>
           </motion.div>
         </div>
       </section>
@@ -52,7 +113,10 @@ export default function About() {
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((v, i) => (
-            <div key={i} className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center">
+            <div
+              key={i}
+              className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center"
+            >
               <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#E11D2E]/10">
                 <v.icon className="h-8 w-8 text-[#E11D2E]" />
               </div>
@@ -66,20 +130,24 @@ export default function About() {
       {/* Team Section */}
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">The Elite Team</h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
+            The Elite Team
+          </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
-            Meet the architects of your digital defense. Our team combines decades of experience from intelligence
-            agencies, global finance, and tech giants.
+            Meet the architects of your digital defense. Our team combines
+            decades of experience from intelligence agencies, global finance,
+            and tech giants.
           </p>
         </div>
 
-        <div className="
+        <div
+          className="
   grid gap-6
   max-w-7xl mx-auto
   grid-cols-[repeat(auto-fit,minmax(260px,1fr))]
   place-content-center
-">
-
+"
+        >
           {team.map((member, idx) => (
             <motion.div
               key={member.name}
@@ -114,13 +182,17 @@ export default function About() {
               </div>
               <div className="p-6">
                 <h3 className="text-lg font-bold">{member.name}</h3>
-                <p className="mb-3 text-sm font-medium text-[#E11D2E] uppercase tracking-tight">{member.role}</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">{member.bio}</p>
+                <p className="mb-3 text-sm font-medium text-[#E11D2E] uppercase tracking-tight">
+                  {member.role}
+                </p>
+                <p className="text-sm text-muted-foreground leading-relaxed">
+                  {member.bio}
+                </p>
               </div>
             </motion.div>
           ))}
         </div>
       </section>
     </div>
-  )
+  );
 }
