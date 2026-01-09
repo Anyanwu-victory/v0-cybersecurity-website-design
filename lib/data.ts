@@ -112,7 +112,7 @@ export const team = [
     name: "Shekinah Glory Frederick",
     role: "Governance risk and Compliance Officer( team lead)",
     bio: "Offensive security specialist with over 15 years in cloud infrastructure penetration testing.",
-    avatar: "/tech-female-leader-portrait.jpg",
+    avatar: "/shekinah-image.jpeg",
     socials: [
       { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
       { name: "Instagram", href: "#", icon: IconBrandInstagram },

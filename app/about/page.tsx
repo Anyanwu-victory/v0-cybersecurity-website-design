@@ -166,12 +166,14 @@ export default function About() {
               transition={{ delay: idx * 0.1 }}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-card"
             >
-              <div className="relative aspect-square overflow-hidden grayscale transition-all duration-500 group-hover:grayscale-0">
+              <div className="relative aspect-square overflow-hidden 
+              grayscale transition-all duration-500 group-hover:grayscale-0">
                 <Image
                   src={member.avatar || "/placeholder.svg"}
                   alt={member.name}
                   fill
-                  className="object-cover transition-transform group-hover:scale-105"
+                  className="object-cover object-center  
+                   transition-transform group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
                 <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
