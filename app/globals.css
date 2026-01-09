@@ -10,9 +10,10 @@
   --cyber-purple: #7c3aed;
   --dark-base: #0b0e14;
   --muted-light: #e5e7eb;
+  --cyber-blue: oklch(12.88% 0.04062 264.709);
 
   /* Updated to a dark-first cybersecurity theme */
-  --background: oklch(0.1 0 0);
+  --background: oklch(12.88% 0.04062 264.709);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.12 0.01 250);
   --card-foreground: oklch(0.985 0 0);
@@ -126,17 +127,24 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground ;
   }
 }
 
 /* Custom Cybersecurity Utilities */
 @layer utilities {
   .cyber-grid {
+  background-image:
+    linear-gradient(to right, rgba(56,189,248,0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(56,189,248,0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+/* 
+  .cyber-grid {
     background-image: linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 40px 40px;
-  }
+  } */
 
   .neon-glow-red {
     box-shadow: 0 0 20px rgba(225, 29, 46, 0.3), 0 0 40px rgba(225, 29, 46, 0.1);

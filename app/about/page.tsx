@@ -30,7 +30,7 @@ export default function About() {
               We Trace. We Defend. <br />
               <span className="text-[#E11D2E]">We Secure.</span>
             </h1>
-            <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line">
+            <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
               {aboutCompanyText}
             </p>
             <div className="flex gap-12">
@@ -175,23 +175,25 @@ export default function About() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
                 <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Link
-                    href="#"
-                    className="rounded-full bg-white/10 p-2 backdrop-blur hover:bg-[#E11D2E] transition-colors"
-                  >
-                    <IconBrandLinkedin className="h-4 w-4" />
-                  </Link>
-                  <Link
-                    href="#"
-                    className="rounded-full bg-white/10 p-2 backdrop-blur hover:bg-[#E11D2E] transition-colors"
-                  >
-                    <IconBrandX className="h-4 w-4" />
-                  </Link>
+                  {member.socials?.map((s, i) => {
+                    const SocialIcon = s.icon;
+                    return (
+                      <Link
+                        key={i}
+                        href={s.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-full bg-white/10 p-2 backdrop-blur hover:bg-[#E11D2E] transition-colors"
+                      >
+                        <SocialIcon className="h-4 w-4" />
+                      </Link>
+                    );
+                  })}
                 </div>
               </div>
               <div className="p-6">
                 <h3 className="text-lg font-bold">{member.name}</h3>
-                <p className="mb-3 text-sm font-medium text-[#E11D2E] uppercase tracking-tight">
+                <p className="mb-3 mt-1 text-sm font-medium text-[#E11D2E] uppercase tracking-tight">
                   {member.role}
                 </p>
                 <p className="text-sm text-muted-foreground leading-relaxed">

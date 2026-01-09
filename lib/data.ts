@@ -1,5 +1,5 @@
 import { Target, Eye, ShieldCheck, Shield, Lock, Search, Mail, Phone, MapPin, Send,  } from "lucide-react";
-import { IconBrandLinkedin, IconBrandX, IconBrandGithub }  from '@tabler/icons-react';
+import { IconBrandLinkedin, IconBrandX, IconBrandTiktok, IconBrandInstagram }  from '@tabler/icons-react';
 
 //Home page data
 export const services = [
@@ -37,9 +37,9 @@ export const socials = [
         icon: IconBrandLinkedin,
     },
        {
-        name: "Github",
-        href: "#",
-        icon: IconBrandGithub,
+        name: "Tiktok",
+        href: "https://www.tiktok.com/@redtraced.securit?_r=1&_t=ZS-92n1s803UVp",
+        icon: IconBrandTiktok,
     },
     {
         name: "X",
@@ -89,28 +89,44 @@ export const values = [
 
 export const team = [
   {
-    name: "Dr. Elena Vance",
-    role: "Chief Security Architect",
+    name: "David Dorcas Mishel",
+    role: "Founder/CEO, Red team lead and CISO",
     bio: "Former intelligence analyst specialized in advanced persistent threat (APT) research.",
     avatar: "/professional-cybersecurity-expert-woman.jpg",
+    socials: [
+      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
+      { name: "Instagram", href: "#", icon: IconBrandInstagram },
+    ],
   },
   {
-    name: "Marcus Thorne",
-    role: "Head of Forensics",
+    name: "Oluebube Victoria Udegbunam",
+    role: "SOC Analyst/Blue Team Lead",
     bio: "Expert in cross-platform digital artifact recovery and memory forensics.",
     avatar: "/cybersecurity-professional-man.jpg",
+    socials: [
+      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
+      { name: "Instagram", href: "#", icon: IconBrandInstagram },
+    ],
   },
   {
-    name: "Sarah Chen",
-    role: "Red Team Lead",
+    name: "Shekinah Glory Frederick",
+    role: "Governance risk and Compliance Officer( team lead)",
     bio: "Offensive security specialist with over 15 years in cloud infrastructure penetration testing.",
     avatar: "/tech-female-leader-portrait.jpg",
+    socials: [
+      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
+      { name: "Instagram", href: "#", icon: IconBrandInstagram },
+    ],
   },
   {
-    name: "Jaxson Reed",
-    role: "SOC Operations Director",
+    name: "Anyanwu Victory",
+    role: "Product Design and Software development",
     bio: "Pioneer in automated incident response systems and 24/7 threat hunting.",
     avatar: "/cybersecurity-man-expert.jpg",
+    socials: [
+      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
+      { name: "Instagram", href: "#", icon: IconBrandInstagram },
+    ],
   },
 ];
 

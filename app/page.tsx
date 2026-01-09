@@ -17,19 +17,19 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 mx-auto max-w-4xl"
+          className="relative z-10 mx-auto max-w-4xl space-y-2"
         >
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E11D2E]/30 bg-[#E11D2E]/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-[#E11D2E] uppercase">
             <Zap className="h-3 w-3" />
             Vulnerability Insight & Response
           </div>
-          <h1 className="mb-6 text-5xl font-extrabold tracking-tight sm:text-7xl md:text-8xl">
+          <h1 className="mb-6 text-5xl font-extrabold tracking-wide sm:text-7xl md:text-8xl">
             Securing the{" "}
             <span className="bg-gradient-to-r from-[#E11D2E] to-[#38BDF8] bg-clip-text text-transparent">Future</span>,{" "}
             <br />
             One Trace at a Time
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl">
+          <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl leading-9">
             RT-DS provides enterprise-grade cybersecurity intelligence, specialized in digital trace analysis and
             proactive defense for the modern digital landscape.
           </p>
@@ -68,7 +68,7 @@ export default function Home() {
       <section className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Mission-Critical Services</h2>
-          <p className="mx-auto max-w-2xl text-muted-foreground">
+          <p className="mx-auto max-w-2xl text-muted-foreground leading-8">
             Our expert team utilizes cutting-edge forensics and automated threat hunting to keep your assets unreachable
             by adversaries.
           </p>
@@ -96,7 +96,7 @@ export default function Home() {
                 <service.icon className="h-7 w-7" />
               </div>
               <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
-              <p className="text-muted-foreground">{service.description}</p>
+              <p className="text-muted-foreground ">{service.description}</p>
               <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E]">
                 Explore Tech <ArrowRight className="h-4 w-4" />
               </div>
