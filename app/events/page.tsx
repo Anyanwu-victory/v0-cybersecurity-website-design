@@ -2,10 +2,8 @@
 
 import { motion } from "framer-motion"
 import { Calendar, MapPin, ArrowUpRight, Shield } from "lucide-react"
-import Link from "next/link";
-import { events } from "@/lib/data";
-
-
+import Link from "next/link"
+import { events } from "@/lib/data"
 
 export default function Events() {
   return (
@@ -26,34 +24,39 @@ export default function Events() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ delay: idx * 0.1 }}
-            className="group relative overflow-hidden rounded-3xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/40"
+            asChild
           >
-            <div className="mb-6 flex items-center justify-between">
-              <span className="rounded-full bg-[#E11D2E]/10 px-3 py-1 text-xs font-bold text-[#E11D2E] uppercase tracking-wider">
-                {event.tag}
-              </span>
-              <div className="text-muted-foreground group-hover:text-[#E11D2E] transition-colors">
-                <ArrowUpRight className="h-6 w-6" />
+            <Link
+              href={`/events/${event.slug}`}
+              className="group relative overflow-hidden rounded-3xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/40"
+            >
+              <div className="mb-6 flex items-center justify-between">
+                <span className="rounded-full bg-[#E11D2E]/10 px-3 py-1 text-xs font-bold text-[#E11D2E] uppercase tracking-wider">
+                  {event.tag}
+                </span>
+                <div className="text-muted-foreground group-hover:text-[#E11D2E] transition-colors">
+                  <ArrowUpRight className="h-6 w-6" />
+                </div>
               </div>
-            </div>
 
-            <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">{event.title}</h3>
-            <p className="mb-8 text-muted-foreground">{event.description}</p>
+              <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">{event.title}</h3>
+              <p className="mb-8 text-muted-foreground">{event.description}</p>
 
-            <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <Calendar className="h-4 w-4 text-[#E11D2E]" />
-                {event.date}
+              <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <Calendar className="h-4 w-4 text-[#E11D2E]" />
+                  {event.date}
+                </div>
+                <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <MapPin className="h-4 w-4 text-[#38BDF8]" />
+                  {event.location}
+                </div>
               </div>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4 text-[#38BDF8]" />
-                {event.location}
-              </div>
-            </div>
 
-            <button className="mt-8 w-full rounded-xl border border-white/10 bg-white/5 py-3 font-semibold transition-all hover:bg-[#E11D2E] hover:text-white">
-              Learn More & Register
-            </button>
+              <button className="mt-8 w-full rounded-xl border border-white/10 bg-white/5 py-3 font-semibold transition-all hover:bg-[#E11D2E] hover:text-white">
+                Learn More & Register
+              </button>
+            </Link>
           </motion.div>
         ))}
       </div>
