@@ -7,15 +7,17 @@ export const generateStaticParams = () => {
   }))
 }
 
-export const generateMetadata = ({ params }: { params: { slug: string } }) => {
-  const event = events.find((e) => e.slug === params.slug)
+export const generateMetadata = async ({ params }: { params: Promise<{ slug: string }> }) => {
+  const { slug } = await params
+  const event = events.find((e) => e.slug === slug)
   return {
     title: event?.title || "Event",
     description: event?.description || "",
   }
 }
 
-export default function EventDetailsPage({ params }: { params: { slug: string } }) {
-  const event = events.find((e) => e.slug === params.slug)
-  return <EventDetailsClient event={event} params={params} />
+export default async function EventDetailsPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const event = events.find((e) => e.slug === slug)
+  return <EventDetailsClient event={event} params={{ slug }} />
 }

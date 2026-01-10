@@ -29,15 +29,17 @@ export function Speakers({ speakers }: SpeakersProps) {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="group rounded-3xl border border-white/10 bg-card p-6 hover:border-[#E11D2E]/40 transition-all"
+              className="group rounded-3xl border border-white/10 bg-card 
+              p-6 hover:border-[#E11D2E]/40 transition-all"
             >
-              <div className="mb-4 overflow-hidden rounded-2xl h-48 bg-white/5">
+              <div className="mb-4 overflow-hidden rounded-2xl  bg-white/5">
                 <Image
                   src={speaker.avatar || "/placeholder.svg"}
                   alt={speaker.name}
                   width={300}
                   height={300}
-                  className="h-full w-full object-cover group-hover:scale-105 transition-transform"
+                  className="h-full w-full object-cover object-center
+                   group-hover:scale-105 transition-transform"
                 />
               </div>
               <h3 className="mb-1 text-xl font-bold">{speaker.name}</h3>
