@@ -1,31 +1,55 @@
-import { Target, Eye, ShieldCheck, Shield, Lock, Search, Mail, Phone, MapPin } from "lucide-react"
-import { IconBrandLinkedin, IconBrandX, IconBrandTiktok, IconBrandInstagram } from "@tabler/icons-react"
+import { Target, Eye, ShieldCheck, Shield, Lock, Search, Mail, Phone, MapPin, Presentation } from "lucide-react"
+import { IconBrandLinkedin, IconBrandX, IconBrandTiktok, IconBrandInstagram, IconUser, IconDeviceDesktop } from "@tabler/icons-react"
 
 //Home page data
 export const services = [
   {
-    title: "Threat Detection",
+    title: "Penetration Testing & Ethical Hacking",
     description:
-      "Real-time monitoring and AI-driven analysis to identify complex attack patterns before they breach your perimeter.",
+      "We simulate real-world attacks to uncover vulnerabilities before malicious actors do.",
     icon: Shield,
     color: "text-[#E11D2E]",
     glowClass: "neon-glow-red",
   },
   {
-    title: "Digital Forensics",
+    title: "Cybersecurity Education & Mentorship",
     description:
-      "Deep-dive analysis of security incidents to recover data, trace origins, and build legally sound forensic reports.",
-    icon: Search,
+      "Practical training for students, developers, and professionals—from beginner to advanced levels.",
+    icon: Presentation,
     color: "text-[#38BDF8]",
     glowClass: "neon-glow-blue",
   },
   {
-    title: "Cyber Defense",
+    title: "Vulnerability Assessment & Risk Analysis",
     description:
-      "Hardening infrastructure with zero-trust architecture and automated response protocols for maximum resilience.",
-    icon: Lock,
+      "Identify security gaps, assess impact, and get clear recommendations to reduce risk.",
+    icon: Search,
     color: "text-[#7C3AED]",
     glowClass: "neon-glow-purple",
+  },
+   {
+    title: "Security Consulting & Advisory",
+    description:
+      "Expert guidance to help organizations make smart security decisions and build resilient systems.",
+    icon: IconUser,
+    color: "text-[#7C3AED]",
+    glowClass: "neon-glow-purple",
+  },
+   {
+    title: "Secure Software Development",
+    description:
+      "We design and build software with security baked in—from architecture to deployment.",
+    icon: Lock,
+    color: "text-[#E11D2E]",
+    glowClass: "neon-glow-red",
+  },
+   {
+    title: "Product Design (UI/UX & Security-First Design)",
+    description:
+      "Creating user-friendly, secure digital products that balance usability with protection.",
+    icon: IconDeviceDesktop,
+    color: "text-[#38BDF8]",
+    glowClass: "neon-glow-blue",
   },
 ]
 
@@ -46,20 +70,29 @@ export const socials = [
     icon: IconBrandX,
   },
 ]
+
+export const homePageIntroSectionText = ` "At RedTrace-D Security, We believe true security starts with awareness. 
+          Our mission is to simplify cybersecurity through education, 
+          consultancy, and proactive 
+          defense strategies that protect digital systems and users at every level.
+          
+          We don’t wait for attacks to happen—we trace weaknesses,
+           strengthen systems, and help teams build secure digital products from day one.
+
+           With RedTrace-D Security, you’re not just getting a service provider;
+            you’re gaining a trusted partner dedicated to
+             securing your digital future."`
 //Home page data ends here
 
 // About page data
-export const aboutCompanyText = ` Founded in 2021, RT-DS (Response Technology & Digital Security) emerged from a collective of elite security researchers dedicated to solving the most complex digital puzzles.
+export const aboutCompanyText = ` RTDS is more than a cybersecurity company—we’re building a community of security-aware creators, developers, and organizations committed to shaping a safer digital future.
 
- Our vision is to build a future where digital innovation isn't hampered by the fear of compromise. By staying "One Trace Ahead," we provide the clarity and armor businesses need to thrive in a hostile cyber climate.`
+The name RedTrace reflects our focus on tracing vulnerabilities early—before they become real threats. What began as a passion for cybersecurity has grown into a startup focused on secure software, product design, training, and digital defense.`
 
-export const missionText = `At RT-DS, we are dedicated to protecting organizations from evolving cyber threats through advanced threat intelligence, digital forensics, and proactive defense strategies. Our mission is to empower businesses with the tools and expertise needed to secure their digital infrastructure in an increasingly connected world.
+export const missionText = `Our mission is to make cybersecurity practical, accessible, and proactive.
+ We empower individuals, developers, startups, and organizations to secure their digital environments through education, consulting, and hands-on security solutions.`
 
-We combine cutting-edge technology with deep domain expertise to deliver comprehensive security solutions that adapt to the ever-changing threat landscape.`
-
-export const visionText = `We envision a future where organizations can operate with confidence, knowing their digital assets are protected by intelligent, adaptive security systems. Through continuous innovation and research, we strive to stay ahead of emerging threats and set new standards in cybersecurity excellence.
-
-Our goal is to become the most trusted partner for enterprise cybersecurity, known for our unwavering commitment to protecting what matters most to our clients.`
+export const visionText = `To build a future where security is not an afterthought, but a foundation—powering innovation, trust, and digital growth across Africa and beyond.`
 
 export const breachesPrevented = 500
 export const activeMonitoringHours = "24/7"
@@ -87,7 +120,7 @@ export const team = [
     name: "David Dorcas Mishel",
     role: "Founder/CEO, Red team lead and CISO",
     bio: "Former intelligence analyst specialized in advanced persistent threat (APT) research.",
-    avatar: "/professional-cybersecurity-expert-woman.jpg",
+    avatar: "/Dorcas image.jpeg",
     socials: [
       { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
       { name: "Instagram", href: "#", icon: IconBrandInstagram },

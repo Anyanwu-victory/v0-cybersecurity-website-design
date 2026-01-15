@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { cn } from "@/lib/utils"
-import {  Zap, ArrowRight,} from "lucide-react"
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { services, socials } from "@/lib/data"
+import { cn } from "@/lib/utils";
+import { Zap, ArrowRight } from "lucide-react";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { services, socials, homePageIntroSectionText } from "@/lib/data";
 
 export default function Home() {
   return (
@@ -25,17 +25,19 @@ export default function Home() {
           </div>
           <h1 className="mb-6 text-5xl font-extrabold tracking-wide sm:text-7xl md:text-8xl">
             Securing the{" "}
-            <span className="bg-gradient-to-r from-[#E11D2E] to-[#38BDF8] bg-clip-text text-transparent">Future</span>,{" "}
-            <br />
+            <span className="bg-gradient-to-r from-[#E11D2E] to-[#38BDF8] bg-clip-text text-transparent">
+              Future
+            </span>
+            , <br />
             One Trace at a Time
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl leading-9">
-            RT-DS provides enterprise-grade cybersecurity intelligence, specialized in digital trace analysis and
-            proactive defense for the modern digital landscape.
+            RTDS (RedTrace-D Security) helps individuals, startups, and
+            organizations stay ahead of cyber threats by finding vulnerabilities
+            early and building security into everything they create
           </p>
 
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
-            
             <Link
               href="/contact"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-8 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
@@ -43,18 +45,17 @@ export default function Home() {
               Connect With Us
               <ArrowRight className="h-5 w-5" />
             </Link>
-            
+
             <div className="flex gap-4">
-            {socials.map((social, idx) => (
-              <Link
-                key={idx}
-                href={social.href}
-                className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-              >
-                <social.icon className="h-6 w-6 text-white" />
-              </Link>
-            ))}
-              
+              {socials.map((social, idx) => (
+                <Link
+                  key={idx}
+                  href={social.href}
+                  className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
+                >
+                  <social.icon className="h-6 w-6 text-white" />
+                </Link>
+              ))}
             </div>
           </div>
         </motion.div>
@@ -67,10 +68,10 @@ export default function Home() {
       {/* Features Grid */}
       <section className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Mission-Critical Services</h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Services</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground leading-8">
-            Our expert team utilizes cutting-edge forensics and automated threat hunting to keep your assets unreachable
-            by adversaries.
+            Our expert team utilizes cutting-edge forensics and automated threat
+            hunting to keep your assets unreachable by adversaries.
           </p>
         </div>
 
@@ -84,19 +85,21 @@ export default function Home() {
               transition={{ delay: idx * 0.1 }}
               className={cn(
                 "group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5",
-                service.glowClass,
+                service.glowClass
               )}
             >
               <div
                 className={cn(
                   "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
-                  service.color,
+                  service.color
                 )}
               >
                 <service.icon className="h-7 w-7" />
               </div>
               <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
-              <p className="text-muted-foreground ">{service.description}</p>
+              <p className="text-muted-foreground leading-6 ">
+                {service.description}
+              </p>
               <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E]">
                 Explore Tech <ArrowRight className="h-4 w-4" />
               </div>
@@ -104,6 +107,53 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Intro section */}
+      <section className="relative pt-20 pb-[500px] md:p-0">
+        <div className="relative">
+          <img
+            src="/images/logo_design_1.png"
+            alt="logo Image"
+            loading="lazy"
+            className="w-full h-auto object-center md:h-[120rem] opacity-20"
+          />
+
+          <div className="absolute top-96 inset-0 flex items-center justify-center md:top-0">
+            <div
+              className="bg-gradient-to-b from-transparent via-background/50 to-[#0B0E14] 
+      backdrop-blur-sm rounded-lg p-8 max-w-sm text-center md:p-12 
+      md:max-w-3xl mx-auto "
+            >
+              <div className="text-[#E11D2E] text-6xl mb-4"> "</div>
+              <p className="text-white text-lg md:text-xl leading-relaxed mb-8 ">
+                {homePageIntroSectionText}
+              </p>
+              <div className="text-[#E11D2E] text-6xl mt-4"> " </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div className="w-full">
+        <section className="text-white bg-[#e5e7eb] pt-15 pb-15 md:py-48 md:px-10">
+        <div className="flex flex-col bg-[#020617]  md:rounded-3xl py-12 px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
+          <div className="w-full mb-6 text-center md:text-left md:mb-0">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4"> RedTrace-D Security</h2>
+            <p className="font-light md:text-xl"> Every digital footprint leaves a trace. We help you control that trace—by building smarter, safer, and more resilient digital experiences</p>
+          </div>
+
+          <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
+            <Link
+              href="/contact"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-8 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
+            >
+              Work with RTDS
+              
+            </Link>
+          </div>
+        </div>
+        </section>
+      </div>
     </div>
-  )
+  );
 }

@@ -18,9 +18,30 @@ import {
 
 export default function About() {
   return (
-    <div className="py-24">
+    <div className="pb-24">
       {/* Mission Section */}
-      <section className="container mx-auto px-4 lg:px-[80px]">
+      <section className="w-full">
+        <div className="bg-[#0b0e14] py-28 px-8 md:py-48 md:px-22 w-full mx-auto">
+        <div className="text-left max-w-screen-md mx-auto">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+          >
+            <p className="text-left max-w-screen-md mx-auto mb-4"> About Us</p>
+            <h1 className="mb-8 text-4xl font-bold md:text-6xl">
+              We Trace. We Defend. <br />
+              <span className="text-[#E11D2E]">We Secure.</span>
+            </h1>
+            <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
+              {aboutCompanyText}
+            </p>
+           
+          </motion.div>
+         </div>
+        </div>
+      </section>
+
+      {/* <section className="container mx-auto px-4 lg:px-[80px]">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -33,7 +54,7 @@ export default function About() {
             <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
               {aboutCompanyText}
             </p>
-            <div className="flex gap-12">
+             <div className="flex gap-12">
               <div>
                 <div className="text-3xl font-bold text-[#E11D2E]">
                   {breachesPrevented}+
@@ -50,7 +71,7 @@ export default function About() {
                   Active Monitoring
                 </div>
               </div>
-            </div>
+            </div> 
           </motion.div>
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
@@ -66,7 +87,7 @@ export default function About() {
             />
           </motion.div>
         </div>
-      </section>
+      </section> */}
 
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="grid gap-12 mb-16 md:grid-cols-[1fr_auto_1fr]">
