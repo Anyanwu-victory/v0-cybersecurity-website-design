@@ -440,7 +440,7 @@ export const contactMethods = [
   {
     icon: Mail,
     type: "Encrypted Email",
-    detail: "ops@rt-ds.secure",
+    detail: "Rtdsecure004@gmail.com",
     color: "[#E11D2E]",
   },
   {

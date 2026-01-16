@@ -1,7 +1,7 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send, } from "lucide-react"
+import { Send } from "lucide-react"
 import Link from "next/link";
 import { socials, contactMethods } from "@/lib/data";
 

@@ -145,7 +145,8 @@ export default function Home() {
           <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-8 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg
+               bg-[#E11D2E] md:px-8 px-4 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
             >
               Work with RTDS
               
