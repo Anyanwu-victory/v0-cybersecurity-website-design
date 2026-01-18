@@ -192,8 +192,10 @@ export default function About() {
                 <Image
                   src={member.avatar || "/placeholder.svg"}
                   alt={member.name}
-                  fill
-                  className="object-cover object-center  
+                 width={100}
+                 height={100}
+                 
+                  className="object-cover object-center  w-full
                    transition-transform group-hover:scale-105"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />

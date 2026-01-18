@@ -27,7 +27,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h3 className="text-lg font-bold">{method.type}</h3>
-                  <p className="text-muted-foreground">{method.detail}</p>
+                  <a href={method.href} className="text-muted-foreground"> {method.detail}</a>
                 </div>
               </div>
             ))}

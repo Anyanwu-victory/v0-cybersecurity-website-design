@@ -118,11 +118,17 @@ export default function Home() {
             className="w-full h-auto object-center md:h-[120rem] opacity-20"
           />
 
-          <div className="absolute top-96 inset-0 flex items-center justify-center md:top-0">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }} // Not in view
+            whileInView={{ opacity: 1, y: 0 }} // In view
+            viewport={{ once: true, amount: 0.3 }} // Trigger when 30% is visible
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="absolute top-96 inset-0 flex items-center justify-center md:top-0"
+          >
             <div
               className="bg-gradient-to-b from-transparent via-background/50 to-[#0B0E14] 
-      backdrop-blur-sm rounded-lg p-8 max-w-sm text-center md:p-12 
-      md:max-w-3xl mx-auto "
+                    backdrop-blur-sm rounded-lg p-8 max-w-sm text-center md:p-12 
+                    md:max-w-3xl mx-auto "
             >
               <div className="text-[#E11D2E] text-6xl mb-4"> "</div>
               <p className="text-white text-lg md:text-xl leading-relaxed mb-8 ">
@@ -130,29 +136,36 @@ export default function Home() {
               </p>
               <div className="text-[#E11D2E] text-6xl mt-4"> " </div>
             </div>
-          </div>
+          </motion.div>
         </div>
       </section>
 
       <div className="w-full">
         <section className="text-white bg-[#e5e7eb] pt-15 pb-15 md:py-48 md:px-10">
-        <div className="flex flex-col bg-[#020617]  md:rounded-3xl py-12 px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
-          <div className="w-full mb-6 text-center md:text-left md:mb-0">
-            <h2 className="text-4xl md:text-5xl font-bold mb-4"> RedTrace-D Security</h2>
-            <p className="font-light md:text-xl"> Every digital footprint leaves a trace. We help you control that trace—by building smarter, safer, and more resilient digital experiences</p>
-          </div>
+          <div className="flex flex-col bg-[#020617]  md:rounded-3xl py-12 px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
+            <div className="w-full mb-6 text-center md:text-left md:mb-0">
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                {" "}
+                RedTrace-D Security
+              </h2>
+              <p className="font-light md:text-xl">
+                {" "}
+                Every digital footprint leaves a trace. We help you control that
+                trace—by building smarter, safer, and more resilient digital
+                experiences
+              </p>
+            </div>
 
-          <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
-            <Link
-              href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg
+            <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
+              <Link
+                href="/contact"
+                className="flex w-full items-center justify-center gap-2 rounded-lg
                bg-[#E11D2E] md:px-8 px-4 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
-            >
-              Work with RTDS
-              
-            </Link>
+              >
+                Work with RTDS
+              </Link>
+            </div>
           </div>
-        </div>
         </section>
       </div>
     </div>

@@ -69,6 +69,12 @@ export const socials = [
     href: "#",
     icon: IconBrandX,
   },
+  {
+    name: "Instagram",
+    href: "#",
+    icon: IconBrandInstagram,
+  },
+  
 ]
 
 export const homePageIntroSectionText = ` "At RedTrace-D Security, We believe true security starts with awareness. 
@@ -101,7 +107,7 @@ export const values = [
   {
     icon: Target,
     title: "Precision",
-    description: "Every trace tells a story. We decode it with surgical precision.",
+    description: "Every trace tells a story. Tracing vulnerabilities with accuracy before they become threats.",
   },
   {
     icon: Eye,
@@ -140,7 +146,7 @@ export const team = [
     name: "Shekinah Glory Frederick",
     role: "Governance risk and Compliance Officer( team lead)",
     bio: "Offensive security specialist with over 15 years in cloud infrastructure penetration testing.",
-    avatar: "/shekinah-image.jpeg",
+    avatar: "/images/shekinah-image.jpeg",
     socials: [
       { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
       { name: "Instagram", href: "#", icon: IconBrandInstagram },
@@ -440,19 +446,22 @@ export const contactMethods = [
   {
     icon: Mail,
     type: "Encrypted Email",
-    detail: "Rtdsecure004@gmail.com",
+    detail: "rtdsecure004@gmail.com",
     color: "[#E11D2E]",
+    href: "mailto:rtdsecure004@gmail.com",
   },
   {
     icon: Phone,
     type: "Direct Hotline",
     detail: "+1 (888) TRACE-OPS",
     color: "[#38BDF8]",
+    href: "",
   },
   {
     icon: MapPin,
     type: "HQ Coordinates",
     detail: "7th Fl, Cyber Hub, Austin TX, USA",
     color: "[#7C3AED]",
+    href: "",
   },
 ]
