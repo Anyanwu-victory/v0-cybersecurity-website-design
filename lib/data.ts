@@ -4,6 +4,7 @@ import { IconBrandLinkedin, IconBrandX, IconBrandTiktok, IconBrandInstagram, Ico
 //Home page data
 export const services = [
   {
+    slug: "penetration-testing",
     title: "Penetration Testing & Ethical Hacking",
     description:
       "We simulate real-world attacks to uncover vulnerabilities before malicious actors do.",
@@ -12,6 +13,7 @@ export const services = [
     glowClass: "neon-glow-red",
   },
   {
+    slug: "training-webinars",
     title: "Cybersecurity Education & Mentorship",
     description:
       "Practical training for students, developers, and professionals—from beginner to advanced levels.",
@@ -20,6 +22,7 @@ export const services = [
     glowClass: "neon-glow-blue",
   },
   {
+    slug: "vulnerability-assessment",
     title: "Vulnerability Assessment & Risk Analysis",
     description:
       "Identify security gaps, assess impact, and get clear recommendations to reduce risk.",
@@ -28,6 +31,7 @@ export const services = [
     glowClass: "neon-glow-purple",
   },
    {
+    slug: "security-consulting",
     title: "Security Consulting & Advisory",
     description:
       "Expert guidance to help organizations make smart security decisions and build resilient systems.",
@@ -36,6 +40,7 @@ export const services = [
     glowClass: "neon-glow-purple",
   },
    {
+    slug: "secure-software-development",
     title: "Secure Software Development",
     description:
       "We design and build software with security baked in—from architecture to deployment.",
@@ -44,6 +49,7 @@ export const services = [
     glowClass: "neon-glow-red",
   },
    {
+    slug: "product-design",
     title: "Product Design (UI/UX & Security-First Design)",
     description:
       "Creating user-friendly, secure digital products that balance usability with protection.",
@@ -441,7 +447,8 @@ export const events = [
   },
 ]
 
-// Contact page data starts here
+// Services detail data is imported from servicesDetailsData.ts
+
 export const contactMethods = [
   {
     icon: Mail,

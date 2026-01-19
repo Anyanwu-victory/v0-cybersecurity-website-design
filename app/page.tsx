@@ -66,7 +66,7 @@ export default function Home() {
       </section>
 
       {/* Features Grid */}
-      <section className="container mx-auto px-4 py-24 lg:px-[80px]">
+      <section id="services" className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Services</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground leading-8">
@@ -77,33 +77,35 @@ export default function Home() {
 
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((service, idx) => (
-            <motion.div
-              key={service.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className={cn(
-                "group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5",
-                service.glowClass
-              )}
+            <Link
+              key={service.slug}
+              href={`/services/${service.slug}`}
+              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5"
             >
-              <div
-                className={cn(
-                  "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
-                  service.color
-                )}
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="block"
               >
-                <service.icon className="h-7 w-7" />
-              </div>
-              <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
-              <p className="text-muted-foreground leading-6 ">
-                {service.description}
-              </p>
-              <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E]">
-                Explore Tech <ArrowRight className="h-4 w-4" />
-              </div>
-            </motion.div>
+                <div
+                  className={cn(
+                    "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
+                    service.color
+                  )}
+                >
+                  <service.icon className="h-7 w-7" />
+                </div>
+                <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
+                <p className="text-muted-foreground leading-6 ">
+                  {service.description}
+                </p>
+                <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E] group-hover:gap-3 transition-all">
+                  Explore More <ArrowRight className="h-4 w-4" />
+                </div>
+              </motion.div>
+            </Link>
           ))}
         </div>
       </section>
