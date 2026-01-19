@@ -460,15 +460,15 @@ export const contactMethods = [
   {
     icon: Phone,
     type: "Direct Hotline",
-    detail: "+234 (801) TRACE-OPS",
+    detail: "+(234) 810 628 3100",
     color: "[#38BDF8]",
-    href: "",
+   href: "tel:+2348106283100",
   },
   {
     icon: MapPin,
     type: "HQ Coordinates",
     detail: "Abuja, Nigeria",
     color: "[#7C3AED]",
-    href: "",
+     href: "https://maps.app.goo.gl/5wwBxxQe9xJY1dhz6",
   },
 ]
