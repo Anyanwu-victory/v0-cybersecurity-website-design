@@ -460,14 +460,14 @@ export const contactMethods = [
   {
     icon: Phone,
     type: "Direct Hotline",
-    detail: "+1 (888) TRACE-OPS",
+    detail: "+234 (801) TRACE-OPS",
     color: "[#38BDF8]",
     href: "",
   },
   {
     icon: MapPin,
     type: "HQ Coordinates",
-    detail: "7th Fl, Cyber Hub, Austin TX, USA",
+    detail: "Abuja, Nigeria",
     color: "[#7C3AED]",
     href: "",
   },

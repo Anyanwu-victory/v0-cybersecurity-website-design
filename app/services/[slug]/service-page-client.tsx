@@ -55,7 +55,7 @@ export default function ServicePageClient({ slug }: ServicePageProps) {
       {service.slug === 'training-webinars' ? (
         <TrainingPortfolio service={service} />
       ) : (
-        <ServicePortfolio portfolio={service.portfolio} />
+        <ServicePortfolio portfolio={service?.portfolio ?? []} />
       )}
 
       {/* CTA Section */}
