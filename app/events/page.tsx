@@ -56,7 +56,7 @@ export default function Events() {
               </div>
 
               <button className="mt-8 w-full rounded-xl border border-white/10 bg-white/5 py-3 font-semibold transition-all hover:bg-[#E11D2E] hover:text-white">
-  Learn More & Register
+  Learn More
 </button>
 
             </Link>

@@ -72,12 +72,12 @@ export const socials = [
   },
   {
     name: "X",
-    href: "#",
+    href: "https://x.com/RSecure41760",
     icon: IconBrandX,
   },
   {
     name: "Instagram",
-    href: "#",
+    href: "https://www.instagram.com/rtdsglobal",
     icon: IconBrandInstagram,
   },
   
