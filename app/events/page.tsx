@@ -1,11 +1,270 @@
 "use client"
 
-import { motion } from "framer-motion"
-import { Calendar, MapPin, ArrowUpRight, Shield } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
+import { Calendar, MapPin, ArrowUpRight, Shield, Search, X, ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react"
 import Link from "next/link"
 import { events } from "@/lib/data"
+import { useState, useEffect } from "react"
 
 export default function Events() {
+  const [searchQuery, setSearchQuery] = useState("")
+  const [activeFilters, setActiveFilters] = useState<string[]>(["Summit Series", "EMEA", "Less than an hour"])
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false)
+  const [typeOpen, setTypeOpen] = useState(true)
+  const [topicsOpen, setTopicsOpen] = useState(false)
+  const [durationsOpen, setDurationsOpen] = useState(true)
+  const [datesOpen, setDatesOpen] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
+  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+  const [selectedDurations, setSelectedDurations] = useState<string[]>(["Less than an hour"])
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+
+  // Prevent body scroll when mobile filter menu is open
+  useEffect(() => {
+    if (filterMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [filterMenuOpen])
+
+  const removeFilter = (filter: string) => {
+    setActiveFilters(activeFilters.filter(f => f !== filter))
+  }
+
+  const clearAllFilters = () => {
+    setActiveFilters([])
+    setSelectedTypes([])
+    setSelectedTopics([])
+    setSelectedDurations([])
+    setSelectedDates([])
+  }
+
+  const toggleType = (type: string) => {
+    setSelectedTypes(prev => 
+      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
+    )
+  }
+
+  const toggleTopic = (topic: string) => {
+    setSelectedTopics(prev => 
+      prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]
+    )
+  }
+
+  const toggleDuration = (duration: string) => {
+    setSelectedDurations(prev => 
+      prev.includes(duration) ? prev.filter(d => d !== duration) : [...prev, duration]
+    )
+  }
+
+  const toggleDate = (date: string) => {
+    setSelectedDates(prev => 
+      prev.includes(date) ? prev.filter(d => d !== date) : [...prev, date]
+    )
+  }
+
+  const FilterSidebar = () => (
+    <div className="rounded-2xl border border-white/10 bg-card p-6 md:sticky md:top-24">
+      <h2 className="mb-6 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Filter By</h2>
+      
+      {/* Type Filter */}
+      <div className="mb-6 border-b border-white/5 pb-6">
+        <button
+          onClick={() => setTypeOpen(!typeOpen)}
+          className="flex w-full items-center justify-between mb-4 font-semibold"
+        >
+          Type
+          {typeOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+        {typeOpen && (
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedTypes.includes("in-person")}
+                onChange={() => toggleType("in-person")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Upcoming in person
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedTypes.includes("digital")}
+                onChange={() => toggleType("digital")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Upcoming digital
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedTypes.includes("on-demand")}
+                onChange={() => toggleType("on-demand")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                On demand
+              </span>
+            </label>
+          </div>
+        )}
+      </div>
+
+      {/* Regions Filter */}
+      <div className="mb-6 border-b border-white/5 pb-6">
+        <button
+          onClick={() => setDurationsOpen(!durationsOpen)}
+          className="flex w-full items-center justify-between mb-4 font-semibold"
+        >
+          Duration
+          {durationsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+        {durationsOpen && (
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDurations.includes("Less than an hour")}
+                onChange={() => toggleDuration("Less than an hour")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Less than an hour
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDurations.includes("1-2 hours")}
+                onChange={() => toggleDuration("1-2 hours")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                1-2 hours
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDurations.includes("2-4 hours")}
+                onChange={() => toggleDuration("2-4 hours")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                2-4 hours
+              </span>
+            </label>
+          </div>
+        )}
+      </div>
+
+      {/* Date Filter */}
+      <div className="mb-6 border-b border-white/5 pb-6">
+        <button
+          onClick={() => setDatesOpen(!datesOpen)}
+          className="flex w-full items-center justify-between mb-4 font-semibold"
+        >
+          Date
+          {datesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+        {datesOpen && (
+          <div className="space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDates.includes("past-60-plus")}
+                onChange={() => toggleDate("past-60-plus")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Past 60+ days
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDates.includes("past-60")}
+                onChange={() => toggleDate("past-60")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Past 60 days
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDates.includes("30-60-away")}
+                onChange={() => toggleDate("30-60-away")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                30-60 days away
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedDates.includes("60-plus-away")}
+                onChange={() => toggleDate("60-plus-away")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                60+ days away
+              </span>
+            </label>
+          </div>
+        )}
+      </div>
+
+      {/* Topics Filter */}
+      <div>
+        <button
+          onClick={() => setTopicsOpen(!topicsOpen)}
+          className="flex w-full items-center justify-between font-semibold"
+        >
+          Topics
+          {topicsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+        </button>
+        {topicsOpen && (
+          <div className="mt-4 space-y-3">
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedTopics.includes("ai")}
+                onChange={() => toggleTopic("ai")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                AI & Machine Learning
+              </span>
+            </label>
+            <label className="flex items-center gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={selectedTopics.includes("cloud")}
+                onChange={() => toggleTopic("cloud")}
+                className="h-4 w-4 rounded border-white/20 bg-transparent"
+              />
+              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
+                Cloud Security
+              </span>
+            </label>
+          </div>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <div className="container mx-auto px-4 py-24 lg:px-[80px]">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16 text-center">
@@ -16,52 +275,141 @@ export default function Events() {
         </p>
       </motion.div>
 
-      {/* Event cards */}
-      <div className="grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-2">
-        {events.map((event, idx) => (
-          <motion.div
-            key={idx}
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: idx * 0.1 }}
-            className="group overflow-hidden rounded-3xl"
-          >
-            <Link
-  href={`/events/${event.slug}`}
-  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-card p-8 transition-all hover:-translate-y-1  hover:border-[#E11D2E]/40"
->
+      <div className="flex flex-col md:flex-row gap-8">
+        {/* Filter Sidebar - Hidden on mobile, visible on tablet and desktop */}
+        <aside className="hidden md:block w-full md:w-64 lg:w-80 shrink-0">
+          <FilterSidebar />
+        </aside>
 
-              <div className="mb-6 flex items-center justify-between">
-                <span className="rounded-full bg-[#E11D2E]/10 px-3 py-1 text-xs font-bold text-[#E11D2E] uppercase tracking-wider">
-                  {event.tag}
-                </span>
-                <div className="text-muted-foreground group-hover:text-[#E11D2E] transition-colors">
-                  <ArrowUpRight className="h-6 w-6" />
+        {/* Mobile Filter Modal */}
+        <AnimatePresence>
+          {filterMenuOpen && (
+            <>
+              {/* Backdrop */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setFilterMenuOpen(false)}
+                className="fixed inset-0 bg-black/60 z-40 md:hidden"
+              />
+              
+              {/* Filter Drawer */}
+              <motion.div
+                initial={{ x: "-100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "-100%" }}
+                transition={{ type: "spring", damping: 30, stiffness: 300 }}
+                className="fixed left-0 top-0 bottom-0 w-[85vw] max-w-sm bg-background z-50 overflow-y-auto md:hidden"
+              >
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 className="text-lg font-bold">Filters</h2>
+                    <button
+                      onClick={() => setFilterMenuOpen(false)}
+                      className="p-2 hover:bg-white/5 rounded-lg transition-colors"
+                    >
+                      <X className="h-5 w-5" />
+                    </button>
+                  </div>
+                  <FilterSidebar />
                 </div>
-              </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
 
-              <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">{event.title}</h3>
-              <p className="mb-8 flex-1 text-muted-foreground line-clamp-3">{event.description}</p>
+        {/* Main Content */}
+        <div className="flex-1">
+          {/* Search Bar with Filter Button */}
+          <div className="mb-6 flex gap-3">
+            <div className="relative flex-1">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+              <input
+                type="text"
+                placeholder='Search events like "digital transformation"'
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full rounded-xl border border-white/10 bg-card py-4 pl-12 pr-4 text-sm focus:border-[#E11D2E]/40 focus:outline-none focus:ring-2 focus:ring-[#E11D2E]/20"
+              />
+            </div>
+            {/* Mobile Filter Button */}
+            <button
+              onClick={() => setFilterMenuOpen(true)}
+              className="md:hidden flex items-center justify-center rounded-xl border border-white/10 bg-card px-4 hover:bg-white/5 transition-colors"
+            >
+              <SlidersHorizontal className="h-5 w-5" />
+            </button>
+          </div>
 
-              <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Calendar className="h-4 w-4 text-[#E11D2E]" />
-                  {event.date}
-                </div>
-                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="h-4 w-4 text-[#38BDF8]" />
-                  {event.location}
-                </div>
-              </div>
+          {/* Active Filters */}
+          {activeFilters.length > 0 && (
+            <div className="mb-8 flex flex-wrap items-center gap-3">
+              {activeFilters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => removeFilter(filter)}
+                  className="flex items-center gap-2 rounded-full bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-400 transition-colors hover:bg-blue-500/20"
+                >
+                  {filter}
+                  <X className="h-3 w-3" />
+                </button>
+              ))}
+              <button
+                onClick={clearAllFilters}
+                className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
+              >
+                Clear all
+              </button>
+            </div>
+          )}
 
-              <button className="mt-8 w-full rounded-xl border border-white/10 bg-white/5 py-3 font-semibold transition-all hover:bg-[#E11D2E] hover:text-white">
-  Learn More
-</button>
+          {/* Event cards */}
+          <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+            {events.map((event, idx) => (
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: idx * 0.1 }}
+                className="group overflow-hidden rounded-3xl"
+              >
+                <Link
+                  href={`/events/${event.slug}`}
+                  className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-card p-8 transition-all hover:-translate-y-1  hover:border-[#E11D2E]/40"
+                >
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="rounded-full bg-[#E11D2E]/10 px-3 py-1 text-xs font-bold text-[#E11D2E] uppercase tracking-wider">
+                      {event.tag}
+                    </span>
+                    <div className="text-muted-foreground group-hover:text-[#E11D2E] transition-colors">
+                      <ArrowUpRight className="h-6 w-6" />
+                    </div>
+                  </div>
 
-            </Link>
-          </motion.div>
-        ))}
+                  <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">{event.title}</h3>
+                  <p className="mb-8 flex-1 text-muted-foreground line-clamp-3">{event.description}</p>
+
+                  <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4 text-[#E11D2E]" />
+                      {event.date}
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4 text-[#38BDF8]" />
+                      {event.location}
+                    </div>
+                  </div>
+
+                  <button className="mt-8 w-full rounded-xl border border-white/10 bg-white/5 py-3 font-semibold transition-all hover:bg-[#E11D2E] hover:text-white">
+                    Learn More
+                  </button>
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Featured CTA */}
