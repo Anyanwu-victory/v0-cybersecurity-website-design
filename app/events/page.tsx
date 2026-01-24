@@ -65,7 +65,7 @@ export default function Events() {
       </div>
 
       {/* Featured CTA */}
-      <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#38BDF8]/20 p-12 text-center border border-white/10">
+      <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/20 p-12 text-center border border-white/10">
         <Shield className="mx-auto mb-6 h-12 w-12 text-[#E11D2E] neon-glow-red" />
         <h2 className="mb-4 text-3xl font-bold">Request a Private Briefing</h2>
         <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
