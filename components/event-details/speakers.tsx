@@ -20,7 +20,7 @@ export function Speakers({ speakers }: SpeakersProps) {
   return (
     <section className="container mx-auto px-4 py-20 lg:px-[80px]">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-        <h2 className="mb-12 text-4xl font-bold">Expert Speakers</h2>
+        <h2 className="mb-12 text-4xl font-bold">Speakers</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {speakers.map((speaker, idx) => (
             <motion.div
