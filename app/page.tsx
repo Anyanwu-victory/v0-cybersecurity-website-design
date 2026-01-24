@@ -61,12 +61,15 @@ export default function Home() {
         </motion.div>
 
         {/* Decorative Circuit Lines */}
-        <div className="pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/50 to-transparent" />
-        <div className="pointer-events-none absolute right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-[#38BDF8]/50 to-transparent" />
+        <div className="hidden md:flex pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/50 to-transparent" />
+        <div className="hidden md:flex pointer-events-none absolute right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-[#38BDF8]/50 to-transparent" />
       </section>
 
       {/* Features Grid */}
-      <section id="services" className="container mx-auto px-4 py-24 lg:px-[80px]">
+      <section
+        id="services"
+        className="container mx-auto px-4 py-24 lg:px-[80px]"
+      >
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Services</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground leading-8">
@@ -142,9 +145,10 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="w-full">
-        <section className="text-white bg-[#e5e7eb] pt-15 pb-15 md:py-48 md:px-10">
-          <div className="flex flex-col bg-[#020617]  md:rounded-3xl py-12 px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
+      {/* Featured CTA */}
+      <section className="container mx-auto px-4 py-24 lg:px-[80px]">
+        <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/10 p-12 text-center border border-white/10">
+         <div className="flex flex-col text-white   px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
             <div className="w-full mb-6 text-center md:text-left md:mb-0">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 {" "}
@@ -168,8 +172,10 @@ export default function Home() {
               </Link>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+
+      
     </div>
   );
 }

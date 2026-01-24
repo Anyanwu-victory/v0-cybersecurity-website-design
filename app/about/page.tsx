@@ -98,7 +98,7 @@ export default function About() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
           >
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 ">
               <Target className="h-6 w-6 text-primary" />
             </div>
 
@@ -121,7 +121,7 @@ export default function About() {
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
             className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
           >
-            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 neon-glow-red">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 ">
               <IconWorld className="h-6 w-6 text-primary" />
             </div>
 
@@ -161,7 +161,7 @@ export default function About() {
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            The Elite Team
+            Meet The Team
           </h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
             Meet the architects of your digital defense. Our team combines
