@@ -62,7 +62,7 @@ export const services = [
 export const socials = [
   {
     name: "LinkedIn",
-    href: `#`,
+    href: `https://www.linkedin.com/company/111051146/admin/dashboard/`,
     icon: IconBrandLinkedin,
   },
   {
