@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Target } from "lucide-react";
-import { IconBrandLinkedin, IconBrandX , IconWorld} from "@tabler/icons-react";
+import { IconBrandLinkedin, IconBrandX, IconWorld } from "@tabler/icons-react";
 import {
   aboutCompanyText,
   breachesPrevented,
@@ -22,22 +22,24 @@ export default function About() {
       {/* Mission Section */}
       <section className="w-full">
         <div className="bg-[#0b0e14] py-28 px-8 md:py-48 md:px-22 w-full mx-auto">
-        <div className="text-left max-w-screen-md mx-auto">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <p className="text-left max-w-screen-md mx-auto mb-4"> About Us</p>
-            <h1 className="mb-8 text-4xl font-bold md:text-6xl">
-              We Trace. We Defend. <br />
-              <span className="text-[#E11D2E]">We Secure.</span>
-            </h1>
-            <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
-              {aboutCompanyText}
-            </p>
-           
-          </motion.div>
-         </div>
+          <div className="text-left max-w-screen-md mx-auto">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+            >
+              <p className="text-left max-w-screen-md mx-auto mb-4">
+                {" "}
+                About Us
+              </p>
+              <h1 className="mb-8 text-4xl font-bold md:text-6xl">
+                We Trace. We Defend. <br />
+                <span className="text-[#E11D2E]">We Secure.</span>
+              </h1>
+              <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
+                {aboutCompanyText}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </section>
 
@@ -110,9 +112,9 @@ export default function About() {
           </motion.div>
 
           {/* Divider */}
-         <div className="hidden md:flex items-center">
-  <div className="h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
-</div>
+          <div className="hidden md:flex items-center">
+            <div className="h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+          </div>
 
           <motion.div
             initial={{ opacity: 0, x: 40 }}
@@ -137,9 +139,7 @@ export default function About() {
       {/* Values Section */}
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Our Values
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Values</h2>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
           {values.map((v, i) => (
@@ -160,9 +160,7 @@ export default function About() {
       {/* Team Section */}
       <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-bold md:text-5xl">
-            Meet The Team
-          </h2>
+          <h2 className="mb-4 text-3xl font-bold md:text-5xl">Meet The Team</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
             Meet the architects of your digital defense. Our team combines
             decades of experience from intelligence agencies, global finance,
@@ -187,14 +185,15 @@ export default function About() {
               transition={{ delay: idx * 0.1 }}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-card"
             >
-              <div className="relative aspect-square overflow-hidden 
-              grayscale transition-all duration-500 group-hover:grayscale-0">
+              <div
+                className="relative aspect-square overflow-hidden 
+              grayscale transition-all duration-500 group-hover:grayscale-0"
+              >
                 <Image
                   src={member.avatar || "/placeholder.svg"}
                   alt={member.name}
-                 width={100}
-                 height={100}
-                 
+                  width={100}
+                  height={100}
                   className="object-cover object-center  w-full
                    transition-transform group-hover:scale-105"
                 />
