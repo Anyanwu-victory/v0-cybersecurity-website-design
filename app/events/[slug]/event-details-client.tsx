@@ -4,7 +4,7 @@ import { EventHero } from "@/components/event-details/event-hero"
 import { LearningOutcomes } from "@/components/event-details/learning-outcomes"
 import { Agenda } from "@/components/event-details/agenda"
 import { Speakers } from "@/components/event-details/speakers"
-import { RolesCard } from "@/components/event-details/roles"
+//import { RolesCard } from "@/components/event-details/roles"
 import { CTASection } from "@/components/event-details/cta-section"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -58,7 +58,7 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       {event.speakers.length > 0 && <Speakers speakers={event.speakers} />}
 
       {/* Who Should Attend */}
-      <RolesCard roles={event.roles} />
+      {/* <RolesCard roles={event.roles} /> */}
 
       {/* Final CTA */}
       <CTASection onRegister={handleRegister} />

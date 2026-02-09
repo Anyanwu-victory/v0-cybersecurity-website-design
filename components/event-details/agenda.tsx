@@ -7,6 +7,7 @@ interface AgendaItem {
   title: string
   duration: string
   description: string
+  resourcesList?: { type: string; link: string }[]
 }
 
 interface AgendaProps {
@@ -41,8 +42,27 @@ export function Agenda({ items }: AgendaProps) {
                     {item.duration}
                   </span>
                 </div>
-                <h3 className="mb-2 text-xl font-bold">{item.title}</h3>
-                {item.description && <p className="text-muted-foreground">{item.description}</p>}
+                {/* <h3 className="mb-2 text-xl font-bold">{item.title}</h3> */}
+                {/* {item.description && <p className="text-muted-foreground">{item.description}</p>} */}
+                {item.resourcesList && (
+                  <div className="mt-4">
+                    <h4 className="mb-2 text-lg font-semibold">Resources:</h4>
+                    <ul className="list-disc list-inside space-y-1">
+                      {item.resourcesList.map((resource, rIdx) => (
+                        <li key={rIdx}>
+                          <a
+                            href={resource.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#38BDF8] hover:underline"
+                          >
+                            {resource.type.charAt(0).toUpperCase() + resource.type.slice(1)}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </motion.div>
           ))}

@@ -173,60 +173,120 @@ export const team = [
 //Events page data
 export const events = [
   {
-    id: "zero-trust-summit",
-    slug: "zero-trust-summit",
-    title: "Zero-Trust Architecture Summit",
-    date: "March 15, 2026",
-    time: "10:00 AM - 5:00 PM EST",
+    id: "cybersecurity-for-begninner",
+    slug: "cybersecurity-for-begninner",
+    title: "Cybersecurity For Beginner",
+    date: "October 11, 2025",
+    time: "09:00 AM - 10:30 AM WAT",
     location: "Online / Virtual",
     eventType: "virtual",
-    description: "A deep dive into implementing zero-trust security models for distributed enterprise teams.",
+    description: "A deep dive into the fundamentals of cybersecurity for aspiring professionals.",
     tag: "WORKSHOP",
-    duration: "6 hours",
-    audience: "Intermediate to Advanced",
-    price: "Free",
+    duration: "4 weeks",
+    audience: "Beginner",
+    price: "N1,000",
     fullDescription:
-      "Join industry experts as we explore the principles and implementation strategies of zero-trust architecture. This comprehensive workshop covers identity verification, continuous authentication, and microservices security.",
+      "This comprehensive 4-week workshop is designed for individuals new to cybersecurity.*Special Early Bird Offer*! Be among the *first 15 people* to register for our Cybersecurity for Beginners training and secure your spot at just *₦1,000* instead of ₦5,000. Offer runs from *28th September – 5th October 2025* Standard fee resumes at ₦5,000 from *6th – 9th October 2025*. Don’t miss this chance to start your cybersecurity journey with hands-on training, expert guidance, and a Certificate of Completion all at an unbeatable offer.",
     learningOutcomes: [
-      "Understand zero-trust core principles and architecture design",
-      "Implement identity and access management at scale",
-      "Deploy network segmentation and microsegmentation",
-      "Monitor and respond to zero-trust violations",
+      "Learn Online Safety and Best Practices",
+      "Understand Common Cyber Threats",
+      "Hands-on security exercises(Laptop and mobile friendly)",
+      "Certificate of Completion",
     ],
     agenda: [
       {
-        time: "10:00 AM",
-        title: "Welcome & Keynote",
+        time: "Oct 11",
+        title: "Resources",
         duration: "30 min",
         description: "Industry overview and zero-trust evolution",
+        resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1LliM2mkyw7XbmrTD57crOP4xbdu7_ks6/view?usp=drivesdk"
+
+          },
+        ],
       },
       {
-        time: "10:30 AM",
-        title: "Architecture Fundamentals",
+        time: "Oct 17",
+        title: "Resources",
         duration: "1 hour",
-        description: "Deep dive into zero-trust principles",
+        description: "",
+         resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1qXXEXf4QwnkejoAcpnbVhuc3-fucvp72/view?usp=drivesdk"
+
+          },
+          {
+            type: "Kali documentation",
+            link: "https://www.kali.org/docs/",
+          },
+          {
+            type: "Kali tutorial",
+            link: "https://ubuntu.com/tutorials/command-line-for-beginners"
+
+          },
+           {
+            type: "Microsoft tutorial",
+            link: "https://www.microsoft.com/en-us/security/business"
+
+          },
+        ],
       },
-      { time: "11:30 AM", title: "Break", duration: "15 min", description: "" },
-      {
-        time: "11:45 AM",
-        title: "Implementation Case Studies",
+      { time: "Oct 18", 
+        title: "", 
+        duration: "35 min",
+        description: "",
+        resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1mi4SJUqmw-vmnkLo5UmKKy9egEAw072l/view?usp=drivesdk"
+
+          },
+        ], 
+      
+      },
+      { time: "Oct 24", 
+        title: "", 
         duration: "1 hour",
-        description: "Real-world deployments and lessons learned",
+        description: "",
+        resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1fgWKUKI_tzBydo1hnaFzEbS1FTFumCnM/view?usp=drivesdk"
+
+          },
+        ], 
+      
       },
-      { time: "12:45 PM", title: "Lunch Break", duration: "1 hour", description: "" },
-      {
-        time: "1:45 PM",
-        title: "Hands-on Lab: IAM Setup",
-        duration: "1.5 hours",
-        description: "Configure zero-trust identity management",
+      { time: "Oct 25", 
+        title: "", 
+        duration: "35 min",
+        description: "",
+        resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1ZOIsfr0bi8-k9IoQF1RBBuC9qZzcJoFu/view?usp=drivesdk"
+
+          },
+        ], 
+      
       },
-      { time: "3:15 PM", title: "Break", duration: "15 min", description: "" },
-      {
-        time: "3:30 PM",
-        title: "Q&A Panel & Closing",
-        duration: "1.5 hours",
-        description: "Expert panel discussion and networking",
+      { time: "Oct 31", 
+        title: "", 
+        duration: "1 hour",
+        description: "",
+        resourcesList: [
+          {
+            type: "video",
+            link: "https://drive.google.com/file/d/1gEDtO8xHGPaVpydC0Z7ovPojeqwjq99C/view?usp=drivesdk"
+
+          },
+        ], 
+      
       },
+      
     ],
     speakers: [
       {
@@ -246,7 +306,7 @@ export const events = [
         avatar: "/cybersecurity-professional-man.jpg",
       },
     ],
-    roles: ["CISO", "Security Architect", "Identity Manager", "Network Engineer"],
+    roles: ["Everyoe in tech", "Software Engineer"],
     registrationLink: "#",
     calendarLink: "#",
   },

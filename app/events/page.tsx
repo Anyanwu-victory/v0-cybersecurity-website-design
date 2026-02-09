@@ -11,11 +11,9 @@ export default function Events() {
   const [activeFilters, setActiveFilters] = useState<string[]>(["Summit Series", "EMEA", "Less than an hour"])
   const [filterMenuOpen, setFilterMenuOpen] = useState(false)
   const [typeOpen, setTypeOpen] = useState(true)
-  const [topicsOpen, setTopicsOpen] = useState(false)
   const [durationsOpen, setDurationsOpen] = useState(true)
   const [datesOpen, setDatesOpen] = useState(false);
   const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
   const [selectedDurations, setSelectedDurations] = useState<string[]>(["Less than an hour"])
   const [selectedDates, setSelectedDates] = useState<string[]>([]);
 
@@ -38,7 +36,6 @@ export default function Events() {
   const clearAllFilters = () => {
     setActiveFilters([])
     setSelectedTypes([])
-    setSelectedTopics([])
     setSelectedDurations([])
     setSelectedDates([])
   }
@@ -49,11 +46,6 @@ export default function Events() {
     )
   }
 
-  const toggleTopic = (topic: string) => {
-    setSelectedTopics(prev => 
-      prev.includes(topic) ? prev.filter(t => t !== topic) : [...prev, topic]
-    )
-  }
 
   const toggleDuration = (duration: string) => {
     setSelectedDurations(prev => 
@@ -104,7 +96,7 @@ export default function Events() {
                 Upcoming digital
               </span>
             </label>
-            <label className="flex items-center gap-3 cursor-pointer group">
+            {/* <label className="flex items-center gap-3 cursor-pointer group">
               <input
                 type="checkbox"
                 checked={selectedTypes.includes("on-demand")}
@@ -114,7 +106,7 @@ export default function Events() {
               <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
                 On demand
               </span>
-            </label>
+            </label> */}
           </div>
         )}
       </div>
@@ -226,42 +218,6 @@ export default function Events() {
         )}
       </div>
 
-      {/* Topics Filter */}
-      <div>
-        <button
-          onClick={() => setTopicsOpen(!topicsOpen)}
-          className="flex w-full items-center justify-between font-semibold"
-        >
-          Topics
-          {topicsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
-        </button>
-        {topicsOpen && (
-          <div className="mt-4 space-y-3">
-            <label className="flex items-center gap-3 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={selectedTopics.includes("ai")}
-                onChange={() => toggleTopic("ai")}
-                className="h-4 w-4 rounded border-white/20 bg-transparent"
-              />
-              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                AI & Machine Learning
-              </span>
-            </label>
-            <label className="flex items-center gap-3 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={selectedTopics.includes("cloud")}
-                onChange={() => toggleTopic("cloud")}
-                className="h-4 w-4 rounded border-white/20 bg-transparent"
-              />
-              <span className="text-sm text-muted-foreground group-hover:text-foreground transition-colors">
-                Cloud Security
-              </span>
-            </label>
-          </div>
-        )}
-      </div>
     </div>
   )
 
@@ -394,7 +350,7 @@ export default function Events() {
                   <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <Calendar className="h-4 w-4 text-[#E11D2E]" />
-                      {event.date}
+                      {event.duration}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <MapPin className="h-4 w-4 text-[#38BDF8]" />

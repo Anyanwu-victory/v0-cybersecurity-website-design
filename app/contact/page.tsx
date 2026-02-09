@@ -1,11 +1,61 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Send } from "lucide-react"
+import { Send, CheckCircle, AlertCircle, Loader2 } from "lucide-react"
 import Link from "next/link";
 import { socials, contactMethods } from "@/lib/data";
+import { useState } from "react";
 
 export default function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus('loading');
+    setErrorMessage("");
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setStatus('success');
+        setFormData({ name: "", email: "", message: "" });
+        
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setStatus('idle');
+        }, 5000);
+      } else {
+        setStatus('error');
+        setErrorMessage(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      setStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-24 lg:px-[80px]">
       <div className="grid gap-16 lg:grid-cols-2">
@@ -57,7 +107,7 @@ export default function Contact() {
           animate={{ opacity: 1, x: 0 }}
           className="rounded-3xl border border-white/10 bg-card p-8 md:p-12 shadow-2xl"
         >
-          <form className="grid gap-6">
+          <form onSubmit={handleSubmit} className="grid gap-6">
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
@@ -65,8 +115,13 @@ export default function Contact() {
                 </label>
                 <input
                   type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   placeholder="John Doe"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
+                  required
+                  disabled={status === 'loading'}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
               <div className="space-y-2">
@@ -75,8 +130,13 @@ export default function Contact() {
                 </label>
                 <input
                   type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
                   placeholder="john@company.com"
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
+                  required
+                  disabled={status === 'loading'}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50 disabled:opacity-50 disabled:cursor-not-allowed"
                 />
               </div>
             </div>
@@ -85,14 +145,49 @@ export default function Contact() {
                 Mission Details
               </label>
               <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 rows={5}
                 placeholder="Briefly describe the security challenge or inquiry..."
-                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50"
+                required
+                disabled={status === 'loading'}
+                className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-[#E11D2E]/50 focus:ring-1 focus:ring-[#E11D2E]/50 disabled:opacity-50 disabled:cursor-not-allowed"
               />
             </div>
-            <button className="flex items-center justify-center gap-2 rounded-xl bg-[#E11D2E] py-4 text-lg font-bold text-white transition-all hover:neon-glow-red">
-              Transmission Send
-              <Send className="h-5 w-5" />
+
+            {/* Success Message */}
+            {status === 'success' && (
+              <div className="flex items-center gap-3 rounded-xl bg-green-500/10 border border-green-500/20 px-4 py-3 text-green-400">
+                <CheckCircle className="h-5 w-5 shrink-0" />
+                <p className="text-sm">Message sent successfully! We'll get back to you soon.</p>
+              </div>
+            )}
+
+            {/* Error Message */}
+            {status === 'error' && (
+              <div className="flex items-center gap-3 rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-red-400">
+                <AlertCircle className="h-5 w-5 shrink-0" />
+                <p className="text-sm">{errorMessage}</p>
+              </div>
+            )}
+
+            <button 
+              type="submit"
+              disabled={status === 'loading'}
+              className="flex items-center justify-center gap-2 rounded-xl bg-[#E11D2E] py-4 text-lg font-bold text-white transition-all hover:neon-glow-red disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
+            >
+              {status === 'loading' ? (
+                <>
+                  Sending...
+                  <Loader2 className="h-5 w-5 animate-spin" />
+                </>
+              ) : (
+                <>
+                  Transmission Send
+                  <Send className="h-5 w-5" />
+                </>
+              )}
             </button>
             <p className="text-center text-xs text-muted-foreground">
               By sending, you agree to our strict non-disclosure terms and privacy policy.

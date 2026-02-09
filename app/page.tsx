@@ -120,7 +120,7 @@ export default function Home() {
             src="/images/logo_design_1.png"
             alt="logo Image"
             loading="lazy"
-            className="w-full h-auto object-center md:h-[120rem] opacity-20"
+            className="w-full h-auto object-center object-cover  opacity-20"
           />
 
           <motion.div
@@ -147,7 +147,7 @@ export default function Home() {
 
       {/* Featured CTA */}
       <section className="container mx-auto px-4 py-24 lg:px-[80px]">
-        <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/10 p-12 text-center border border-white/10">
+        <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/20 p-12 text-center border border-white/10">
          <div className="flex flex-col text-white   px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
             <div className="w-full mb-6 text-center md:text-left md:mb-0">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
@@ -175,7 +175,7 @@ export default function Home() {
         </div>
       </section>
 
-      
+
     </div>
   );
 }
