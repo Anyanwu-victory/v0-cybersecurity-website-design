@@ -54,6 +54,7 @@ export default function Contact() {
       setStatus('error');
       setErrorMessage('Network error. Please check your connection and try again.');
     }
+
   };
 
   return (
