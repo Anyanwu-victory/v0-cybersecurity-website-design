@@ -175,7 +175,7 @@ export const events = [
   {
     id: "cybersecurity-for-begninner",
     slug: "cybersecurity-for-begninner",
-    title: "Cybersecurity For Beginner",
+    title: "Cybersecurity For Beginner- Cohort 1",
     date: "October 11, 2025",
     time: "09:00 AM - 10:30 AM WAT",
     location: "Online / Virtual",
@@ -311,9 +311,9 @@ export const events = [
     calendarLink: "#",
   },
   {
-    id: "threat-hunting-forensics",
-    slug: "threat-hunting-forensics",
-    title: "Advanced Threat Hunting & Forensic Analysis",
+    id: "cyber-security-awareness",
+    slug: "cyber-security-awareness",
+    title: "Defend the Click: Cyber Security Awareness 1.0",
     date: "April 02, 2026",
     time: "9:00 AM - 6:00 PM UTC",
     location: "Washington D.C.",

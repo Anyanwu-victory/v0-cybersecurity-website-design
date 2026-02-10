@@ -48,7 +48,7 @@ export async function POST(request: Request) {
       html: adminEmailTemplate({ name, email, message }),
     })
 
-    // 2️⃣ Auto-reply to user
+    // 2️⃣ Auto-reply to user -- need a domain for this to work, so it's currently just a placeholder 
     await resend.emails.send({
       from: 'Contact Form <onboarding@resend.dev>',
       to: [email],
