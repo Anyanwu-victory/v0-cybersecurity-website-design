@@ -279,7 +279,7 @@ export default function Events() {
         <div className="flex-1">
           {/* Search Bar with Filter Button */}
           <div className="mb-6 flex gap-3">
-            <div className="relative flex-1">
+            {/* <div className="relative flex-1">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <input
                 type="text"
@@ -288,7 +288,7 @@ export default function Events() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full rounded-xl border border-white/10 bg-card py-4 pl-12 pr-4 text-sm focus:border-[#E11D2E]/40 focus:outline-none focus:ring-2 focus:ring-[#E11D2E]/20"
               />
-            </div>
+            </div> */}
             {/* Mobile Filter Button */}
             <button
               onClick={() => setFilterMenuOpen(true)}
