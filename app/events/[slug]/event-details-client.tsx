@@ -10,6 +10,7 @@ import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import type { Event } from "@/lib/types"
 
+
 export default function EventDetailsClient({ event, params }: { event: Event | undefined; params: { slug: string } }) {
   if (!event) {
     return (
@@ -35,7 +36,7 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
   return (
     <div className="min-h-screen bg-background">
       {/* Back button */}
-      <div className="container mx-auto px-4 py-6 lg:px-[80px]">
+      <div className="container mx-auto px-4 py-6 lg:px-20">
         <Link
           href="/events"
           className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#E11D2E] transition-colors"

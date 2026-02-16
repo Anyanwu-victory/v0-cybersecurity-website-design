@@ -5,32 +5,61 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { Target } from "lucide-react";
-import { IconBrandLinkedin, IconBrandX, IconWorld } from "@tabler/icons-react";
 import {
-  aboutCompanyText,
-  breachesPrevented,
-  activeMonitoringHours,
-  values,
-  team,
-  missionText,
-  visionText,
-} from "@/lib/data";
+  IconBrandLinkedin,
+  IconBrandInstagram,
+  IconBrandX,
+  IconWorld,
+} from "@tabler/icons-react";
+import { aboutCompanyText, values, missionText, visionText } from "@/lib/data";
+
+import { useEffect, useState } from "react";
+import { sanity } from "@/lib/sanity";
 
 export default function About() {
+  type Social = {
+    name?: string;
+    href: string;
+    icon?: React.ComponentType<{ className?: string }>;
+  };
+
+  type TeamMember = {
+    name: string;
+    role: string;
+    bio: string;
+    avatar: string;
+    socials?: Social[];
+  };
+
+  const [team, setTeam] = useState<TeamMember[]>([]);
+
+  useEffect(() => {
+    let mounted = true;
+    sanity
+      .fetchTeamMembers()
+      .then((res) => {
+        if (!mounted) return;
+        setTeam(res || []);
+      })
+      .catch((err) => {
+        console.error("Sanity fetch team error:", err);
+      });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <div className="pb-24">
       {/* Mission Section */}
       <section className="w-full">
         <div className="bg-[#0b0e14] py-28 px-8 md:py-48 md:px-22 w-full mx-auto">
-          <div className="text-left max-w-screen-md mx-auto">
+          <div className="text-left max-w-3xl mx-auto">
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
             >
-              <p className="text-left max-w-screen-md mx-auto mb-4">
-                {" "}
-                About Us
-              </p>
+              <p className="text-left max-w-3xl mx-auto mb-4"> About Us</p>
               <h1 className="mb-8 text-4xl font-bold md:text-6xl">
                 We Trace. We Defend. <br />
                 <span className="text-[#E11D2E]">We Secure.</span>
@@ -43,62 +72,14 @@ export default function About() {
         </div>
       </section>
 
-      {/* <section className="container mx-auto px-4 lg:px-[80px]">
-        <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            <h1 className="mb-6 text-4xl font-bold md:text-6xl">
-              We Trace. We Defend. <br />
-              <span className="text-[#E11D2E]">We Secure.</span>
-            </h1>
-            <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
-              {aboutCompanyText}
-            </p>
-             <div className="flex gap-12">
-              <div>
-                <div className="text-3xl font-bold text-[#E11D2E]">
-                  {breachesPrevented}+
-                </div>
-                <div className="text-sm text-muted-foreground uppercase tracking-widest">
-                  Breaches Prevented
-                </div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-[#38BDF8]">
-                  {activeMonitoringHours}
-                </div>
-                <div className="text-sm text-muted-foreground uppercase tracking-widest">
-                  Active Monitoring
-                </div>
-              </div>
-            </div> 
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="relative rounded-3xl border border-white/10 bg-card p-4 neon-glow-blue justify-center"
-          >
-            <Image
-              src="/images/logo_design_1.png"
-              alt="RT-DS Red Logo"
-              width={600}
-              height={600}
-              className="rounded-2xl"
-            />
-          </motion.div>
-        </div>
-      </section> */}
-
-      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+      <section className="container mx-auto mt-32 px-4 lg:px-20">
         <div className="grid gap-12 mb-16 md:grid-cols-[1fr_auto_1fr]">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
+            className="relative rounded-3xl border border-white/10 bg-linear-to-br from-white/5 to-transparent p-8 backdrop-blur"
           >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 ">
               <Target className="h-6 w-6 text-primary" />
@@ -111,9 +92,8 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Divider */}
           <div className="hidden md:flex items-center">
-            <div className="h-full w-px bg-gradient-to-b from-transparent via-primary/50 to-transparent" />
+            <div className="h-full w-px bg-linear-to-b from-transparent via-primary/50 to-transparent" />
           </div>
 
           <motion.div
@@ -121,7 +101,7 @@ export default function About() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: "easeOut", delay: 0.15 }}
-            className="relative rounded-3xl border border-white/10 bg-gradient-to-br from-white/5 to-transparent p-8 backdrop-blur"
+            className="relative rounded-3xl border border-white/10 bg-linear-to-br from-white/5 to-transparent p-8 backdrop-blur"
           >
             <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/20 ">
               <IconWorld className="h-6 w-6 text-primary" />
@@ -136,8 +116,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+      <section className="container mx-auto mt-32 px-4 lg:px-20">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Values</h2>
         </div>
@@ -157,8 +136,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section className="container mx-auto mt-32 px-4 lg:px-[80px]">
+      <section className="container mx-auto mt-32 px-4 lg:px-20">
         <div className="mb-16 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Meet The Team</h2>
           <p className="mx-auto max-w-2xl text-muted-foreground">
@@ -168,14 +146,7 @@ export default function About() {
           </p>
         </div>
 
-        <div
-          className="
-  grid gap-6
-  max-w-7xl mx-auto
-  grid-cols-[repeat(auto-fit,minmax(260px,1fr))]
-  place-content-center
-"
-        >
+        <div className="grid gap-6 max-w-7xl mx-auto grid-cols-[repeat(auto-fit,minmax(260px,1fr))] place-content-center">
           {team.map((member, idx) => (
             <motion.div
               key={member.name}
@@ -185,22 +156,27 @@ export default function About() {
               transition={{ delay: idx * 0.1 }}
               className="group overflow-hidden rounded-2xl border border-white/10 bg-card"
             >
-              <div
-                className="relative aspect-square overflow-hidden 
-              grayscale transition-all duration-500 group-hover:grayscale-0"
-              >
+              <div className="relative aspect-square overflow-hidden grayscale transition-all duration-500 group-hover:grayscale-0">
                 <Image
                   src={member.avatar || "/placeholder.svg"}
                   alt={member.name}
                   width={100}
                   height={100}
-                  className="object-cover object-center  w-full
-                   transition-transform group-hover:scale-105"
+                  className="object-cover object-center  w-full transition-transform group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-60" />
+                <div className="absolute inset-0 bg-linear-to-t from-background to-transparent opacity-60" />
                 <div className="absolute bottom-4 left-4 flex gap-2 opacity-0 transition-opacity group-hover:opacity-100">
-                  {member.socials?.map((s, i) => {
-                    const SocialIcon = s.icon;
+                  {member.socials?.map((s: Social, i: number) => {
+                    const name = (s.name || "").toLowerCase();
+                    const SocialIcon =
+                      s.icon ??
+                      (name.includes("linkedin")
+                        ? IconBrandLinkedin
+                        : name.includes("instagram")
+                        ? IconBrandInstagram
+                        : name.includes("x") || name.includes("twitter")
+                        ? IconBrandX
+                        : null);
                     return (
                       <Link
                         key={i}
@@ -209,7 +185,7 @@ export default function About() {
                         rel="noreferrer"
                         className="rounded-full bg-white/10 p-2 backdrop-blur hover:bg-[#E11D2E] transition-colors"
                       >
-                        <SocialIcon className="h-4 w-4" />
+                        {SocialIcon ? <SocialIcon className="h-4 w-4" /> : <IconWorld className="h-4 w-4" />}
                       </Link>
                     );
                   })}
