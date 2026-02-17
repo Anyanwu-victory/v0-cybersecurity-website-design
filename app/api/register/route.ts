@@ -7,7 +7,7 @@ interface RegistrationRequest {
   email: string
   phone: string
   company: string
-  ticketType: string
+  profession: string
 }
 
 async function getSheetClient() {
@@ -38,13 +38,13 @@ export async function POST(request: NextRequest) {
     // Validate request body
     const body: RegistrationRequest = await request.json()
 
-    const { eventId, fullName, email, phone, company, ticketType } = body
+    const { eventId, fullName, email, phone, company, profession } = body
 
     // Validate required fields
-    if (!eventId || !fullName || !email || !phone || !ticketType) {
+    if (!eventId || !fullName || !email || !phone || !profession) {
       return NextResponse.json(
         {
-          error: 'Missing required fields: eventId, fullName, email, phone, ticketType',
+          error: 'Missing required fields: eventId, fullName, email, phone, profession',
         },
         { status: 400 }
       )
@@ -64,7 +64,7 @@ export async function POST(request: NextRequest) {
 
     // Prepare row data
     const timestamp = new Date().toISOString()
-    const values = [[timestamp, eventId, fullName, email, phone, company || '', ticketType]]
+    const values = [[timestamp, eventId, fullName, email, phone, company || '', profession]]
 
     // Append to sheet
     const response = await sheets.spreadsheets.values.append({
@@ -78,10 +78,13 @@ export async function POST(request: NextRequest) {
 
     console.log('[v0] Registration appended to sheet:', response.data.updates)
 
+    // Return success with registration data for payment routing
     return NextResponse.json(
       {
         message: 'Registration successful',
-        updates: response.data.updates,
+        email,
+        eventId,
+        fullName,
       },
       { status: 200 }
     )

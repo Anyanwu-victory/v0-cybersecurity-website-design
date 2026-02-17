@@ -66,6 +66,7 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       <CTASection
         eventId={params.slug}
         eventTitle={event.title}
+        eventPrice={event.price}
         registrationDeadline={event.registrationDeadline}
         showModal={showModal}
         onOpenModal={() => setShowModal(true)}

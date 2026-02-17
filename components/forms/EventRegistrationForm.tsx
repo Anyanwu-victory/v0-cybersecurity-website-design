@@ -1,25 +1,29 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { AlertCircle, CheckCircle, Loader2 } from 'lucide-react'
 
 interface EventRegistrationFormProps {
   eventId: string
   eventTitle?: string
+  eventPrice?: string
   onSuccess?: () => void
 }
 
 export function EventRegistrationForm({
   eventId,
   eventTitle,
+  eventPrice,
   onSuccess,
 }: EventRegistrationFormProps) {
+  const router = useRouter()
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
     phone: '',
     company: '',
-    ticketType: 'Regular',
+    profession: '',
   })
 
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -80,7 +84,7 @@ export function EventRegistrationForm({
           email: formData.email,
           phone: formData.phone,
           company: formData.company,
-          ticketType: formData.ticketType,
+          profession: formData.profession,
         }),
       })
 
@@ -90,20 +94,38 @@ export function EventRegistrationForm({
         throw new Error(data.error || 'Registration failed. Please try again.')
       }
 
-      setSuccessMessage(
-        'Registration successful! You will receive a confirmation email shortly.'
-      )
+      // Check if event is paid or free
+      const isPaid = eventPrice && !eventPrice.includes('Free')
+
+      if (isPaid && eventPrice) {
+        // Extract amount from price string (e.g., "$1,499" -> "1499")
+        const priceAmount = eventPrice.replace(/[^0-9]/g, '')
+        
+        // Redirect to Paystack checkout
+        const checkoutUrl = new URL('/events/register/checkout', window.location.origin)
+        checkoutUrl.searchParams.set('email', formData.email)
+        checkoutUrl.searchParams.set('amount', priceAmount)
+        checkoutUrl.searchParams.set('eventId', eventId)
+        checkoutUrl.searchParams.set('eventTitle', eventTitle || '')
+        checkoutUrl.searchParams.set('fullName', formData.fullName)
+        
+        router.push(checkoutUrl.toString())
+      } else {
+        // Free event - redirect to success page
+        const successUrl = new URL('/events/register/success', window.location.origin)
+        successUrl.searchParams.set('email', formData.email)
+        successUrl.searchParams.set('eventTitle', eventTitle || '')
+        
+        router.push(successUrl.toString())
+      }
+
       setFormData({
         fullName: '',
         email: '',
         phone: '',
         company: '',
-        ticketType: 'Regular',
+        profession: '',
       })
-
-      if (onSuccess) {
-        setTimeout(onSuccess, 2000)
-      }
     } catch (error) {
       const errorMsg =
         error instanceof Error ? error.message : 'An unexpected error occurred'
@@ -206,21 +228,28 @@ export function EventRegistrationForm({
           />
         </div>
 
-        {/* Ticket Type */}
+        {/* Profession */}
         <div>
-          <label htmlFor="ticketType" className="block text-sm font-medium mb-2">
-            Ticket Type <span className="text-[#E11D2E]">*</span>
+          <label htmlFor="profession" className="block text-sm font-medium mb-2">
+            Profession <span className="text-[#E11D2E]">*</span>
           </label>
           <select
-            id="ticketType"
-            name="ticketType"
-            value={formData.ticketType}
+            id="profession"
+            name="profession"
+            value={formData.profession}
             onChange={handleChange}
             disabled={isSubmitting}
             className="w-full rounded-lg border border-white/10 bg-white/5 px-4 py-2.5 text-foreground focus:border-[#38BDF8] focus:outline-none focus:ring-2 focus:ring-[#38BDF8]/20 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            required
           >
-            <option value="Regular">Regular</option>
-            <option value="VIP">VIP</option>
+            <option value="">Select Profession</option>
+            <option value="Student">Student</option>
+            <option value="Doctor">Doctor</option>
+            <option value="Engineer">Engineer</option>
+            <option value="Security Professional">Security Professional</option>
+            <option value="IT Manager">IT Manager</option>
+            <option value="Developer">Developer</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 

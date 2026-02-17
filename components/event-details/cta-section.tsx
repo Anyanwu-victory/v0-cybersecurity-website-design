@@ -8,6 +8,7 @@ import { EventRegistrationForm } from "@/components/forms/EventRegistrationForm"
 interface CTASectionProps {
   eventId: string
   eventTitle?: string
+  eventPrice?: string
   registrationDeadline?: string
   showModal?: boolean
   onOpenModal?: () => void
@@ -17,6 +18,7 @@ interface CTASectionProps {
 export function CTASection({
   eventId,
   eventTitle,
+  eventPrice,
   registrationDeadline,
   showModal: externalShowModal,
   onOpenModal,
@@ -98,6 +100,7 @@ export function CTASection({
             <EventRegistrationForm
               eventId={eventId}
               eventTitle={eventTitle}
+              eventPrice={eventPrice}
               onSuccess={handleSuccess}
             />
           </motion.div>
