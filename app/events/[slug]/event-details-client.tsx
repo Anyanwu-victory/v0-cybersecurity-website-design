@@ -61,7 +61,7 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       <RolesCard roles={event.roles} />
 
       {/* Final CTA */}
-      <CTASection onRegister={handleRegister} />
+      <CTASection onRegister={handleRegister} registrationDeadline={event.registrationDeadline} />
     </div>
   )
 }

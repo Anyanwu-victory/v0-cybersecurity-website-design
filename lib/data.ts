@@ -185,6 +185,7 @@ export const events = [
     duration: "6 hours",
     audience: "Intermediate to Advanced",
     price: "Free",
+    registrationDeadline: "March 10, 2026",
     fullDescription:
       "Join industry experts as we explore the principles and implementation strategies of zero-trust architecture. This comprehensive workshop covers identity verification, continuous authentication, and microservices security.",
     learningOutcomes: [
@@ -263,6 +264,7 @@ export const events = [
     duration: "2 days",
     audience: "Advanced",
     price: "$1,499",
+    registrationDeadline: "March 25, 2026",
     fullDescription:
       "This intensive 2-day workshop brings together elite threat hunters and forensic analysts to share advanced techniques for detecting, analyzing, and responding to sophisticated APT campaigns.",
     learningOutcomes: [
@@ -343,6 +345,7 @@ export const events = [
     duration: "3 hours",
     audience: "All Levels",
     price: "Free",
+    registrationDeadline: "May 5, 2026",
     fullDescription:
       "Discover how artificial intelligence and machine learning are transforming the cybersecurity landscape. This keynote explores defensive AI applications, emerging attack vectors, and the future of intelligent security systems.",
     learningOutcomes: [
@@ -400,6 +403,7 @@ export const events = [
     duration: "4 hours",
     audience: "Intermediate to Advanced",
     price: "$799",
+    registrationDeadline: "June 10, 2026",
     fullDescription:
       "Learn practical strategies for hardening cloud infrastructure across AWS, Azure, and Google Cloud. This hands-on seminar covers container security, identity management, and advanced threat detection in cloud environments.",
     learningOutcomes: [

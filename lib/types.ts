@@ -9,6 +9,7 @@ export interface Event {
   location: string
   audience: string
   price: string
+  registrationDeadline?: string
   learningOutcomes: string[]
   agenda: {
     time: string
