@@ -9,8 +9,11 @@ import { CTASection } from "@/components/event-details/cta-section"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import type { Event } from "@/lib/types"
+import { useState } from "react"
 
 export default function EventDetailsClient({ event, params }: { event: Event | undefined; params: { slug: string } }) {
+  const [showModal, setShowModal] = useState(false)
+
   if (!event) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
@@ -22,13 +25,8 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
     )
   }
 
-  const handleRegister = () => {
-    // <CHANGE> Placeholder for registration logic
-    alert("Registration feature coming soon!")
-  }
-
   const handleAddCalendar = () => {
-    // <CHANGE> Placeholder for calendar integration
+    // Placeholder for calendar integration
     alert("Add to calendar feature coming soon!")
   }
 
@@ -46,7 +44,11 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       </div>
 
       {/* Hero Section */}
-      <EventHero event={event} onRegister={handleRegister} onAddCalendar={handleAddCalendar} />
+      <EventHero
+        event={event}
+        onAddCalendar={handleAddCalendar}
+        onOpenRegisterModal={() => setShowModal(true)}
+      />
 
       {/* Learning Outcomes */}
       <LearningOutcomes outcomes={event.learningOutcomes} />
@@ -61,7 +63,14 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       <RolesCard roles={event.roles} />
 
       {/* Final CTA */}
-      <CTASection onRegister={handleRegister} registrationDeadline={event.registrationDeadline} />
+      <CTASection
+        eventId={params.slug}
+        eventTitle={event.title}
+        registrationDeadline={event.registrationDeadline}
+        showModal={showModal}
+        onOpenModal={() => setShowModal(true)}
+        onCloseModal={() => setShowModal(false)}
+      />
     </div>
   )
 }

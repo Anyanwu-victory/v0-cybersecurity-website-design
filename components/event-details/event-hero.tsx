@@ -14,11 +14,15 @@ interface EventHeroProps {
     audience: string
     price: string
   }
-  onRegister: () => void
   onAddCalendar: () => void
+  onOpenRegisterModal?: () => void
 }
 
-export function EventHero({ event, onRegister, onAddCalendar }: EventHeroProps) {
+export function EventHero({
+  event,
+  onAddCalendar,
+  onOpenRegisterModal,
+}: EventHeroProps) {
   return (
     <div className="relative overflow-hidden">
       {/* Gradient background */}
@@ -65,7 +69,7 @@ export function EventHero({ event, onRegister, onAddCalendar }: EventHeroProps) 
 
           <div className="flex flex-wrap gap-4">
             <button
-              onClick={onRegister}
+              onClick={onOpenRegisterModal}
               className="rounded-xl bg-[#E11D2E] px-8 py-3 font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:shadow-lg hover:shadow-[#E11D2E]/50"
             >
               Register Now
