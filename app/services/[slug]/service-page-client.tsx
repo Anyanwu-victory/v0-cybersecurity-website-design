@@ -26,7 +26,7 @@ export default function ServicePageClient({ slug }: ServicePageProps) {
   return (
     <div className="relative overflow-hidden bg-[#0B0E14]">
       {/* Back Button */}
-      <div className="container mx-auto px-4 pt-8 lg:px-[80px]">
+      <div className="container mx-auto px-4 pt-8 lg:px-20">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}

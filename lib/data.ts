@@ -127,48 +127,6 @@ export const values = [
   },
 ]
 
-export const team = [
-  {
-    name: "David Dorcas Mishel",
-    role: "Founder/CEO, Red team lead and CISO",
-    bio: "Former intelligence analyst specialized in advanced persistent threat (APT) research.",
-    avatar: "/Dorcas image.jpeg",
-    socials: [
-      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
-      { name: "Instagram", href: "#", icon: IconBrandInstagram },
-    ],
-  },
-  {
-    name: "Oluebube Victoria Udegbunam",
-    role: "SOC Analyst/Blue Team Lead",
-    bio: "Expert in cross-platform digital artifact recovery and memory forensics.",
-    avatar: "/cybersecurity-professional-man.jpg",
-    socials: [
-      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
-      { name: "Instagram", href: "#", icon: IconBrandInstagram },
-    ],
-  },
-  {
-    name: "Shekinah Glory Frederick",
-    role: "Governance risk and Compliance Officer( team lead)",
-    bio: "Offensive security specialist with over 15 years in cloud infrastructure penetration testing.",
-    avatar: "/images/shekinah-image.jpeg",
-    socials: [
-      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
-      { name: "Instagram", href: "#", icon: IconBrandInstagram },
-    ],
-  },
-  {
-    name: "Anyanwu Victory",
-    role: "Product Design and Software development",
-    bio: "Pioneer in automated incident response systems and 24/7 threat hunting.",
-    avatar: "/cybersecurity-man-expert.jpg",
-    socials: [
-      { name: "LinkedIn", href: "#", icon: IconBrandLinkedin },
-      { name: "Instagram", href: "#", icon: IconBrandInstagram },
-    ],
-  },
-]
 
 //Events page data
 export const events = [
@@ -447,64 +405,7 @@ export const events = [
     registrationLink: "#",
     calendarLink: "#",
   },
-  {
-    id: "cloud-hardening",
-    slug: "cloud-hardening",
-    title: "Cloud Infrastructure Hardening",
-    date: "June 20, 2026",
-    time: "8:00 AM - 12:00 PM SGT",
-    location: "Singapore",
-    eventType: "in-person",
-    description: "Hands-on session for securing multi-cloud environments against lateral movement.",
-    tag: "SEMINAR",
-    duration: "4 hours",
-    audience: "Intermediate to Advanced",
-    price: "$799",
-    fullDescription:
-      "Learn practical strategies for hardening cloud infrastructure across AWS, Azure, and Google Cloud. This hands-on seminar covers container security, identity management, and advanced threat detection in cloud environments.",
-    learningOutcomes: [
-      "Master cloud-native security best practices",
-      "Implement container and Kubernetes security controls",
-      "Configure cloud IAM for zero-trust environments",
-      "Detect and prevent lateral movement in cloud networks",
-      "Deploy cloud-native threat detection and response",
-    ],
-    agenda: [
-      {
-        time: "8:00 AM",
-        title: "Cloud Security Fundamentals",
-        duration: "1 hour",
-        description: "Overview of cloud threat landscape and controls",
-      },
-      {
-        time: "9:00 AM",
-        title: "Container & Kubernetes Security",
-        duration: "1.5 hours",
-        description: "Securing containerized workloads",
-      },
-      { time: "10:30 AM", title: "Break & Networking", duration: "15 min", description: "" },
-      {
-        time: "10:45 AM",
-        title: "Hands-on Lab: Cloud Hardening Scenarios",
-        duration: "1 hour",
-        description: "Practical exercises on securing cloud resources",
-      },
-      { time: "11:45 AM", title: "Q&A & Resources", duration: "15 min", description: "" },
-    ],
-    speakers: [
-      {
-        id: 1,
-        name: "Anyanwu Victory",
-        role: "Product Design and Software Development",
-        organization: "RT-DS",
-        bio: "Pioneer in cloud infrastructure security and automated incident response systems.",
-        avatar: "/cybersecurity-man-expert.jpg",
-      },
-    ],
-    roles: ["Cloud Architect", "DevOps Engineer", "Security Engineer", "Platform Engineer"],
-    registrationLink: "#",
-    calendarLink: "#",
-  },
+ 
 ]
 
 // Services detail data is imported from servicesDetailsData.ts

@@ -4,14 +4,16 @@ import { EventHero } from "@/components/event-details/event-hero"
 import { LearningOutcomes } from "@/components/event-details/learning-outcomes"
 import { Agenda } from "@/components/event-details/agenda"
 import { Speakers } from "@/components/event-details/speakers"
-//import { RolesCard } from "@/components/event-details/roles"
+import { RolesCard } from "@/components/event-details/roles"
 import { CTASection } from "@/components/event-details/cta-section"
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import type { Event } from "@/lib/types"
-
+import { useState } from "react"
 
 export default function EventDetailsClient({ event, params }: { event: Event | undefined; params: { slug: string } }) {
+  const [showModal, setShowModal] = useState(false)
+
   if (!event) {
     return (
       <div className="container mx-auto px-4 py-24 text-center">
@@ -23,13 +25,8 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
     )
   }
 
-  const handleRegister = () => {
-    // <CHANGE> Placeholder for registration logic
-    alert("Registration feature coming soon!")
-  }
-
   const handleAddCalendar = () => {
-    // <CHANGE> Placeholder for calendar integration
+    // Placeholder for calendar integration
     alert("Add to calendar feature coming soon!")
   }
 
@@ -47,7 +44,11 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       </div>
 
       {/* Hero Section */}
-      <EventHero event={event} onRegister={handleRegister} onAddCalendar={handleAddCalendar} />
+      <EventHero
+        event={event}
+        onAddCalendar={handleAddCalendar}
+        onOpenRegisterModal={() => setShowModal(true)}
+      />
 
       {/* Learning Outcomes */}
       <LearningOutcomes outcomes={event.learningOutcomes} />
@@ -59,10 +60,18 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       {event.speakers.length > 0 && <Speakers speakers={event.speakers} />}
 
       {/* Who Should Attend */}
-      {/* <RolesCard roles={event.roles} /> */}
+      <RolesCard roles={event.roles} />
 
       {/* Final CTA */}
-      <CTASection onRegister={handleRegister} />
+      <CTASection
+        eventId={params.slug}
+        eventTitle={event.title}
+        eventPrice={event.price}
+        registrationDeadline={event.registrationDeadline}
+        showModal={showModal}
+        onOpenModal={() => setShowModal(true)}
+        onCloseModal={() => setShowModal(false)}
+      />
     </div>
   )
 }

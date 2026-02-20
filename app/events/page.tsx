@@ -1,85 +1,120 @@
-"use client"
+"use client";
 
-import { motion, AnimatePresence } from "framer-motion"
-import { Calendar, MapPin, ArrowUpRight, Shield, Search, X, ChevronDown, ChevronUp, SlidersHorizontal } from "lucide-react"
-import Link from "next/link"
-import { useState, useEffect } from "react"
-import { sanity } from '@/lib/sanity'
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  Calendar,
+  MapPin,
+  ArrowUpRight,
+  Shield,
+  Search,
+  X,
+  ChevronDown,
+  ChevronUp,
+  SlidersHorizontal,
+} from "lucide-react";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { sanity } from "@/lib/sanity";
 
 export default function Events() {
-  const [searchQuery, setSearchQuery] = useState("")
-  const [activeFilters, setActiveFilters] = useState<string[]>(["Summit Series", "EMEA", "Less than an hour"])
-  const [filterMenuOpen, setFilterMenuOpen] = useState(false)
-  const [typeOpen, setTypeOpen] = useState(true)
-  const [durationsOpen, setDurationsOpen] = useState(true)
-  const [datesOpen, setDatesOpen] = useState(false)
-  const [selectedTypes, setSelectedTypes] = useState<string[]>([])
-  const [selectedDurations, setSelectedDurations] = useState<string[]>(["Less than an hour"])
-  const [selectedDates, setSelectedDates] = useState<string[]>([])
-  const [events, setEvents] = useState<any[]>([])
+  const [searchQuery, setSearchQuery] = useState("");
+  const [activeFilters, setActiveFilters] = useState<string[]>([
+    "Summit Series",
+    "EMEA",
+    "Less than an hour",
+  ]);
+  const [filterMenuOpen, setFilterMenuOpen] = useState(false);
+  const [typeOpen, setTypeOpen] = useState(true);
+  const [durationsOpen, setDurationsOpen] = useState(true);
+  const [datesOpen, setDatesOpen] = useState(false);
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedDurations, setSelectedDurations] = useState<string[]>([
+    "Less than an hour",
+  ]);
+  const [selectedDates, setSelectedDates] = useState<string[]>([]);
+  const [events, setEvents] = useState<any[]>([]);
 
   // Prevent body scroll when mobile filter menu is open
   useEffect(() => {
     if (filterMenuOpen) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = "unset";
     }
     return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [filterMenuOpen])
+      document.body.style.overflow = "unset";
+    };
+  }, [filterMenuOpen]);
 
-useEffect(() => {
-    let mounted = true
-    sanity
-      .fetchEvents()
-      .then((res) => {
-        if (!mounted) return
-        setEvents(res)
-      })
-      .catch((err) => {
-        console.error("Sanity fetch events error:", err)
-      })
+  useEffect(() => {
+    let mounted = true;
+
+    const fetchData = () => {
+      sanity
+        .fetchEvents()
+        .then((res) => {
+          if (!mounted) return;
+          setEvents(res);
+        })
+        .catch((err) => {
+          console.error("Sanity fetch events error:", err);
+        });
+    };
+
+    // Fetch on mount
+    fetchData();
+
+    // Refetch every 30 seconds to catch new events
+    const interval = setInterval(fetchData, 30000);
+
+    // Refetch when tab regains focus
+    const handleFocus = () => fetchData();
+    window.addEventListener("focus", handleFocus);
+
     return () => {
-      mounted = false
-    }
+      mounted = false;
+      clearInterval(interval);
+      window.removeEventListener("focus", handleFocus);
+    };
   }, []);
-  
+
   const removeFilter = (filter: string) => {
-    setActiveFilters(activeFilters.filter(f => f !== filter))
-  }
+    setActiveFilters(activeFilters.filter((f) => f !== filter));
+  };
 
   const clearAllFilters = () => {
-    setActiveFilters([])
-    setSelectedTypes([])
-    setSelectedDurations([])
-    setSelectedDates([])
-  }
+    setActiveFilters([]);
+    setSelectedTypes([]);
+    setSelectedDurations([]);
+    setSelectedDates([]);
+  };
 
   const toggleType = (type: string) => {
-    setSelectedTypes(prev => 
-      prev.includes(type) ? prev.filter(t => t !== type) : [...prev, type]
-    )
-  }
-
+    setSelectedTypes((prev) =>
+      prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
+    );
+  };
 
   const toggleDuration = (duration: string) => {
-    setSelectedDurations(prev => 
-      prev.includes(duration) ? prev.filter(d => d !== duration) : [...prev, duration]
-    )
-  }
+    setSelectedDurations((prev) =>
+      prev.includes(duration)
+        ? prev.filter((d) => d !== duration)
+        : [...prev, duration],
+    );
+  };
 
   const toggleDate = (date: string) => {
-    setSelectedDates(prev => 
-      prev.includes(date) ? prev.filter(d => d !== date) : [...prev, date]
-    )
-  }
+    setSelectedDates((prev) =>
+      prev.includes(date) ? prev.filter((d) => d !== date) : [...prev, date],
+    );
+  };
 
   const FilterSidebar = () => (
     <div className="rounded-2xl border border-white/10 bg-card p-6 md:sticky md:top-24">
-      <h2 className="mb-6 text-sm font-semibold uppercase tracking-wider text-muted-foreground">Filter By</h2>
-      
+      <h2 className="mb-6 text-sm font-semibold uppercase tracking-wider text-muted-foreground">
+        Filter By
+      </h2>
+
       {/* Type Filter */}
       <div className="mb-6 border-b border-white/5 pb-6">
         <button
@@ -87,7 +122,11 @@ useEffect(() => {
           className="flex w-full items-center justify-between mb-4 font-semibold"
         >
           Type
-          {typeOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          {typeOpen ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          )}
         </button>
         {typeOpen && (
           <div className="space-y-3">
@@ -135,7 +174,11 @@ useEffect(() => {
           className="flex w-full items-center justify-between mb-4 font-semibold"
         >
           Duration
-          {durationsOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          {durationsOpen ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          )}
         </button>
         {durationsOpen && (
           <div className="space-y-3">
@@ -183,7 +226,11 @@ useEffect(() => {
           className="flex w-full items-center justify-between mb-4 font-semibold"
         >
           Date
-          {datesOpen ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          {datesOpen ? (
+            <ChevronUp className="h-4 w-4" />
+          ) : (
+            <ChevronDown className="h-4 w-4" />
+          )}
         </button>
         {datesOpen && (
           <div className="space-y-3">
@@ -234,18 +281,23 @@ useEffect(() => {
           </div>
         )}
       </div>
-
     </div>
-  )
+  );
 
-   return (
+  return (
     <div className="container mx-auto px-4 py-24 lg:px-20">
       {/* existing UI unchanged; event cards map over `events` state below */}
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-16 text-center">
-        <h1 className="mb-4 text-4xl font-bold md:text-6xl">Intelligence Briefings</h1>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-16 text-center"
+      >
+        <h1 className="mb-4 text-4xl font-bold md:text-6xl">
+          Intelligence Briefings
+        </h1>
         <p className="mx-auto max-w-2xl text-muted-foreground">
-          Join our experts at these upcoming workshops, conferences, and seminars to stay ahead of the evolving threat
-          landscape.
+          Join our experts at these upcoming workshops, conferences, and
+          seminars to stay ahead of the evolving threat landscape.
         </p>
       </motion.div>
 
@@ -342,8 +394,12 @@ useEffect(() => {
                     </div>
                   </div>
 
-                  <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">{event.title}</h3>
-                  <p className="mb-8 flex-1 text-muted-foreground line-clamp-3">{event.description}</p>
+                  <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">
+                    {event.title}
+                  </h3>
+                  <p className="mb-8 flex-1 text-muted-foreground line-clamp-3">
+                    {event.description}
+                  </p>
 
                   <div className="flex flex-wrap gap-6 border-t border-white/5 pt-6">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
@@ -370,8 +426,9 @@ useEffect(() => {
         <Shield className="mx-auto mb-6 h-12 w-12 text-[#E11D2E] neon-glow-red" />
         <h2 className="mb-4 text-3xl font-bold">Request a Private Briefing</h2>
         <p className="mx-auto mb-8 max-w-xl text-muted-foreground">
-          Need a specialized session for your executive team? We provide custom cybersecurity awareness and strategy
-          briefings for global organizations.
+          Need a specialized session for your executive team? We provide custom
+          cybersecurity awareness and strategy briefings for global
+          organizations.
         </p>
         <Link
           href="/contact"
@@ -381,5 +438,5 @@ useEffect(() => {
         </Link>
       </div>
     </div>
-  )
+  );
 }

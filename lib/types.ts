@@ -7,6 +7,7 @@ export interface Event {
   date: string
   time: string
   location: string
+  registrationDeadline: string
   audience: string
   price: string
   learningOutcomes: string[]
@@ -17,7 +18,7 @@ export interface Event {
     description: string
   }[]
   speakers: {
-    id: number
+    _id: string
     name: string
     role: string
     organization: string

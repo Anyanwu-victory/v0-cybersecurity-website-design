@@ -16,12 +16,12 @@ interface AgendaProps {
 
 export function Agenda({ items }: AgendaProps) {
   return (
-    <section className="container mx-auto px-4 py-20 lg:px-[80px]">
+    <section className="container mx-auto px-4 py-20 lg:px-20">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         <h2 className="mb-12 text-4xl font-bold">Agenda & Schedule</h2>
         <div className="relative space-y-8 pl-8 md:pl-12">
           {/* Timeline line */}
-          <div className="absolute left-3 top-0 h-full w-1 bg-gradient-to-b from-[#E11D2E] to-[#38BDF8] md:left-5" />
+          <div className="absolute left-3 top-0 h-full w-1 bg-linear-to-b from-[#E11D2E] to-[#38BDF8] md:left-5" />
 
           {items.map((item, idx) => (
             <motion.div

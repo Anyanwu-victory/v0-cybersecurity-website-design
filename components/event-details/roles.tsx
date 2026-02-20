@@ -8,7 +8,7 @@ interface RolesProps {
 
 export function RolesCard({ roles }: RolesProps) {
   return (
-    <section className="container mx-auto px-4 py-20 lg:px-[80px]">
+    <section className="container mx-auto px-4 py-20 lg:px-20">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         <h2 className="mb-12 text-4xl font-bold">Who Should Attend</h2>
         <div className="grid grid-cols-2 gap-4 md:grid-cols-4">

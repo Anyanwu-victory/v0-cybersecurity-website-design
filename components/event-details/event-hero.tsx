@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Calendar, MapPin, Clock, Users } from "lucide-react"
+import { useMemo } from "react";
 
 interface EventHeroProps {
   event: {
@@ -13,18 +14,36 @@ interface EventHeroProps {
     location: string
     audience: string
     price: string
+    registrationDeadline?: string
   }
-  onRegister: () => void
   onAddCalendar: () => void
+  onOpenRegisterModal?: () => void
 }
 
-export function EventHero({ event, onRegister, onAddCalendar }: EventHeroProps) {
+export function EventHero({
+  event,
+  onAddCalendar,
+  onOpenRegisterModal,
+}: EventHeroProps) {
+
+  const isRegistrationClosed = useMemo(() => {
+    if (!event.registrationDeadline) return false
+
+    try {
+      const deadline = new Date(event.registrationDeadline)
+      const now = new Date()
+      return now > deadline
+    } catch {
+      return false
+    }
+  }, [event.registrationDeadline])
+
   return (
     <div className="relative overflow-hidden">
       {/* Gradient background */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#E11D2E]/20 to-[#38BDF8]/20" />
+      <div className="absolute inset-0 bg-linear-to-r from-[#E11D2E]/20 to-[#38BDF8]/20" />
 
-      <div className="relative container mx-auto px-4 py-24 lg:px-[80px]">
+      <div className="relative container mx-auto px-4 py-24 lg:px-20">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
           <div className="mb-6 flex items-center gap-4">
             <span className="rounded-full bg-[#E11D2E]/10 px-4 py-2 text-sm font-bold text-[#E11D2E] uppercase tracking-wider">
@@ -58,18 +77,24 @@ export function EventHero({ event, onRegister, onAddCalendar }: EventHeroProps) 
             <div className="flex items-center gap-3">
               <Users className="h-5 w-5 text-[#E11D2E]" />
               <div className="text-sm">
-                <div className="font-semibold">{event.price}</div>
+                <div className="font-semibold">₦{event.price}</div>
               </div>
             </div>
           </div>
 
           <div className="flex flex-wrap gap-4">
-            <button
-              onClick={onRegister}
-              className="rounded-xl bg-[#E11D2E] px-8 py-3 font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:shadow-lg hover:shadow-[#E11D2E]/50"
+           <button
+              onClick={onOpenRegisterModal}
+              disabled={isRegistrationClosed}
+              className={`rounded-xl px-8 py-3 font-bold transition-all ${
+                isRegistrationClosed
+                  ? "bg-gray-600 text-white cursor-not-allowed opacity-50"
+                  : "bg-[#E11D2E] text-white hover:bg-[#E11D2E]/90 hover:shadow-lg hover:shadow-[#E11D2E]/50"
+              }`}
             >
-              Register Now
+              {isRegistrationClosed ? "Registration Closed" : "Register Now"}
             </button>
+            
             <button
               onClick={onAddCalendar}
               className="rounded-xl border border-[#38BDF8]/50 px-8 py-3 font-semibold text-[#38BDF8] transition-all hover:bg-[#38BDF8]/10"

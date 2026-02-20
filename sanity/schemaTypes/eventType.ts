@@ -28,6 +28,23 @@ export const eventType = defineType({
     }),
 
     defineField({
+      name: "startDateTime",
+      type: "datetime",
+    }),
+
+    defineField({
+      name: "endDateTime",
+      type: "datetime",
+    }),
+
+    defineField({
+      name: "registrationDeadline",
+      title: "Registration Deadline",
+      type: "datetime",
+      validation: (Rule) => Rule.required(),
+    }),
+
+    defineField({
       name: "location",
       title: "Location",
       type: "string",
@@ -122,30 +139,24 @@ export const eventType = defineType({
     }),
 
     // Speakers (Reference to team members)
-   defineField({
-  name: "speakers",
-  title: "Speakers",
-  type: "array",
-  of: [
-    {
-      type: "reference",
-      to: [{ type: "speaker" }],
-    },
-  ],
-}),
-
     defineField({
-      name: "roles",
-      title: "Suitable Roles",
+      name: "speakers",
+      title: "Speakers",
       type: "array",
-      of: [{ type: "string" }],
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "speaker" }],
+        },
+      ],
     }),
 
-    defineField({
-      name: "registrationLink",
-      title: "Registration Link",
-      type: "url",
-    }),
+    // defineField({
+    //   name: "roles",
+    //   title: "Suitable Roles",
+    //   type: "array",
+    //   of: [{ type: "string" }],
+    // }),
 
     defineField({
       name: "calendarLink",

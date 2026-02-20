@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 
 interface Speaker {
-  id: number
+  _id: string
   name: string
   role: string
   organization: string
@@ -17,14 +17,16 @@ interface SpeakersProps {
 }
 
 export function Speakers({ speakers }: SpeakersProps) {
+  console.log("Speakers:", speakers)
+
   return (
-    <section className="container mx-auto px-4 py-20 lg:px-[80px]">
+    <section className="container mx-auto px-4 py-20 lg:px-20">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         <h2 className="mb-12 text-4xl font-bold">Speakers</h2>
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {speakers.map((speaker, idx) => (
             <motion.div
-              key={speaker.id}
+              key={speaker._id}
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -32,14 +34,14 @@ export function Speakers({ speakers }: SpeakersProps) {
               className="group rounded-3xl border border-white/10 bg-card 
               p-6 hover:border-[#E11D2E]/40 transition-all"
             >
-              <div className="mb-4 overflow-hidden rounded-2xl  bg-white/5">
+              <div className="mb-4 overflow-hidden rounded-2xl  bg-white/5 aspect-square grayscale transition-all duration-500 group-hover:grayscale-0">
                 <Image
                   src={speaker.avatar || "/placeholder.svg"}
                   alt={speaker.name}
                   width={300}
                   height={300}
                   className="h-full w-full object-cover object-center
-                   group-hover:scale-105 transition-transform"
+                   group-hover:scale-105 transition-transform aspect-square"
                 />
               </div>
               <h3 className="mb-1 text-xl font-bold">{speaker.name}</h3>
