@@ -1,27 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-interface PaymentVerificationRequest {
-  reference: string
-  email: string
-  eventId: string
-  eventTitle: string
-  fullName: string
-}
-
 export async function POST(request: NextRequest) {
   try {
-    const body: PaymentVerificationRequest = await request.json()
-    const { reference, email, eventId, eventTitle, fullName } = body
+    const { reference } = await request.json()
 
-    if (!reference || !email) {
+    if (!reference) {
       return NextResponse.json(
-        { error: 'Missing reference or email', success: false },
+        { success: false, message: 'Reference is required' },
         { status: 400 }
       )
     }
 
     // Verify payment with Paystack
-    const paystackResponse = await fetch(
+    const response = await fetch(
       `https://api.paystack.co/transaction/verify/${reference}`,
       {
         headers: {
@@ -30,45 +21,32 @@ export async function POST(request: NextRequest) {
       }
     )
 
-    const paystackData = await paystackResponse.json()
+    const data = await response.json()
 
-    if (!paystackData.status || paystackData.data.status !== 'success') {
+    if (data.status && data.data.status === 'success') {
+      console.log('✅ Payment verified:', data.data)
+
+      return NextResponse.json({
+        success: true,
+        message: 'Payment verified',
+        data: {
+          amount: data.data.amount / 100, // Convert from kobo
+          reference: data.data.reference,
+          paidAt: data.data.paid_at,
+          customer: data.data.customer,
+        },
+      })
+    } else {
+      console.error('❌ Payment verification failed:', data)
       return NextResponse.json(
-        { error: 'Payment verification failed', success: false },
+        { success: false, message: 'Payment verification failed' },
         { status: 400 }
       )
     }
-
-    // Send confirmation email
-    await fetch(`${process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000'}/api/send-confirmation-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        eventTitle,
-        fullName,
-        isPaid: true,
-        amount: paystackData.data.amount / 100,
-      }),
-    }).catch((err) => console.error('[v0] Email send error:', err))
-
+  } catch (error: any) {
+    console.error('Error verifying payment:', error)
     return NextResponse.json(
-      {
-        success: true,
-        message: 'Payment verified successfully',
-        reference,
-      },
-      { status: 200 }
-    )
-  } catch (error) {
-    console.error('[v0] Payment verification error:', error)
-
-    return NextResponse.json(
-      {
-        error: 'Payment verification failed',
-        success: false,
-        details: error instanceof Error ? error.message : 'Unknown error',
-      },
+      { success: false, message: 'Verification error', error: error.message },
       { status: 500 }
     )
   }

@@ -126,19 +126,21 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
-    @apply bg-background text-foreground ;
+    @apply bg-background text-foreground;
   }
 }
 
 /* Custom Cybersecurity Utilities */
 @layer utilities {
   .cyber-grid {
-  background-image:
-    linear-gradient(to right, rgba(56,189,248,0.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56,189,248,0.06) 1px, transparent 1px);
-  background-size: 40px 40px;
-}
+    background-image:
+      linear-gradient(to right, rgba(56, 189, 248, 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(56, 189, 248, 0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
   .neon-glow-red {
     box-shadow: 0 0 20px rgba(225, 29, 46, 0.3), 0 0 40px rgba(225, 29, 46, 0.1);
   }
@@ -162,32 +164,148 @@
   .accent-gradient {
     background: linear-gradient(135deg, var(--primary-red), var(--cyber-purple));
   }
+
   .circuit-bg {
-  background:
-    linear-gradient(90deg, transparent 0%, #38bdf8 50%, transparent 100%),
-    linear-gradient(#38BDF8 1px, transparent 1px);
-  background-size: 200px 200px, 40px 40px;
-  opacity: 0.15;
-}
-.cyber-red {
-  background-color: #E11D2E;
-  color: #ffffff;
-}
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-}
+    background:
+      linear-gradient(90deg, transparent 0%, #38bdf8 50%, transparent 100%),
+      linear-gradient(#38BDF8 1px, transparent 1px);
+    background-size: 200px 200px, 40px 40px;
+    opacity: 0.15;
+  }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+  .cyber-red {
+    background-color: #E11D2E;
+    color: #ffffff;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: transparent;
-  border-radius: 9999px;
-}
+  /* Custom Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(225, 29, 46, 0.9);
-}
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 9999px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(225, 29, 46, 0.9);
+  }
+
+  input {
+    -webkit-appearance: none;
+    /* Chrome, Safari, Opera */
+    -moz-appearance: none;
+    /* Firefox */
+    appearance: none;
+    /* Standard */
+    border: 1px solid #ccc;
+    /* Re-add a base border so it remains visible */
+  }
+
+  /* Keeps the background transparent or matches your background when autofilled */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0px 1000px black inset;
+    /* Change "white" to your background color */
+    box-shadow: 0 0 0px 1000px black inset;
+  }
+
+  /* From Uiverse.io by mobinkakei */
+  .wrapper {
+    width: 200px;
+    height: 80px;
+    position: relative;
+    z-index: 1;
+    border-radius: 6px;
+  }
+
+  .circle {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    border-radius: 50%;
+    background-color: #fff;
+    left: 15%;
+    transform-origin: 50%;
+    animation: circle7124 .5s alternate infinite ease;
+  }
+
+  @keyframes circle7124 {
+    0% {
+      top: 60px;
+      height: 5px;
+      border-radius: 50px 50px 25px 25px;
+      transform: scaleX(1.7);
+    }
+
+    40% {
+      height: 20px;
+      border-radius: 50%;
+      transform: scaleX(1);
+    }
+
+    100% {
+      top: 0%;
+    }
+  }
+
+  .circle:nth-child(2) {
+    left: 45%;
+    animation-delay: .2s;
+  }
+
+  .circle:nth-child(3) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+
+  .shadow {
+    width: 20px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.9);
+    position: absolute;
+    top: 62px;
+    transform-origin: 50%;
+    z-index: -1;
+    left: 15%;
+    filter: blur(1px);
+    animation: shadow046 .5s alternate infinite ease;
+  }
+
+  @keyframes shadow046 {
+    0% {
+      transform: scaleX(1.5);
+    }
+
+    40% {
+      transform: scaleX(1);
+      opacity: .7;
+    }
+
+    100% {
+      transform: scaleX(.2);
+      opacity: .4;
+    }
+  }
+
+  .shadow:nth-child(4) {
+    left: 45%;
+    animation-delay: .2s
+  }
+
+  .shadow:nth-child(5) {
+    left: auto;
+    right: 15%;
+    animation-delay: .3s;
+  }
+
 }

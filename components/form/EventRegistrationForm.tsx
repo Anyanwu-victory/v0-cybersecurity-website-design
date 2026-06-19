@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AlertCircle, CheckCircle, Loader2, X } from "lucide-react";
 
+
 interface EventRegistrationFormProps {
   eventId: string;
   eventTitle?: string;
@@ -207,9 +208,11 @@ export function EventRegistrationForm({
       )}
 
       {successMessage && (
-        <div className="mb-6 flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/10 p-4 animate-in fade-in slide-in-from-top-2 duration-300">
-          <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
-          <p className="text-sm text-green-400">{successMessage}</p>
+        <div className="mb-6">
+          <div className="mt-4 flex items-start gap-3 rounded-lg border border-green-500/30 bg-green-500/10 p-4 animate-in fade-in slide-in-from-top-2 duration-300">
+            <CheckCircle className="mt-0.5 h-5 w-5 shrink-0 text-green-500" />
+            <p className="text-sm text-green-400">{successMessage}</p>
+          </div>
         </div>
       )}
 

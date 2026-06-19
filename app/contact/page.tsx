@@ -41,7 +41,7 @@ export default function Contact() {
       if (response.ok) {
         setStatus('success');
         setFormData({ name: "", email: "", message: "" });
-        
+
         // Reset success message after 5 seconds
         setTimeout(() => {
           setStatus('idle');
@@ -112,7 +112,7 @@ export default function Contact() {
             <div className="grid gap-6 md:grid-cols-2">
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                  Operator Name
+                  Name
                 </label>
                 <input
                   type="text"
@@ -127,7 +127,7 @@ export default function Contact() {
               </div>
               <div className="space-y-2">
                 <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                  Secure Email
+                  Email
                 </label>
                 <input
                   type="email"
@@ -143,7 +143,7 @@ export default function Contact() {
             </div>
             <div className="space-y-2">
               <label className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                Mission Details
+                Message
               </label>
               <textarea
                 name="message"
@@ -173,7 +173,7 @@ export default function Contact() {
               </div>
             )}
 
-            <button 
+            <button
               type="submit"
               disabled={status === 'loading'}
               className="flex items-center justify-center gap-2 rounded-xl bg-[#E11D2E] py-4 text-lg font-bold text-white transition-all hover:neon-glow-red disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:shadow-none"
@@ -185,7 +185,7 @@ export default function Contact() {
                 </>
               ) : (
                 <>
-                  Transmission Send
+                  Send a Message
                   <Send className="h-5 w-5" />
                 </>
               )}

@@ -55,7 +55,8 @@ export async function POST(request: Request) {
       subject: 'We received your message',
       html: autoReplyTemplate(name),
     })
-
+    console.log('ADMIN_EMAIL:', process.env.ADMIN_EMAIL);
+    
     return NextResponse.json({
       success: true,
       message: 'Message sent successfully',

@@ -5,7 +5,9 @@ import {categoryType} from './categoryType'
 import {eventType} from './eventType'
 import {speakerType} from './speakerType'
 import {teamMemberType} from './teamMemberType'
+import {contactType} from './contactType'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, categoryType, eventType, speakerType, teamMemberType],
+  types: [blockContentType, categoryType, eventType, speakerType, teamMemberType, contactType],
 }
+

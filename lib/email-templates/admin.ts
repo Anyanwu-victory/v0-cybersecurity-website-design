@@ -60,7 +60,7 @@ export const adminEmailTemplate = ({
               </div>
               <div class="content">
                 <div class="field">
-                  <span class="label">Operator Name:</span>
+                  <span class="label">Sender Name:</span>
                   <div class="value">${name}</div>
                 </div>
                 <div class="field">
@@ -68,11 +68,11 @@ export const adminEmailTemplate = ({
                   <div class="value">${email}</div>
                 </div>
                 <div class="field">
-                  <span class="label">Mission Details:</span>
+                  <span class="label">Message Details:</span>
                   <div class="value">${message.replace(/\n/g, '<br>')}</div>
                 </div>
                 <p style="margin-top: 30px; color: #666; font-size: 14px;">
-                  This email was sent from the contact form on your website.
+                  This email was sent from the contact form on your website - RedTrace-D Security.
                 </p>
               </div>
             </div>

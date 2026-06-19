@@ -302,10 +302,10 @@ export default function Events() {
       </motion.div>
 
       <div className="flex flex-col md:flex-row gap-8">
-        <aside className="hidden md:block w-full md:w-64 lg:w-80 shrink-0">
+        {/* <aside className="hidden md:block w-full md:w-64 lg:w-80 shrink-0">
           <FilterSidebar />
-        </aside>
-
+        </aside> */}
+        {/* 
         <AnimatePresence>
           {filterMenuOpen && (
             <>
@@ -338,19 +338,22 @@ export default function Events() {
               </motion.div>
             </>
           )}
-        </AnimatePresence>
+        </AnimatePresence> */}
 
         <div className="flex-1">
-          <div className="mb-6 flex gap-3">
+
+          {/* For mobile and tablet filter bar opening */}
+          {/* <div className="mb-6 flex gap-3">
             <button
               onClick={() => setFilterMenuOpen(true)}
               className="md:hidden flex items-center justify-center rounded-xl border border-white/10 bg-card px-4 hover:bg-white/5 transition-colors"
             >
               <SlidersHorizontal className="h-5 w-5" />
             </button>
-          </div>
+          </div> */}
 
-          {activeFilters.length > 0 && (
+          {/* active filter featured here   */}
+          {/* {activeFilters.length > 0 && (
             <div className="mb-8 flex flex-wrap items-center gap-3">
               {activeFilters.map((filter) => (
                 <button
@@ -369,7 +372,7 @@ export default function Events() {
                 Clear all
               </button>
             </div>
-          )}
+          )} */}
 
           <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {events.map((event, idx) => (

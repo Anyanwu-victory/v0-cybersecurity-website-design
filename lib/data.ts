@@ -30,7 +30,7 @@ export const services = [
     color: "text-[#7C3AED]",
     glowClass: "neon-glow-purple",
   },
-   {
+  {
     slug: "security-consulting",
     title: "Security Consulting & Advisory",
     description:
@@ -39,7 +39,7 @@ export const services = [
     color: "text-[#7C3AED]",
     glowClass: "neon-glow-purple",
   },
-   {
+  {
     slug: "secure-software-development",
     title: "Secure Software Development",
     description:
@@ -48,7 +48,7 @@ export const services = [
     color: "text-[#E11D2E]",
     glowClass: "neon-glow-red",
   },
-   {
+  {
     slug: "product-design",
     title: "Product Design (UI/UX & Security-First Design)",
     description:
@@ -80,7 +80,7 @@ export const socials = [
     href: "https://www.instagram.com/rtdsglobal",
     icon: IconBrandInstagram,
   },
-  
+
 ]
 
 export const homePageIntroSectionText = ` "At RedTrace-D Security, We believe true security starts with awareness. 
@@ -170,7 +170,7 @@ export const events = [
         title: "Resources",
         duration: "1 hour",
         description: "",
-         resourcesList: [
+        resourcesList: [
           {
             type: "video",
             link: "https://drive.google.com/file/d/1qXXEXf4QwnkejoAcpnbVhuc3-fucvp72/view?usp=drivesdk"
@@ -185,15 +185,16 @@ export const events = [
             link: "https://ubuntu.com/tutorials/command-line-for-beginners"
 
           },
-           {
+          {
             type: "Microsoft tutorial",
             link: "https://www.microsoft.com/en-us/security/business"
 
           },
         ],
       },
-      { time: "Oct 18", 
-        title: "", 
+      {
+        time: "Oct 18",
+        title: "",
         duration: "35 min",
         description: "",
         resourcesList: [
@@ -202,11 +203,12 @@ export const events = [
             link: "https://drive.google.com/file/d/1mi4SJUqmw-vmnkLo5UmKKy9egEAw072l/view?usp=drivesdk"
 
           },
-        ], 
-      
+        ],
+
       },
-      { time: "Oct 24", 
-        title: "", 
+      {
+        time: "Oct 24",
+        title: "",
         duration: "1 hour",
         description: "",
         resourcesList: [
@@ -215,11 +217,12 @@ export const events = [
             link: "https://drive.google.com/file/d/1fgWKUKI_tzBydo1hnaFzEbS1FTFumCnM/view?usp=drivesdk"
 
           },
-        ], 
-      
+        ],
+
       },
-      { time: "Oct 25", 
-        title: "", 
+      {
+        time: "Oct 25",
+        title: "",
         duration: "35 min",
         description: "",
         resourcesList: [
@@ -228,11 +231,12 @@ export const events = [
             link: "https://drive.google.com/file/d/1ZOIsfr0bi8-k9IoQF1RBBuC9qZzcJoFu/view?usp=drivesdk"
 
           },
-        ], 
-      
+        ],
+
       },
-      { time: "Oct 31", 
-        title: "", 
+      {
+        time: "Oct 31",
+        title: "",
         duration: "1 hour",
         description: "",
         resourcesList: [
@@ -241,10 +245,10 @@ export const events = [
             link: "https://drive.google.com/file/d/1gEDtO8xHGPaVpydC0Z7ovPojeqwjq99C/view?usp=drivesdk"
 
           },
-        ], 
-      
+        ],
+
       },
-      
+
     ],
     speakers: [
       {
@@ -405,7 +409,7 @@ export const events = [
     registrationLink: "#",
     calendarLink: "#",
   },
- 
+
 ]
 
 // Services detail data is imported from servicesDetailsData.ts
@@ -413,7 +417,7 @@ export const events = [
 export const contactMethods = [
   {
     icon: Mail,
-    type: "Encrypted Email",
+    type: "Contact Email",
     detail: "rtdsecure004@gmail.com",
     color: "[#E11D2E]",
     href: "mailto:rtdsecure004@gmail.com",
@@ -423,13 +427,13 @@ export const contactMethods = [
     type: "Direct Hotline",
     detail: "+(234) 810 628 3100",
     color: "[#38BDF8]",
-   href: "tel:+2348106283100",
+    href: "tel:+2348106283100",
   },
   {
     icon: MapPin,
     type: "HQ Coordinates",
     detail: "Abuja, Nigeria",
     color: "[#7C3AED]",
-     href: "https://maps.app.goo.gl/5wwBxxQe9xJY1dhz6",
+    href: "https://maps.app.goo.gl/5wwBxxQe9xJY1dhz6",
   },
 ]
