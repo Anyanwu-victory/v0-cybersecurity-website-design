@@ -59,6 +59,7 @@ export default function Home() {
             </div> */}
           </div>
         </motion.div>
+        
 
         {/* Decorative Circuit Lines */}
         <div className="hidden md:flex pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/50 to-transparent" />
