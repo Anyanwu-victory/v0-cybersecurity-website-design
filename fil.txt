@@ -1,0 +1,34 @@
+     {/* //href={`/services/${service.slug}`} */}
+        <div className="grid gap-8 md:grid-cols-3">
+          {services.map((service, idx) => (
+            // <Link
+            //   key={service.slug}
+            //   href="#"
+            //   className="group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5"
+            // >
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="block"
+            >
+              <div
+                className={cn(
+                  "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
+                  service.color,
+                )}
+              >
+                <service.icon className="h-7 w-7" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
+              <p className="text-muted-foreground leading-6 ">
+                {service.description}
+              </p>
+              {/* <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E] group-hover:gap-3 transition-all">
+                  Explore More <ArrowRight className="h-4 w-4" />
+                </div> */}
+            </motion.div>
+            // </Link>
+          ))}
+        </div>

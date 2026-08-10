@@ -83,7 +83,7 @@ export const socials = [
 
 ]
 
-export const homePageIntroSectionText = ` "At RedTrace-D Security, We believe true security starts with awareness. 
+export const homePageIntroSectionText = ` "At RedTrace-D Sentinel, We believe true security starts with awareness. 
           Our mission is to simplify cybersecurity through education, 
           consultancy, and proactive 
           defense strategies that protect digital systems and users at every level.

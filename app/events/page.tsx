@@ -78,17 +78,7 @@ export default function Events() {
     };
   }, []);
 
-  const removeFilter = (filter: string) => {
-    setActiveFilters(activeFilters.filter((f) => f !== filter));
-  };
-
-  const clearAllFilters = () => {
-    setActiveFilters([]);
-    setSelectedTypes([]);
-    setSelectedDurations([]);
-    setSelectedDates([]);
-  };
-
+  
   const toggleType = (type: string) => {
     setSelectedTypes((prev) =>
       prev.includes(type) ? prev.filter((t) => t !== type) : [...prev, type],
@@ -168,7 +158,7 @@ export default function Events() {
       </div>
 
       {/* Regions Filter */}
-      <div className="mb-6 border-b border-white/5 pb-6">
+      {/* <div className="mb-6 border-b border-white/5 pb-6">
         <button
           onClick={() => setDurationsOpen(!durationsOpen)}
           className="flex w-full items-center justify-between mb-4 font-semibold"
@@ -217,9 +207,9 @@ export default function Events() {
             </label>
           </div>
         )}
-      </div>
+      </div> */}
 
-      {/* Date Filter */}
+      {/* Date Filter
       <div className="mb-6 border-b border-white/5 pb-6">
         <button
           onClick={() => setDatesOpen(!datesOpen)}
@@ -280,7 +270,7 @@ export default function Events() {
             </label>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 
@@ -302,78 +292,10 @@ export default function Events() {
       </motion.div>
 
       <div className="flex flex-col md:flex-row gap-8">
-        {/* <aside className="hidden md:block w-full md:w-64 lg:w-80 shrink-0">
-          <FilterSidebar />
-        </aside> */}
-        {/* 
-        <AnimatePresence>
-          {filterMenuOpen && (
-            <>
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                onClick={() => setFilterMenuOpen(false)}
-                className="fixed inset-0 bg-black/60 z-40 md:hidden"
-              />
-              <motion.div
-                initial={{ x: "-100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "-100%" }}
-                transition={{ type: "spring", damping: 30, stiffness: 300 }}
-                className="fixed left-0 top-0 bottom-0 w-[85vw] max-w-sm bg-background z-50 overflow-y-auto md:hidden"
-              >
-                <div className="p-6">
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-lg font-bold">Filters</h2>
-                    <button
-                      onClick={() => setFilterMenuOpen(false)}
-                      className="p-2 hover:bg-white/5 rounded-lg transition-colors"
-                    >
-                      <X className="h-5 w-5" />
-                    </button>
-                  </div>
-                  <FilterSidebar />
-                </div>
-              </motion.div>
-            </>
-          )}
-        </AnimatePresence> */}
 
         <div className="flex-1">
 
-          {/* For mobile and tablet filter bar opening */}
-          {/* <div className="mb-6 flex gap-3">
-            <button
-              onClick={() => setFilterMenuOpen(true)}
-              className="md:hidden flex items-center justify-center rounded-xl border border-white/10 bg-card px-4 hover:bg-white/5 transition-colors"
-            >
-              <SlidersHorizontal className="h-5 w-5" />
-            </button>
-          </div> */}
-
-          {/* active filter featured here   */}
-          {/* {activeFilters.length > 0 && (
-            <div className="mb-8 flex flex-wrap items-center gap-3">
-              {activeFilters.map((filter) => (
-                <button
-                  key={filter}
-                  onClick={() => removeFilter(filter)}
-                  className="flex items-center gap-2 rounded-full bg-blue-500/10 px-4 py-2 text-sm font-medium text-blue-400 transition-colors hover:bg-blue-500/20"
-                >
-                  {filter}
-                  <X className="h-3 w-3" />
-                </button>
-              ))}
-              <button
-                onClick={clearAllFilters}
-                className="text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors"
-              >
-                Clear all
-              </button>
-            </div>
-          )} */}
-
+         
           <div className="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
             {events.map((event, idx) => (
               <motion.div

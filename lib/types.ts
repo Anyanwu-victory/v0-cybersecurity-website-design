@@ -16,6 +16,10 @@ export interface Event {
     title: string
     duration: string
     description: string
+    resourcesList?: {
+      type: string
+      link: string
+    }[]
   }[]
   speakers: {
     _id: string

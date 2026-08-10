@@ -54,7 +54,7 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       <LearningOutcomes outcomes={event.learningOutcomes} />
 
       {/* Agenda */}
-      <Agenda items={event.agenda} />
+      <Agenda items={event.agenda ?? []} />
 
       {/* Speakers */}
       {event.speakers.length > 0 && <Speakers speakers={event.speakers} />}

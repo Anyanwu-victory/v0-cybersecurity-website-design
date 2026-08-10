@@ -29,10 +29,10 @@ export default function Home() {
               Future
             </span>
             <br />
-            One Trace at a Time 
+            One Trace at a Time
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl leading-9">
-            RTDS (RedTrace-D Security) helps individuals, startups, and
+            RTDS (RedTrace-D Sentinel) helps individuals, startups, and
             organizations stay ahead of cyber threats by finding vulnerabilities
             early and building security into everything they create
           </p>
@@ -59,7 +59,6 @@ export default function Home() {
             </div> */}
           </div>
         </motion.div>
-        
 
         {/* Decorative Circuit Lines */}
         <div className="hidden md:flex pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/50 to-transparent" />
@@ -78,38 +77,29 @@ export default function Home() {
             hunting to keep your assets unreachable by adversaries.
           </p>
         </div>
-{/* //href={`/services/${service.slug}`} */}
+        {/* //href={`/services/${service.slug}`} */}
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((service, idx) => (
-            <Link
-              key={service.slug}
-             href="#"
-              className="group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5"
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1 }}
+              className="block group relative overflow-hidden rounded-2xl border border-white/10 bg-card p-8 transition-all hover:border-[#E11D2E]/50 hover:bg-white/5 "
             >
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1 }}
-                className="block"
+              <div
+                className={cn(
+                  "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
+                  service.color,
+                )}
               >
-                <div
-                  className={cn(
-                    "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
-                    service.color
-                  )}
-                >
-                  <service.icon className="h-7 w-7" />
-                </div>
-                <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
-                <p className="text-muted-foreground leading-6 ">
-                  {service.description}
-                </p>
-                {/* <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-[#E11D2E] group-hover:gap-3 transition-all">
-                  Explore More <ArrowRight className="h-4 w-4" />
-                </div> */}
-              </motion.div>
-            </Link>
+                <service.icon className="h-7 w-7" />
+              </div>
+              <h3 className="mb-3 text-xl font-bold">{service.title}</h3>
+              <p className="text-muted-foreground leading-6 ">
+                {service.description}
+              </p>
+            </motion.div>
           ))}
         </div>
       </section>
@@ -149,11 +139,11 @@ export default function Home() {
       {/* Featured CTA */}
       <section className="container mx-auto px-4 py-24 lg:px-[80px]">
         <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/20 p-12 text-center border border-white/10">
-         <div className="flex flex-col text-white   px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
+          <div className="flex flex-col text-white   px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
             <div className="w-full mb-6 text-center md:text-left md:mb-0">
               <h2 className="text-4xl md:text-5xl font-bold mb-4">
                 {" "}
-                RedTrace-D Security
+                RedTrace-D Sentinel
               </h2>
               <p className="font-light md:text-xl">
                 {" "}
@@ -175,8 +165,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 }
