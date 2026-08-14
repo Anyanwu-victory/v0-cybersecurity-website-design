@@ -106,8 +106,7 @@ export const missionText = `Our mission is to make cybersecurity practical, acce
 
 export const visionText = `To build a future where security is not an afterthought, but a foundation—powering innovation, trust, and digital growth across Africa and beyond.`
 
-export const breachesPrevented = 500
-export const activeMonitoringHours = "24/7"
+
 
 export const values = [
   {
@@ -412,6 +411,8 @@ export const events = [
 
 ]
 
+export const breachesPrevented = 500;
+export const activeMonitoringHours = "24/7";
 // Services detail data is imported from servicesDetailsData.ts
 
 export const contactMethods = [

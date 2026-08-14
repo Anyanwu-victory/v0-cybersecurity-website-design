@@ -1,5 +1,7 @@
 // lib/types.ts
 export interface Event {
+  eventId: string
+  sheetTabName: string
   slug: string
   tag: string
   title: string
@@ -8,8 +10,11 @@ export interface Event {
   time: string
   location: string
   registrationDeadline: string
+  registrationStatus: "draft" | "active" | "closed" | "archived"
   audience: string
-  price: string
+  eventCategory: "free" | "paid"
+  price?: number
+  currency?: "NGN" | "USD" | "GHS"
   learningOutcomes: string[]
   agenda: {
     time: string

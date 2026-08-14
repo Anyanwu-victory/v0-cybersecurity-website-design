@@ -7,16 +7,22 @@ import { AlertCircle, CheckCircle, Loader2, X } from "lucide-react";
 
 interface EventRegistrationFormProps {
   eventId: string;
+  eventSlug: string;
   eventTitle?: string;
-  eventPrice?: string;
+  eventCategory: "free" | "paid";
+  eventPrice?: number;
+  eventCurrency?: string;
   onSuccess?: () => void;
   onClose?: () => void;
 }
 
 export function EventRegistrationForm({
   eventId,
+  eventSlug,
   eventTitle,
+  eventCategory,
   eventPrice,
+  eventCurrency,
   onSuccess,
   onClose,
 }: EventRegistrationFormProps) {
@@ -80,6 +86,34 @@ export function EventRegistrationForm({
     setIsSubmitting(true);
 
     try {
+      const requiresPayment = eventCategory === "paid";
+
+      if (requiresPayment) {
+        if (!eventPrice || eventPrice <= 0) {
+          throw new Error("This paid event does not have a valid price.");
+        }
+        // Keep only routing identifiers in the URL; personal details remain in session storage.
+        const checkoutUrl = new URL("/events/register/checkout", window.location.origin);
+        checkoutUrl.searchParams.set("event", eventId);
+        checkoutUrl.searchParams.set("slug", eventSlug);
+        checkoutUrl.searchParams.set("eventTitle", eventTitle || "");
+
+        // Preserve the form long enough for Paystack to include it in signed webhook metadata.
+        sessionStorage.setItem(
+          `event-registration:${eventId}`,
+          JSON.stringify({
+            eventId,
+            eventSlug,
+            eventCategory,
+            eventPrice,
+            eventCurrency: eventCurrency || "NGN",
+            ...formData,
+          }),
+        );
+
+        router.push(checkoutUrl.toString());
+        return;
+      }
       console.log("📤 Sending registration data:", {
         eventId,
         fullName: formData.fullName,
@@ -95,7 +129,7 @@ export function EventRegistrationForm({
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          eventId,
+          eventSlug,
           fullName: formData.fullName,
           email: formData.email,
           phone: formData.phone,
@@ -112,7 +146,7 @@ export function EventRegistrationForm({
 
       if (!response.ok) {
         // Show specific error message from API
-        const errorMsg = data.error || data.details || "Registration failed. Please try again.";
+        const errorMsg = data.error || data.message || data.details || "Registration failed. Please try again.";
         throw new Error(errorMsg);
       }
 
@@ -120,14 +154,14 @@ export function EventRegistrationForm({
       setSuccessMessage("Registration successful! Redirecting...");
 
       // Check if event is paid or free
-      const isPaid = eventPrice && !eventPrice.toLowerCase().includes("free");
+      const isPaid = false; // Paid events return above and are completed by the Paystack webhook.
 
       // Wait a moment to show success message
       await new Promise(resolve => setTimeout(resolve, 1500));
 
       if (isPaid && eventPrice) {
         // Extract amount from price string (e.g., "$1,499" -> "1499")
-        const priceAmount = eventPrice.replace(/[^0-9]/g, "");
+        const priceAmount = String(eventPrice);
 
         // Redirect to Paystack checkout
         const checkoutUrl = new URL(
@@ -148,8 +182,8 @@ export function EventRegistrationForm({
           "/events/register/success",
           window.location.origin,
         );
-        successUrl.searchParams.set("email", formData.email);
-        successUrl.searchParams.set("eventTitle", eventTitle || "");
+        successUrl.searchParams.set("id", data.registrationId);
+        successUrl.searchParams.set("event", data.eventId);
 
         console.log("✅ Redirecting to success page:", successUrl.toString());
         router.push(successUrl.toString());
@@ -201,9 +235,16 @@ export function EventRegistrationForm({
         <p className="mb-6 text-sm text-muted-foreground">{eventTitle}</p>
       )}
 
-      {eventPrice && (
+      {eventCategory && (
         <div className="mb-6 inline-block px-3 py-1 rounded-full bg-[#E11D2E]/10 border border-[#E11D2E]/30">
-          <p className="text-sm font-semibold text-[#E11D2E]">{eventPrice}</p>
+          <p className="text-sm font-semibold text-[#E11D2E]">
+            {eventCategory === "free"
+              ? "Free"
+              : new Intl.NumberFormat("en-NG", {
+                  style: "currency",
+                  currency: eventCurrency || "NGN",
+                }).format(eventPrice || 0)}
+          </p>
         </div>
       )}
 

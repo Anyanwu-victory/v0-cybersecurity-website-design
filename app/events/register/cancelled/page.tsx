@@ -7,19 +7,19 @@ import { XCircle } from 'lucide-react'
 function CancelledContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
-  const eventId = searchParams.get('eventId')
+  const eventSlug = searchParams.get('slug')
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <div className="max-w-md w-full text-center">
         <XCircle className="w-16 h-16 text-yellow-500 mx-auto mb-6" />
-        <h1 className="text-3xl font-bold mb-4">Payment Cancelled</h1>
+        <h1 className="text-3xl font-bold mb-4">Transaction Failed</h1>
         <p className="text-muted-foreground mb-8">
-          Your payment was cancelled. You can try again or contact support if you need help.
+          Due to an error, your transaction could not be completed. You can try again or contact us if you need help.
         </p>
         <div className="flex gap-4 justify-center">
           <button
-            onClick={() => router.push(`/events/${eventId}`)}
+            onClick={() => router.push(eventSlug ? `/events/${eventSlug}` : '/events')}
             className="px-6 py-3 bg-[#E11D2E] text-white rounded-lg hover:bg-[#E11D2E]/90"
           >
             Try Again

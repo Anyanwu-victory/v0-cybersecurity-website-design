@@ -64,10 +64,14 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
 
       {/* Final CTA */}
       <CTASection
-        eventId={params.slug}
+        eventId={event.eventId}
+        eventSlug={params.slug}
         eventTitle={event.title}
+        eventCategory={event.eventCategory}
         eventPrice={event.price}
+        eventCurrency={event.currency}
         registrationDeadline={event.registrationDeadline}
+        registrationStatus={event.registrationStatus}
         showModal={showModal}
         onOpenModal={() => setShowModal(true)}
         onCloseModal={() => setShowModal(false)}

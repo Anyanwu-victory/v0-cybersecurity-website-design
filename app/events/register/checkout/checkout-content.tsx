@@ -11,30 +11,59 @@ export default function CheckoutContent() {
 
   const [config, setConfig] = useState<any>(null)
   const [loading, setLoading] = useState(true)
+  const [configurationError, setConfigurationError] = useState('')
 
   useEffect(() => {
-    // Get params from URL
-    const email = searchParams.get('email')
-    const amount = searchParams.get('amount')
-    const eventId = searchParams.get('eventId')
+    // Read only stable event identifiers and display text from the URL.
+    const eventId = searchParams.get('event')
+    const eventSlug = searchParams.get('slug')
     const eventTitle = searchParams.get('eventTitle')
-    const fullName = searchParams.get('fullName')
+    const registrationKey = `event-registration:${eventId}`
+    const storedRegistration = eventId ? sessionStorage.getItem(registrationKey) : null
 
-    if (!email || !amount || !eventId) {
+    if (!eventId || !eventSlug) {
       router.push('/events')
       return
     }
 
-    // Paystack config
+    const publicKey = process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY
+
+    if (!publicKey) {
+      setConfigurationError('Paystack is not configured. Please contact support.')
+      setLoading(false)
+      return
+    }
+
+    if (!storedRegistration) {
+      setConfigurationError('Your registration details expired. Please complete the form again.')
+      setLoading(false)
+      return
+    }
+
+    const registration = JSON.parse(storedRegistration)
+    const parsedAmount = Number(registration.eventPrice)
+
+    if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
+      setConfigurationError('The payment amount is invalid. Please return to the event and try again.')
+      setLoading(false)
+      return
+    }
+
+    // Paystack returns this metadata in the signed charge.success webhook.
     const paystackConfig = {
-      reference: `${eventId}-${Date.now()}`,
-      email,
-      amount: parseInt(amount) * 100, // Convert to kobo (Paystack uses smallest currency unit)
-      publicKey: process.env.NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY || '',
+      reference: crypto.randomUUID(),
+      email: registration.email,
+      amount: parsedAmount * 100, // Convert to kobo (Paystack uses smallest currency unit)
+      publicKey,
+      currency: registration.eventCurrency || 'NGN',
       metadata: {
         eventId,
+        eventSlug,
         eventTitle,
-        fullName,
+        fullName: registration.fullName,
+        phone: registration.phone,
+        company: registration.company || '',
+        profession: registration.profession,
         custom_fields: [
           {
             display_name: 'Event',
@@ -44,7 +73,7 @@ export default function CheckoutContent() {
           {
             display_name: 'Attendee Name',
             variable_name: 'attendee_name',
-            value: fullName,
+            value: registration.fullName,
           },
         ],
       },
@@ -55,68 +84,44 @@ export default function CheckoutContent() {
   }, [searchParams, router])
 
   const handleSuccess = async (reference: any) => {
+    if (!reference?.reference) {
+      alert('Paystack did not return a payment reference. Please contact support.')
+      return
+    }
     console.log('✅ Payment successful:', reference)
 
-    try {
-      // Verify payment on server
-      const response = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          reference: reference.reference,
-          eventId: config.metadata.eventId,
-          email: config.email,
-        }),
-      })
-
-      const data = await response.json()
-
-      if (data.success) {
-        // Update registration status to 'paid'
-        await fetch('/api/update-registration', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            email: config.email,
-            eventId: config.metadata.eventId,
-            status: 'paid',
-            reference: reference.reference,
-          }),
-        })
-
-        // Redirect to success page
-        const successUrl = new URL('/events/register/success', window.location.origin)
-        successUrl.searchParams.set('email', config.email)
-        successUrl.searchParams.set('eventTitle', config.metadata.eventTitle)
-        successUrl.searchParams.set('paid', 'true')
-        successUrl.searchParams.set('reference', reference.reference)
-
-        router.push(successUrl.toString())
-      } else {
-        throw new Error('Payment verification failed')
-      }
-    } catch (error) {
-      console.error('Error verifying payment:', error)
-      alert('Payment verification failed. Please contact support with your reference: ' + reference.reference)
-    }
+    const registrationKey = `event-registration:${config.metadata.eventId}`
+    sessionStorage.removeItem(registrationKey)
+    const successUrl = new URL('/events/register/success', window.location.origin)
+    successUrl.searchParams.set('id', reference.reference)
+    successUrl.searchParams.set('event', config.metadata.eventId)
+    router.push(successUrl.toString())
   }
 
   const handleClose = () => {
     console.log('❌ Payment closed')
     // User closed the payment modal
     const cancelUrl = new URL('/events/register/cancelled', window.location.origin)
-    cancelUrl.searchParams.set('eventId', config.metadata.eventId)
+    // Cancellation returns to the public event slug rather than the internal business ID.
+    cancelUrl.searchParams.set('slug', config.metadata.eventSlug)
     router.push(cancelUrl.toString())
   }
 
-  if (loading || !config) {
+  if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-[#E11D2E]" />
+      </div>
+    )
+  }
+
+  if (configurationError || !config) {
+    return (
+      <div className="min-h-screen flex items-center justify-center px-6">
+        <div className="max-w-md rounded-xl border border-red-500/30 bg-red-500/10 p-6 text-center">
+          <h1 className="mb-2 text-xl font-semibold">Payment unavailable</h1>
+          <p className="text-sm text-muted-foreground">{configurationError}</p>
+        </div>
       </div>
     )
   }
@@ -134,8 +139,12 @@ export default function CheckoutContent() {
         <div className="bg-card border border-white/10 rounded-2xl p-8 md:p-12">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">Complete Payment</h1>
-            <p className="text-muted-foreground">Secure checkout powered by Paystack</p>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2">
+              Complete Payment
+            </h1>
+            <p className="text-muted-foreground">
+              Secure checkout powered by Paystack
+            </p>
           </div>
 
           {/* Event Details */}
@@ -165,7 +174,8 @@ export default function CheckoutContent() {
             </div>
 
             <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-              <DollarSign className="w-5 h-5 text-[#E11D2E]" />
+              {/* <DollarSign className="w-5 h-5 text-[#E11D2E]" /> */}
+              <h1 className="w-5 h-5 text-[#E11D2E]"> ₦</h1>
               <div>
                 <p className="text-sm text-muted-foreground">Amount</p>
                 <p className="text-2xl font-bold">
@@ -190,5 +200,5 @@ export default function CheckoutContent() {
         </div>
       </div>
     </div>
-  )
+  );
 }

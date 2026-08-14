@@ -1,12 +1,48 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Zap, ArrowRight } from "lucide-react";
+import {ArrowRight, Shield, Lock, Search, Presentation } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { services, socials, homePageIntroSectionText } from "@/lib/data";
+import { IconUser, IconDeviceDesktop } from "@tabler/icons-react";
+import { sanity } from "@/lib/sanity";
+import HomepageCTA from "@/components/HomepageCTA";
+
+
 
 export default function Home() {
+  const [services, setServices] = useState<any[]>([])
+  const [siteSettings, setSiteSettings] = useState<any>(null)
+
+  useEffect(() => {
+    let mounted = true
+    const ICON_MAP: Record<string, any> = {
+      Shield,
+      Presentation,
+      Search,
+      Lock,
+      IconUser,
+      IconDeviceDesktop,
+    }
+
+    // fetch services and site settings in parallel
+    Promise.all([sanity.fetchServices(), sanity.fetchSiteSettings()])
+      .then(([servicesRes, settings]: any) => {
+        if (!mounted) return
+        const mapped = (servicesRes || []).map((s: any) => ({
+          ...s,
+          icon: ICON_MAP[s.icon] || Shield,
+        }))
+        setServices(mapped)
+        setSiteSettings(settings)
+      })
+
+    return () => {
+      mounted = false
+    }
+  }, [])
+
   return (
     <div className="relative overflow-hidden">
       {/* Hero Section */}
@@ -90,8 +126,17 @@ export default function Home() {
               <div
                 className={cn(
                   "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
-                  service.color,
+                  // only include as a Tailwind class when it's already a valid class (eg. starts with "text-")
+                  service.color && !/#/.test(String(service.color)) ? service.color : undefined,
                 )}
+                // if a raw hex was stored (eg. "#E11D2E" or "[#E11D2E]"), extract and apply as inline color
+                style={(() => {
+                  const col = service.color
+                  if (!col) return undefined
+                  const m = String(col).match(/#([0-9A-Fa-f]{3,8})/)
+                  if (m) return { color: `#${m[1]}` }
+                  return undefined
+                })()}
               >
                 <service.icon className="h-7 w-7" />
               </div>
@@ -128,7 +173,7 @@ export default function Home() {
             >
               <div className="text-[#E11D2E] text-6xl mb-4"> "</div>
               <p className="text-white text-lg md:text-xl leading-relaxed mb-8 ">
-                {homePageIntroSectionText}
+                {siteSettings?.homePageIntroSectionText}
               </p>
               <div className="text-[#E11D2E] text-6xl mt-4"> " </div>
             </div>
@@ -137,34 +182,7 @@ export default function Home() {
       </section>
 
       {/* Featured CTA */}
-      <section className="container mx-auto px-4 py-24 lg:px-[80px]">
-        <div className="mt-24 overflow-hidden rounded-3xl bg-gradient-to-r from-[#E11D2E]/20 to-[#0b0e14]/20 p-12 text-center border border-white/10">
-          <div className="flex flex-col text-white   px-20 mx-auto w-full items-center justify-between max-w-screen-xl">
-            <div className="w-full mb-6 text-center md:text-left md:mb-0">
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
-                {" "}
-                RedTrace-D Sentinel
-              </h2>
-              <p className="font-light md:text-xl">
-                {" "}
-                Every digital footprint leaves a trace. We help you control that
-                trace—by building smarter, safer, and more resilient digital
-                experiences
-              </p>
-            </div>
-
-            <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
-              <Link
-                href="/contact"
-                className="flex w-full items-center justify-center gap-2 rounded-lg
-               bg-[#E11D2E] md:px-8 px-4 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
-              >
-                Work with RTDS
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+ <HomepageCTA />
     </div>
   );
 }

@@ -8,9 +8,13 @@ import {EventRegistrationForm} from "@/components/form/EventRegistrationForm"
 
 interface CTASectionProps {
   eventId: string
+  eventSlug: string
   eventTitle?: string
-  eventPrice?: string
+  eventCategory: "free" | "paid"
+  eventPrice?: number
+  eventCurrency?: string
   registrationDeadline?: string
+  registrationStatus: "draft" | "active" | "closed" | "archived"
   showModal?: boolean
   onOpenModal?: () => void
   onCloseModal?: () => void
@@ -18,9 +22,13 @@ interface CTASectionProps {
 
 export function CTASection({
   eventId,
+  eventSlug,
   eventTitle,
+  eventCategory,
   eventPrice,
+  eventCurrency,
   registrationDeadline,
+  registrationStatus,
   showModal: externalShowModal,
   onOpenModal,
   onCloseModal,
@@ -31,6 +39,8 @@ export function CTASection({
   const handleCloseModal = onCloseModal ?? (() => setInternalShowModal(false))
 
   const isRegistrationClosed = useMemo(() => {
+    // Only active events may open the registration modal.
+    if (registrationStatus !== "active") return true
     if (!registrationDeadline) return false
 
     try {
@@ -40,7 +50,7 @@ export function CTASection({
     } catch {
       return false
     }
-  }, [registrationDeadline])
+  }, [registrationDeadline, registrationStatus])
 
   const handleSuccess = () => {
     handleCloseModal()
@@ -100,8 +110,11 @@ export function CTASection({
             </button>
             <EventRegistrationForm
               eventId={eventId}
+              eventSlug={eventSlug}
               eventTitle={eventTitle}
+              eventCategory={eventCategory}
               eventPrice={eventPrice}
+              eventCurrency={eventCurrency}
               onSuccess={handleSuccess}
               onClose={() => handleCloseModal()}
             />

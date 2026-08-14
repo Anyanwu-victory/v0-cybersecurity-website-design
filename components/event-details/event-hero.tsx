@@ -13,8 +13,11 @@ interface EventHeroProps {
     time: string
     location: string
     audience: string
-    price: string
+    eventCategory: "free" | "paid"
+    price?: number
+    currency?: string
     registrationDeadline?: string
+    registrationStatus: "draft" | "active" | "closed" | "archived"
   }
   onAddCalendar: () => void
   onOpenRegisterModal?: () => void
@@ -27,6 +30,8 @@ export function EventHero({
 }: EventHeroProps) {
 
   const isRegistrationClosed = useMemo(() => {
+    // Mirror the server's active-status requirement in the event UI.
+    if (event.registrationStatus !== "active") return true
     if (!event.registrationDeadline) return false
 
     try {
@@ -36,7 +41,7 @@ export function EventHero({
     } catch {
       return false
     }
-  }, [event.registrationDeadline])
+  }, [event.registrationDeadline, event.registrationStatus])
 
   return (
     <div className="relative overflow-hidden">
@@ -77,7 +82,15 @@ export function EventHero({
             <div className="flex items-center gap-3">
               <Users className="h-5 w-5 text-[#E11D2E]" />
               <div className="text-sm">
-                <div className="font-semibold">₦{event.price}</div>
+                <div className="font-semibold">
+                  {event.eventCategory === "free"
+                    ? "Free"
+                    : new Intl.NumberFormat("en-NG", {
+                        style: "currency",
+                        currency: event.currency || "NGN",
+                        maximumFractionDigits: 2,
+                      }).format(event.price || 0)}
+                </div>
               </div>
             </div>
           </div>

@@ -4,15 +4,13 @@ import Link from "next/link";
 
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { Target } from "lucide-react";
+import { Target, Eye, ShieldCheck, Shield } from "lucide-react";
 import {
   IconBrandLinkedin,
   IconBrandInstagram,
   IconBrandX,
   IconWorld,
 } from "@tabler/icons-react";
-import { aboutCompanyText, values, missionText, visionText } from "@/lib/data";
-
 import { useEffect, useState } from "react";
 import { sanity } from "@/lib/sanity";
 
@@ -32,6 +30,14 @@ export default function About() {
   };
 
   const [team, setTeam] = useState<TeamMember[]>([]);
+  const [siteSettings, setSiteSettings] = useState<any>(null)
+
+  const ICON_MAP_VALUES: Record<string, any> = {
+    Target,
+    Eye,
+    ShieldCheck,
+    Shield,
+  }
 
   useEffect(() => {
     let mounted = true;
@@ -44,6 +50,7 @@ export default function About() {
       .catch((err) => {
         console.error("Sanity fetch team error:", err);
       });
+    sanity.fetchSiteSettings().then((s) => { if (mounted) setSiteSettings(s) }).catch(()=>{})
     return () => {
       mounted = false;
     };
@@ -65,7 +72,7 @@ export default function About() {
                 <span className="text-[#E11D2E]">We Secure.</span>
               </h1>
               <p className="mb-8 text-lg text-muted-foreground whitespace-pre-line leading-8">
-                {aboutCompanyText}
+                {siteSettings?.aboutCompanyText}
               </p>
             </motion.div>
           </div>
@@ -88,7 +95,7 @@ export default function About() {
             <h2 className="mb-4 text-3xl font-bold">Our Mission</h2>
 
             <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-              {missionText}
+              {siteSettings?.missionText}
             </p>
           </motion.div>
 
@@ -110,7 +117,7 @@ export default function About() {
             <h2 className="mb-4 text-3xl font-bold">Our Vision</h2>
 
             <p className="text-muted-foreground leading-relaxed whitespace-pre-line">
-              {visionText}
+              {siteSettings?.visionText }
             </p>
           </motion.div>
         </div>
@@ -121,18 +128,21 @@ export default function About() {
           <h2 className="mb-4 text-3xl font-bold md:text-5xl">Our Values</h2>
         </div>
         <div className="grid gap-8 md:grid-cols-3">
-          {values.map((v, i) => (
-            <div
-              key={i}
-              className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center"
-            >
-              <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#E11D2E]/10">
-                <v.icon className="h-8 w-8 text-[#E11D2E]" />
+          {(siteSettings?.values || []).map((v: any, i: number) => {
+            const IconComp = ICON_MAP_VALUES[v.icon] || Target
+            return (
+              <div
+                key={i}
+                className="rounded-2xl border border-white/5 bg-white/5 p-8 text-center"
+              >
+                <div className="mx-auto mb-6 flex h-16 w-16 items-center justify-center rounded-full bg-[#E11D2E]/10">
+                  <IconComp className="h-8 w-8 text-[#E11D2E]" />
+                </div>
+                <h3 className="mb-3 text-xl font-bold">{v.title}</h3>
+                <p className="text-sm text-muted-foreground">{v.description}</p>
               </div>
-              <h3 className="mb-3 text-xl font-bold">{v.title}</h3>
-              <p className="text-sm text-muted-foreground">{v.description}</p>
-            </div>
-          ))}
+            )
+          })}
         </div>
       </section>
 
