@@ -1,44 +1,43 @@
+import { notFound } from "next/navigation"
 import EventDetailsClient from "./event-details-client"
 import { sanity } from "@/lib/sanity"
 
-// ✅ Enable dynamic rendering to fetch fresh data
-export const dynamic = 'force-dynamic'
+// Fetch fresh event documents instead of serving a stale static event page.
+export const dynamic = "force-dynamic"
 
-// ✅ Updated: params is now Promise<{ slug: string }>
-export const generateMetadata = async ({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
+// Build page metadata from the same Sanity event slug used by the route.
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>
 }) => {
   try {
-    const { slug } = await params // ✅ Must await params
+    const { slug } = await params
     const event = await sanity.client.fetch(
       `*[_type == "event" && slug.current == $slug][0]{title, description}`,
-      { slug }
+      { slug },
     )
     return {
-      title: event?.title || "Event",
-      description: event?.description || "",
+      title: event?.title || "Event not found",
+      description: event?.description || "The requested event could not be found.",
     }
-  } catch (err) {
-    console.error("generateMetadata error:", err)
-    return { title: "Event", description: "" }
+  } catch (error) {
+    console.error("Event metadata fetch failed:", error)
+    return { title: "Event", description: "Event details" }
   }
 }
 
-// ✅ Updated: params is now Promise<{ slug: string }>
-export default async function EventDetailsPage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
+// Render an event or delegate unknown slugs to the application's custom 404 page.
+export default async function EventDetailsPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>
 }) {
-  try {
-    const { slug } = await params // ✅ Must await params
-    const event = await sanity.fetchEventBySlug(slug)
-    return <EventDetailsClient event={event ?? undefined} params={{ slug }} />
-  } catch (err) {
-    console.error("EventDetailsPage fetch error:", err)
-    const { slug } = await params // ✅ Must await params even in catch
-    return <EventDetailsClient event={undefined} params={{ slug }} />
-  }
+  const { slug } = await params
+  const event = await sanity.fetchEventBySlug(slug)
+
+  // This produces a real 404 response instead of a normal page containing an error message.
+  if (!event) notFound()
+
+  return <EventDetailsClient event={event} params={{ slug }} />
 }
