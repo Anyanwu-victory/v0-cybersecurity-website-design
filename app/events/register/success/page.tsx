@@ -20,6 +20,8 @@ function SuccessPageContent() {
   const searchParams = useSearchParams()
   const id = searchParams.get('id')
   const eventId = searchParams.get('event')
+  const registrationType = searchParams.get('type')
+  const isPaidAttempt = registrationType === 'paid'
   const [registration, setRegistration] = useState<RegistrationStatus | null>(null)
   const [error, setError] = useState('')
 
@@ -55,13 +57,21 @@ function SuccessPageContent() {
           return
         }
 
-        setError('We could not confirm this registration yet. Keep your payment reference and contact support.')
+        setError(
+          isPaidAttempt
+            ? 'Your payment may have succeeded, but we have not confirmed your registration yet. Do not pay again. Save your payment reference and contact support.'
+            : 'We could not confirm this registration yet. Please try again or contact support.',
+        )
       } catch {
         if (!cancelled && attempts < 12) {
           attempts += 1
           timer = setTimeout(loadRegistration, 2500)
         } else if (!cancelled) {
-          setError('Unable to load the registration. Please try again later.')
+          setError(
+            isPaidAttempt
+              ? 'Your payment may have succeeded, but we could not confirm your registration. Do not pay again. Save your payment reference and contact support.'
+              : 'Unable to load the registration. Please try again later.',
+          )
         }
       }
     }
@@ -71,7 +81,7 @@ function SuccessPageContent() {
       cancelled = true
       if (timer) clearTimeout(timer)
     }
-  }, [eventId, id])
+  }, [eventId, id, isPaidAttempt])
 
   if (error) {
     return (
@@ -80,7 +90,24 @@ function SuccessPageContent() {
           <XCircle className="mx-auto mb-5 h-16 w-16 text-red-500" />
           <h1 className="mb-3 text-2xl font-bold">Registration not confirmed</h1>
           <p className="mb-6 text-muted-foreground">{error}</p>
-          <Link href="/events" className="rounded-lg bg-[#E11D2E] px-5 py-3 font-semibold text-white">View events</Link>
+          {/* A paid customer needs the reference for support and must not start another charge. */}
+          {isPaidAttempt && id && (
+            <div className="mb-6 rounded-lg border border-yellow-500/30 bg-yellow-500/10 p-4 text-left">
+              <p className="mb-1 text-sm font-semibold text-yellow-400">Payment reference</p>
+              <p className="break-all font-mono text-sm">{id}</p>
+            </div>
+          )}
+          <div className="flex flex-col justify-center gap-3 sm:flex-row">
+            {isPaidAttempt && (
+              <a
+                href={`mailto:support@rtds.com?subject=${encodeURIComponent(`Unconfirmed registration ${id || ''}`)}`}
+                className="rounded-lg bg-[#E11D2E] px-5 py-3 font-semibold text-white"
+              >
+                Contact support
+              </a>
+            )}
+            <Link href="/events" className="rounded-lg border border-white/15 px-5 py-3 font-semibold">View events</Link>
+          </div>
         </div>
       </div>
     )

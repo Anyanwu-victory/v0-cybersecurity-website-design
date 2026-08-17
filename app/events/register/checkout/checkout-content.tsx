@@ -95,6 +95,8 @@ export default function CheckoutContent() {
     const successUrl = new URL('/events/register/success', window.location.origin)
     successUrl.searchParams.set('id', reference.reference)
     successUrl.searchParams.set('event', config.metadata.eventId)
+    // Let the recovery screen distinguish an unconfirmed payment from a free registration failure.
+    successUrl.searchParams.set('type', 'paid')
     router.push(successUrl.toString())
   }
 

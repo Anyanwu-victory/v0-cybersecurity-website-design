@@ -117,6 +117,7 @@ export default function Home() {
         <div className="grid gap-8 md:grid-cols-3">
           {services.map((service, idx) => (
             <motion.div
+              key={idx}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

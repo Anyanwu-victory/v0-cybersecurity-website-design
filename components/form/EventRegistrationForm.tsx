@@ -184,6 +184,8 @@ export function EventRegistrationForm({
         );
         successUrl.searchParams.set("id", data.registrationId);
         successUrl.searchParams.set("event", data.eventId);
+        // Free registrations can safely use a standard confirmation-error message.
+        successUrl.searchParams.set("type", "free");
 
         console.log("✅ Redirecting to success page:", successUrl.toString());
         router.push(successUrl.toString());
