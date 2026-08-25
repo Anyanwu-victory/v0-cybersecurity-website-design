@@ -28,24 +28,34 @@ export async function sendRegistrationEmail(options: {
   eventTitle: string;
   amount: number;
   currency?: string;
-}) {
+}): Promise<boolean> {
   if (!process.env.RESEND_API_KEY) return false;
   const resend = new Resend(process.env.RESEND_API_KEY);
   const isPaid = options.amount > 0;
-  const result = await resend.emails.send({
-    from: "Event Registration <onboarding@resend.dev>",
-    to: options.email,
-    subject: isPaid
-      ? `Payment Confirmed - ${options.eventTitle}`
-      : `Registration Confirmed - ${options.eventTitle}`,
-    html: `
-      <h2>${isPaid ? "Payment Confirmed" : "Event Registration Confirmed"}</h2>
-      <p>Hi ${escapeHtml(options.fullName)},</p>
-      <p>Your registration for <strong>${escapeHtml(options.eventTitle)}</strong> is confirmed.</p>
-      ${isPaid ? `<p><strong>Amount paid:</strong> ${escapeHtml(options.currency || "NGN")} ${options.amount.toLocaleString()}</p>` : ""}
-      <p>We look forward to seeing you there.</p>
-    `,
-  });
-  if (result.error) throw new Error(result.error.message);
-  return true;
+
+  try {
+    await resend.emails.send({
+      from: "Event Registration <events@mail.rtdsentinel.com>",
+      to: options.email,
+      subject: `Registration Confirmed - ${options.eventTitle}`,
+      html: `
+        <h2>Event Registration Confirmed</h2>
+        <p>Hi ${escapeHtml(options.fullName)},</p>
+        <p>Your registration for <strong>${escapeHtml(options.eventTitle)}</strong> is confirmed.</p>
+        ${isPaid ? `<p><strong>Amount paid:</strong> ${escapeHtml(options.currency || "NGN")} ${options.amount.toLocaleString()}</p> is received.` : ""}
+        
+        <p>The event details and any access information will be shared with you closer to the event date, shortly before the event.</p>
+        <p>We look forward to seeing you there.</p>
+      `,
+    });
+
+    return true;
+  } catch (err) {
+    // Log and return false so callers can handle failure gracefully
+    // eslint-disable-next-line no-console
+    console.error("sendRegistrationEmail error:", err);
+    return false;
+  }
 }
+
+     

@@ -4,6 +4,7 @@ import { Analytics } from "@vercel/analytics/next"
 import "./globals.css"
 import Navbar from "@/components/navbar"
 import Footer from "@/components/footer"
+import NavbarGlass from "@/components/navbarGlass"  
 import { Inter, JetBrains_Mono } from "next/font/google"
 
 const inter = Inter({
@@ -46,8 +47,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col`}>
-        <Navbar />
+      <body className={`${inter.variable} ${jetbrainsMono.variable} font-sans antialiased min-h-screen flex flex-col `}>
+        <NavbarGlass />
         <main className="flex-grow">{children}</main>
         <Footer />
         <Analytics />

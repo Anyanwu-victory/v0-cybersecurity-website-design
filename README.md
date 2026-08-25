@@ -189,6 +189,8 @@ NEXT_PUBLIC_SANITY_API_VERSION=YYYY-MM-DD
 # Contact and registration email delivery.
 ADMIN_EMAIL=admin@example.com
 RESEND_API_KEY=re_your_key
+# Use an address on a Resend-verified domain for scheduled reminders.
+RESEND_FROM_EMAIL="Event Reminders <events@example.com>"
 
 # Paystack keys must belong to the same account and test/live mode.
 NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY=pk_test_your_key
@@ -200,6 +202,18 @@ GOOGLE_SHEET_ID=your-spreadsheet-id
 ```
 
 Variables prefixed with `NEXT_PUBLIC_` are intentionally available to the browser and must never contain secrets. `PAYSTACK_SECRET_KEY`, `RESEND_API_KEY`, and `GOOGLE_SERVICE_ACCOUNT_KEY` are server-only secrets.
+
+### Automated event reminders
+
+Each confirmed registration schedules one reminder through Resend at registration time. Online reminders are scheduled one day before `startDateTime`; in-person reminders are scheduled five days before it. Past reminder times are marked `CANCELLED` and are not sent.
+
+Event registration tabs store reminder metadata in columns M–O:
+
+```text
+Reminder Scheduled At | Resend Reminder ID | Reminder Status
+```
+
+The persisted Resend ID and an idempotency key prevent duplicate scheduling. Event-change rescheduling is available in the reminder service, but it is not automatic because the application does not currently have a Sanity event webhook route.
 
 After adding or changing environment variables, restart the development server.
 

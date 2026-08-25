@@ -8,7 +8,13 @@ export interface Event {
   description: string
   date: string
   time: string
-  location: string
+  // Preserve Sanity's ISO timestamps for calendar-file generation.
+  startDateTime?: string
+  endDateTime?: string
+  // Online events use a meeting link, while in-person events use a location.
+  location?: string
+  meetingLink?: string
+  eventType: "in-person" | "online"
   registrationDeadline: string
   registrationStatus: "draft" | "active" | "closed" | "archived"
   audience: string

@@ -12,6 +12,11 @@ const EVENT_PROJECTION = `{
   currency,
   registrationStatus,
   date,
+  startDateTime,
+  endDateTime,
+  eventType,
+  meetingLink,
+  location,
   registrationDeadline,
   "createdAt": _createdAt,
   "updatedAt": _updatedAt

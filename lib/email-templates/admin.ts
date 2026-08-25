@@ -2,10 +2,12 @@
 export const adminEmailTemplate = ({
   name,
   email,
+  service,
   message,
 }: {
   name: string
   email: string
+  service: string
   message: string
 }) => `
   <!DOCTYPE html>
@@ -66,6 +68,11 @@ export const adminEmailTemplate = ({
                 <div class="field">
                   <span class="label">Email:</span>
                   <div class="value">${email}</div>
+                </div>
+                <!-- Show the Sanity service selected in the contact form. -->
+                <div class="field">
+                  <span class="label">Service:</span>
+                  <div class="value">${service}</div>
                 </div>
                 <div class="field">
                   <span class="label">Message Details:</span>

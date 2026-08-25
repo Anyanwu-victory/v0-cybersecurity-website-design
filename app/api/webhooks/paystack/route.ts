@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { appendRegistration, findRegistration, registrationExists } from "@/lib/google-sheets";
 import { assertEventSheetConfiguration, getEventById } from "@/lib/event-record";
 import { eventRequiresPayment, parseEventPrice, sendRegistrationEmail } from "@/lib/event-registration";
+import { scheduleRegistrationReminder } from "@/lib/reminder-scheduler";
 
 // Signature verification requires Node's crypto implementation.
 export const runtime = "nodejs";
@@ -100,6 +101,17 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Webhook registration saved but email failed:", error);
   }
+
+  // Reminder failure is isolated so a saved paid registration remains confirmed.
+  await scheduleRegistrationReminder({
+    eventId: event.eventId,
+    registrationId,
+    registrantEmail: email,
+    registrantName: fullName,
+    event,
+  }).catch((reminderError) => {
+    console.error("Paid registration saved but reminder scheduling failed:", reminderError);
+  });
 
   return NextResponse.json({ received: true, registrationId });
 }

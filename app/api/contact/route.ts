@@ -15,7 +15,8 @@ export async function POST(request: Request) {
       )
     }
 
-    const { name, email, message, company } = await request.json()
+    // The selected Sanity service accompanies the visitor's contact message.
+    const { name, email, service, message, company } = await request.json()
 
     // 🛑 Honeypot (spam protection)
     if (company) {
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     }
 
     // Validation
-    if (!name || !email || !message) {
+    if (!name || !email || !service || !message) {
       return NextResponse.json(
         { error: 'All fields are required' },
         { status: 400 }
@@ -41,16 +42,16 @@ export async function POST(request: Request) {
 
     // 1️⃣ Admin notification
     await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
+      from: 'RTD Sentinel <contact@mail.rtdsentinel.com>',
       to: [process.env.ADMIN_EMAIL!],
       replyTo: email,
-      subject: `New Contact Message from ${name}`,
-      html: adminEmailTemplate({ name, email, message }),
+      subject: `A New Inquiry from RTD-Sentinel Website - ${name}`,
+      html: adminEmailTemplate({ name, email, service, message }),
     })
 
     // 2️⃣ Auto-reply to user -- need a domain for this to work, so it's currently just a placeholder 
     await resend.emails.send({
-      from: 'Contact Form <onboarding@resend.dev>',
+      from: 'RTD Sentinel <contact@mail.rtdsentinel.com>',
       to: [email],
       subject: 'We received your message',
       html: autoReplyTemplate(name),
