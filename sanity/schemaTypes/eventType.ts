@@ -46,11 +46,6 @@ export const eventType = defineType({
       validation: (Rule) => Rule.required(),
     }),
 
-    defineField({
-      name: "location",
-      title: "Location",
-      type: "string",
-    }),
 
     defineField({
       name: "eventType",
@@ -58,10 +53,43 @@ export const eventType = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Virtual", value: "virtual" },
+          { title: "Online", value: "online" },
           { title: "In-Person", value: "in-person" },
         ],
       },
+      validation: (Rule) => Rule.required(),
+    }),
+
+    // Online events need a remote-access link.
+    defineField({
+      name: "meetingLink",
+      title: "Meeting Link",
+      type: "url",
+      description: "Zoom, Google Meet, or StreamYard link. Add before sending reminders.",
+      hidden: ({ parent }) => parent?.eventType !== "online",
+      validation: (Rule) => Rule.custom((meetingLink, context) => {
+        // Require the link only when the editor selects the online event type.
+        const event = context.parent as { eventType?: string };
+        return event?.eventType === "online" && !meetingLink
+          ? "A meeting link is required for online events"
+          : true;
+      }),
+    }),
+
+    // In-person events need a physical venue.
+    defineField({
+      name: "location",
+      title: "Location",
+      type: "string",
+      description: "Physical address for in-person events.",
+      hidden: ({ parent }) => parent?.eventType !== "in-person",
+      validation: (Rule) => Rule.custom((location, context) => {
+        // Require the venue only when the editor selects the in-person event type.
+        const event = context.parent as { eventType?: string };
+        return event?.eventType === "in-person" && !location
+          ? "A location is required for in-person events"
+          : true;
+      }),
     }),
 
     defineField({

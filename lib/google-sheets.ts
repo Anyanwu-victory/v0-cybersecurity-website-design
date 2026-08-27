@@ -9,7 +9,11 @@ const EVENT_HEADERS = [
 const REGISTRATION_HEADERS = [
   "Registration ID", "Name", "Email", "Phone", "Profession", "Company",
   "Registration Type", "Amount", "Currency", "Payment Status", "Payment Reference", "Registered At",
+  "Reminder Scheduled At", "Resend Reminder ID", "Reminder Status",
 ];
+
+// Reminder states persisted with each registration for idempotent scheduling.
+export type ReminderStatus = "PENDING" | "SCHEDULED" | "CANCELLED" | "FAILED";
 
 // Server-resolved Sanity metadata required to locate and describe an event tab.
 export interface EventSheetInfo {
@@ -22,6 +26,11 @@ export interface EventSheetInfo {
   currency?: string;
   registrationStatus: "draft" | "active" | "closed" | "archived";
   date?: string;
+  startDateTime?: string;
+  endDateTime?: string;
+  eventType?: "online" | "in-person";
+  meetingLink?: string;
+  location?: string;
   registrationDeadline?: string;
   createdAt?: string;
   updatedAt?: string;
@@ -41,6 +50,9 @@ export interface RegistrationRow {
   paymentStatus: "Not Required" | "Pending" | "Paid" | "Failed" | "Refunded";
   paymentReference?: string;
   registeredAt: string;
+  reminderScheduledAt?: string;
+  resendReminderId?: string;
+  reminderStatus?: ReminderStatus;
 }
 
 // Build an authenticated Sheets client from the service-account JSON environment variable.
@@ -126,7 +138,7 @@ export async function ensureEventTab(event: EventSheetInfo) {
         },
         {
           setBasicFilter: {
-            filter: { range: { sheetId, startRowIndex: 0, startColumnIndex: 0, endColumnIndex: 12 } },
+            filter: { range: { sheetId, startRowIndex: 0, startColumnIndex: 0, endColumnIndex: 15 } },
           },
         },
       ],
@@ -200,6 +212,7 @@ export async function appendRegistration(event: EventSheetInfo, row: Registratio
         row.registrationId, row.fullName, row.email, row.phone, row.profession,
         row.company || "", row.registrationType, row.amount, row.currency || "",
         row.paymentStatus, row.paymentReference || "", row.registeredAt,
+        row.reminderScheduledAt || "", row.resendReminderId || "", row.reminderStatus || "",
       ]],
     },
   });
@@ -213,7 +226,7 @@ async function readRegistrationRows(event: EventSheetInfo) {
   if (!tab) return [];
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
-    range: `${quotedTab(event.sheetTabName)}!A:L`,
+    range: `${quotedTab(event.sheetTabName)}!A:O`,
   });
   return (response.data.values || []).slice(1);
 }
@@ -248,5 +261,90 @@ export async function findRegistration(event: EventSheetInfo, registrationId: st
     paymentStatus: row[9] || "Not Required",
     paymentReference: row[10] || "",
     registeredAt: row[11] || "",
+    reminderScheduledAt: row[12] || "",
+    resendReminderId: row[13] || "",
+    reminderStatus: (row[14] || undefined) as ReminderStatus | undefined,
+  };
+}
+
+// Resolve a stable event ID through the permanent Events index before touching its tab.
+async function getEventTabNameById(
+  sheets: sheets_v4.Sheets,
+  spreadsheetId: string,
+  eventId: string,
+) {
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${quotedTab(EVENTS_TAB)}!A:D`,
+  });
+  const eventRow = (response.data.values || []).slice(1).find((row) => row[0] === eventId);
+  const tabName = String(eventRow?.[3] || "");
+  if (!tabName) throw new Error(`No Sheet tab is assigned to event ${eventId}`);
+  return tabName;
+}
+
+// Find the physical row number for a registration in its event-specific tab.
+async function getRegistrationRowNumber(
+  sheets: sheets_v4.Sheets,
+  spreadsheetId: string,
+  tabName: string,
+  registrationId: string,
+) {
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${quotedTab(tabName)}!A:A`,
+  });
+  const rowIndex = (response.data.values || []).slice(1).findIndex((row) => row[0] === registrationId);
+  if (rowIndex < 0) throw new Error(`Registration ${registrationId} was not found`);
+  return rowIndex + 2;
+}
+
+// Persist Resend scheduling details in columns M, N, and O for one registration.
+export async function updateReminderStatus(
+  eventId: string,
+  registrationId: string,
+  resendEmailId: string,
+  scheduledAt: string,
+  status: ReminderStatus,
+) {
+  const sheets = await getSheetClient();
+  const spreadsheetId = getSpreadsheetId();
+  const tabName = await getEventTabNameById(sheets, spreadsheetId, eventId);
+  const rowNumber = await getRegistrationRowNumber(
+    sheets,
+    spreadsheetId,
+    tabName,
+    registrationId,
+  );
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: `${quotedTab(tabName)}!M${rowNumber}:O${rowNumber}`,
+    valueInputOption: "RAW",
+    requestBody: { values: [[scheduledAt, resendEmailId, status]] },
+  });
+}
+
+// Read the stored reminder identity before scheduling or cancelling another email.
+export async function getReminderDetails(eventId: string, registrationId: string) {
+  const sheets = await getSheetClient();
+  const spreadsheetId = getSpreadsheetId();
+  const tabName = await getEventTabNameById(sheets, spreadsheetId, eventId);
+  const rowNumber = await getRegistrationRowNumber(
+    sheets,
+    spreadsheetId,
+    tabName,
+    registrationId,
+  );
+  const response = await sheets.spreadsheets.values.get({
+    spreadsheetId,
+    range: `${quotedTab(tabName)}!M${rowNumber}:O${rowNumber}`,
+  });
+  const row = response.data.values?.[0];
+  if (!row || (!row[1] && !row[2])) return null;
+  return {
+    scheduledAt: String(row[0] || ""),
+    resendEmailId: String(row[1] || ""),
+    status: String(row[2] || "") as ReminderStatus,
   };
 }

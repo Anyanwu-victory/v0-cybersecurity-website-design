@@ -3,22 +3,10 @@
 import { motion } from "framer-motion"
 import { Calendar, MapPin, Clock, Users } from "lucide-react"
 import { useMemo } from "react";
+import type { Event as EventType } from "../../lib/types";
 
 interface EventHeroProps {
-  event: {
-    title: string
-    tag: string
-    description: string
-    date: string
-    time: string
-    location: string
-    audience: string
-    eventCategory: "free" | "paid"
-    price?: number
-    currency?: string
-    registrationDeadline?: string
-    registrationStatus: "draft" | "active" | "closed" | "archived"
-  }
+  event: EventType
   onAddCalendar: () => void
   onOpenRegisterModal?: () => void
 }
@@ -76,7 +64,7 @@ export function EventHero({
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-[#7C3AED]" />
               <div className="text-sm">
-                <div className="font-semibold">{event.location}</div>
+                <div className="font-semibold  capitalize">{event.eventType}</div>
               </div>
             </div>
             <div className="flex items-center gap-3">

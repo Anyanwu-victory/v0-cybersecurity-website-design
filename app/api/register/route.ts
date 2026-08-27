@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { appendRegistration, registrationExists } from "@/lib/google-sheets";
 import { assertEventSheetConfiguration, getEventBySlug, registrationIsOpen } from "@/lib/event-record";
 import { eventRequiresPayment, sendRegistrationEmail } from "@/lib/event-registration";
+import { scheduleRegistrationReminder } from "@/lib/reminder-scheduler";
 
 interface RegistrationRequest {
   eventSlug?: string;
@@ -75,6 +76,17 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       console.error("Registration saved but confirmation email failed:", emailError);
     }
+
+    // Reminder failure is isolated so a saved free registration still succeeds.
+    await scheduleRegistrationReminder({
+      eventId: event.eventId,
+      registrationId,
+      registrantEmail: email,
+      registrantName: body.fullName.trim(),
+      event,
+    }).catch((reminderError) => {
+      console.error("Registration saved but reminder scheduling failed:", reminderError);
+    });
 
     return NextResponse.json({
       success: true,
