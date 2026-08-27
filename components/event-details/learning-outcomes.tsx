@@ -8,10 +8,13 @@ interface LearningOutcomesProps {
 }
 
 export function LearningOutcomes({ outcomes }: LearningOutcomesProps) {
+  // Protect this reusable section when it is called without meaningful Sanity content.
+  if (!outcomes?.some((outcome) => outcome?.trim())) return null
+
   return (
     <section className="container mx-auto px-4 py-20 lg:px-[80px]">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-        <h2 className="mb-12 text-4xl font-bold">What You'll Learn</h2>
+        <h2 className="mb-12 text-4xl font-bold">Objectives</h2>
         <div className="space-y-4">
           {outcomes.map((outcome, idx) => (
             <motion.div

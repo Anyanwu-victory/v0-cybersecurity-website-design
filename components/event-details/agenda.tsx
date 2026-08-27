@@ -15,6 +15,9 @@ interface AgendaProps {
 }
 
 export function Agenda({ items = [] }: AgendaProps) {
+  // Hide the complete agenda section, including its heading, when Sanity has no usable items.
+  if (!items.some((item) => item?.time?.trim() || item?.title?.trim() || item?.duration?.trim() || item?.description?.trim())) return null
+
   return (
     <section className="container mx-auto px-4 py-20 lg:px-20">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

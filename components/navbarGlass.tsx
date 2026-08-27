@@ -88,7 +88,7 @@ export default function NavbarGlass() {
     
              {/* <div className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-8 lg:flex xl:gap-11"></div> */}
           {/* Laptop links sit beside the logo while the CTA remains pushed to the far right. */}
-          <div className="mr-auto hidden items-center gap-8 lg:ml-10 lg:flex xl:ml-14 xl:gap-10">
+          <div className="mr-auto hidden items-center gap-8 lg:ml-10 lg:flex xl:ml-14 xl:gap-15">
             {navLinks.map((link) => {
               const active = isActive(link.href);
               return (

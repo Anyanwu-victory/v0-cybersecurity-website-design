@@ -7,8 +7,10 @@ import {teamMemberType} from './teamMemberType'
 import {contactType} from './contactType'
 import {serviceType} from './servicesType'
 import {siteSettingType} from './siteSettingType' 
+import {articleType} from './articleType'
   
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, eventType, speakerType, teamMemberType, contactType, serviceType, siteSettingType],
+  // Register articles alongside the existing application document types.
+  types: [blockContentType, eventType, speakerType, teamMemberType, contactType, serviceType, siteSettingType, articleType],
 }
 
