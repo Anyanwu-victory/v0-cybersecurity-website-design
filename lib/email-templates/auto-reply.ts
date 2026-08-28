@@ -142,7 +142,7 @@ export const autoReplyTemplate = (name: string) =>`
                   >
                     Best regards,<br />
                     <strong style="color: #d71920;">
-                      RT-DS Team
+                      RTD Sentinel Team
                     </strong>
                   </p>
 
