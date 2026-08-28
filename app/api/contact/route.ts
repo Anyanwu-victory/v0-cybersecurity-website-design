@@ -50,7 +50,7 @@ export async function POST(request: Request) {
 
     // 1. Send website enquiry to RTD Sentinel
     const { data: adminData, error: adminError } = await resend.emails.send({
-      from: "RTD Sentinel Website <website@mail.rtdsentinel.com>",
+      from: "RedTrace-D Sentinel Website <website@mail.rtdsentinel.com>",
       to: [adminEmail],
 
       // Clicking Reply responds directly to the visitor
@@ -79,7 +79,7 @@ export async function POST(request: Request) {
 
     // 2. Confirmation email to visitor
     const { data: replyData, error: replyError } = await resend.emails.send({
-      from: "RTD Sentinel <contact@mail.rtdsentinel.com>",
+      from: "RedTrace-D Sentinel <contact@mail.rtdsentinel.com>",
       to: [email],
 
       // Customer replies go to the real Zoho mailbox
