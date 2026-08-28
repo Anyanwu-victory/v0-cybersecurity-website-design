@@ -1,4 +1,4 @@
-import { reminderResend, scheduleReminderEmail } from "@/lib/email-templates/reminder";
+import { reminderResend, scheduleReminderEmail } from "@/lib/email-templates/reminder-schedule";
 import { getReminderDetails, updateReminderStatus } from "@/lib/google-sheets";
 
 // Sanity event types map directly to their fixed reminder offsets in days.

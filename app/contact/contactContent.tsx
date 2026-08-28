@@ -122,9 +122,7 @@ export default function Contact() {
             At RedTrace-D Sentinel, We believe true security starts with
             awareness. Our mission is to simplify cybersecurity through
             education, consultancy, and proactive defense strategies that
-            protect digital systems and users at every level. With RedTrace-D
-            Sentinel, you’re not just getting a service provider; you’re gaining
-            a trusted partner dedicated to securing your digital future.
+            protect digital systems and users at every level.
           </p>
 
           <div className="space-y-8">
@@ -180,8 +178,8 @@ export default function Contact() {
                     <Icon className="h-6 w-6" style={{ color: hex }} />
                   </div>
                   <div>
-                    <h3 className="text-md font-bold">{method.type}</h3>
-                    <a href={method.href} className="text-muted-foreground text-sm">
+                    <h3 className="text-lg font-bold">{method.type}</h3>
+                    <a href={method.href} className="text-muted-foreground text-md">
                       {" "}
                       {method.detail}
                     </a>

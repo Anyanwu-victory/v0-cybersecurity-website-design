@@ -40,17 +40,17 @@ export default async function Footer() {
               Securing the Future, One Trace at a Time.
             </p>
             <h1 className="font-bold text-lg text-white mt-3">Contact Us</h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-md text-muted-foreground">
               email:{" "}
               {emailMethod ? (
                 <a href={emailMethod.href}>{emailMethod.detail}</a>
               ) : (
-                <a href="mailto:rtdsecure004@gmail.com">
-                  rtdsecure004@gmail.com
+                <a href="mailto:support@rtdsentinel.com">
+                  support@rtdsentinel.com
                 </a>
               )}
             </p>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-md text-muted-foreground">
               call us:{" "}
               {phoneMethod ? (
                 <a href={phoneMethod.href}>{phoneMethod.detail}</a>
