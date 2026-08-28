@@ -51,7 +51,7 @@ export const autoReplyTemplate = (name: string) =>`
 
                   <!-- Optional Logo -->
                   <img
-                    src="https://rtdsentinel.com/email/redtrace-logo.png"
+                    src="https://rtdsentinel.com/images/redtraced_logo.jpeg"
                     alt="RedTrace-D Sentinel"
                     width="180"
                     style="
