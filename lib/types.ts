@@ -14,7 +14,7 @@ export interface Event {
   // Online events use a meeting link, while in-person events use a location.
   location?: string
   meetingLink?: string
-  eventType: "in-person" | "online"
+  eventType: "virtual" | "in-person"
   registrationDeadline: string
   registrationStatus: "draft" | "active" | "closed" | "archived"
   audience: string

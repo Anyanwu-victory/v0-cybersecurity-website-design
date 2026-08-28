@@ -37,16 +37,26 @@ export function EventHero({
       <div className="absolute inset-0 bg-linear-to-r from-[#E11D2E]/20 to-[#38BDF8]/20" />
 
       <div className="relative container mx-auto px-4 py-24 lg:px-20">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-4xl"
+        >
           <div className="mb-6 flex items-center gap-4">
             <span className="rounded-full bg-[#E11D2E]/10 px-4 py-2 text-sm font-bold text-[#E11D2E] uppercase tracking-wider">
               {event.tag}
             </span>
-            <div className="text-sm text-muted-foreground">{event.audience}</div>
+            <div className="text-sm text-muted-foreground">
+              {event.audience}
+            </div>
           </div>
 
-          <h1 className="mb-6 text-5xl font-bold md:text-6xl lg:text-7xl text-balance">{event.title}</h1>
-          <p className="mb-8 max-w-2xl text-lg text-muted-foreground">{event.description}</p>
+          <h1 className="mb-6 text-5xl font-bold md:text-6xl lg:text-7xl text-balance">
+            {event.title}
+          </h1>
+          <p className="mb-8 max-w-2xl text-lg text-muted-foreground">
+            {event.description}
+          </p>
 
           <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-4">
             <div className="flex items-center gap-3">
@@ -64,7 +74,9 @@ export function EventHero({
             <div className="flex items-center gap-3">
               <MapPin className="h-5 w-5 text-[#7C3AED]" />
               <div className="text-sm">
-                <div className="font-semibold  capitalize">{event.eventType}</div>
+                <div className="font-semibold  capitalize">
+                  {event.eventType}
+                </div>
               </div>
             </div>
             <div className="flex items-center gap-3">
@@ -84,7 +96,7 @@ export function EventHero({
           </div>
 
           <div className="flex flex-wrap gap-4">
-           <button
+            <button
               onClick={onOpenRegisterModal}
               disabled={isRegistrationClosed}
               className={`rounded-xl px-8 py-3 font-bold transition-all ${
@@ -95,10 +107,11 @@ export function EventHero({
             >
               {isRegistrationClosed ? "Registration Closed" : "Register Now"}
             </button>
-            
+
             <button
               onClick={onAddCalendar}
-              className="rounded-xl border border-[#38BDF8]/50 px-8 py-3 font-semibold text-[#38BDF8] transition-all hover:bg-[#38BDF8]/10"
+              className="inline-flex items-center rounded-xl border border-[#38BDF8]/50 px-8 py-3 font-semibold text-[#38BDF8] transition-all hover:bg-[#38BDF8]/10"
+              type="button"
             >
               Add to Calendar
             </button>
@@ -106,5 +119,5 @@ export function EventHero({
         </motion.div>
       </div>
     </div>
-  )
+  );
 }
