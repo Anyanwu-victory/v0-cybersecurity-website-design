@@ -1,4 +1,5 @@
 import { Resend } from "resend";
+import { registrationConfirmationTemplate } from "./email-templates/event-registration-temp";
 
 export function parseEventPrice(price?: number | string): number {
   if (typeof price === "number") return Number.isFinite(price) ? price : 0;
@@ -34,20 +35,26 @@ export async function sendRegistrationEmail(options: {
   const isPaid = options.amount > 0;
 
   try {
-    await resend.emails.send({
-      from: "Event Registration <events@mail.rtdsentinel.com>",
-      to: options.email,
-      subject: `Registration Confirmed - ${options.eventTitle}`,
-      html: `
-        <h2>Event Registration Confirmed</h2>
-        <p>Hi ${escapeHtml(options.fullName)},</p>
-        <p>Your registration for <strong>${escapeHtml(options.eventTitle)}</strong> is confirmed.</p>
-        ${isPaid ? `<p><strong>Amount paid:</strong> ${escapeHtml(options.currency || "NGN")} ${options.amount.toLocaleString()}</p> is received.` : ""}
-        
-        <p>The event details and any access information will be shared with you closer to the event date, shortly before the event.</p>
-        <p>We look forward to seeing you there.</p>
-      `,
-    });
+   await resend.emails.send({
+     from: "RedTrace-D Sentinel <events@mail.rtdsentinel.com>",
+     to: options.email,
+     subject: `Registration Confirmed - ${options.eventTitle}`,
+
+     attachments: [
+       {
+         path: "https://rtdsentinel.com/images/redtraced_logo.jpeg",
+         filename: "redtraceD.jpeg",
+         contentId: "rtd-logo",
+       },
+     ],
+
+     html: registrationConfirmationTemplate({
+       fullName: options.fullName,
+       eventTitle: options.eventTitle,
+       amount: options.amount,
+       currency: options.currency,
+     }),
+   });
 
     return true;
   } catch (err) {

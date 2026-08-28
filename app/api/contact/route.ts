@@ -1,73 +1,118 @@
-import { Resend } from 'resend'
-import { NextResponse } from 'next/server'
-import { adminEmailTemplate } from '@/lib/email-templates/admin'
-import { autoReplyTemplate } from '@/lib/email-templates/auto-reply'
+import { Resend } from "resend";
+import { NextResponse } from "next/server";
+import { adminEmailTemplate } from "@/lib/email-templates/admin";
+import { autoReplyTemplate } from "@/lib/email-templates/auto-reply";
 
-const resend = new Resend(process.env.RESEND_API_KEY!)
+const resendApiKey = process.env.RESEND_API_KEY;
+const adminEmail = process.env.ADMIN_EMAIL;
+
+if (!resendApiKey) {
+  throw new Error("RESEND_API_KEY is not configured");
+}
+
+const resend = new Resend(resendApiKey);
 
 export async function POST(request: Request) {
   try {
-    // method check
-    if (request.method !== 'POST') {
+    if (!adminEmail) {
+      console.error("ADMIN_EMAIL is not configured");
+
       return NextResponse.json(
-        { error: 'Method not allowed' },
-        { status: 405 }
-      )
+        { error: "Email service is not configured" },
+        { status: 500 },
+      );
     }
 
-    // The selected Sanity service accompanies the visitor's contact message.
-    const { name, email, service, message, company } = await request.json()
+    const { name, email, service, message, company } = await request.json();
 
-    // 🛑 Honeypot (spam protection)
+    // Honeypot
     if (company) {
-      return NextResponse.json({ success: true })
+      return NextResponse.json({ success: true });
     }
 
-    // Validation
+    // Required fields
     if (!name || !email || !service || !message) {
       return NextResponse.json(
-        { error: 'All fields are required' },
-        { status: 400 }
-      )
+        { error: "All fields are required" },
+        { status: 400 },
+      );
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(email)) {
       return NextResponse.json(
-        { error: 'Invalid email address' },
-        { status: 400 }
-      )
+        { error: "Invalid email address" },
+        { status: 400 },
+      );
     }
-   
 
-    // 1️⃣ Admin notification
-    await resend.emails.send({
-      from: 'RTD Sentinel <contact@mail.rtdsentinel.com>',
-      to: [process.env.ADMIN_EMAIL!],
+    // 1. Send website enquiry to RTD Sentinel
+    const { data: adminData, error: adminError } = await resend.emails.send({
+      from: "RTD Sentinel Website <website@mail.rtdsentinel.com>",
+      to: [adminEmail],
+
+      // Clicking Reply responds directly to the visitor
       replyTo: email,
-      subject: `A New Inquiry from RTD-Sentinel Website - ${name}`,
-      html: adminEmailTemplate({ name, email, service, message }),
-    })
 
-    // 2️⃣ Auto-reply to user -- need a domain for this to work, so it's currently just a placeholder 
-    await resend.emails.send({
-      from: 'RTD Sentinel <contact@mail.rtdsentinel.com>',
+      subject: `New Website Inquiry - ${name}`,
+
+      html: adminEmailTemplate({
+        name,
+        email,
+        service,
+        message,
+      }),
+    });
+
+    if (adminError) {
+      console.error("Admin notification failed:", adminError);
+
+      return NextResponse.json(
+        {
+          error: "Unable to send your message. Please try again later.",
+        },
+        { status: 500 },
+      );
+    }
+
+    // 2. Confirmation email to visitor
+    const { data: replyData, error: replyError } = await resend.emails.send({
+      from: "RTD Sentinel <contact@mail.rtdsentinel.com>",
       to: [email],
-      subject: 'We received your message',
+
+      // Customer replies go to the real Zoho mailbox
+      replyTo: "support@rtdsentinel.com",
+
+      subject: "We received your message",
+
       html: autoReplyTemplate(name),
-    })
-    console.log('ADMIN_EMAIL:', process.env.ADMIN_EMAIL);
-    
+    });
+
+    // The enquiry was already received, so don't fail the
+    // entire submission if only the acknowledgement fails.
+    if (replyError) {
+      console.error("Auto-reply failed:", replyError);
+    }
+
+    console.log("Contact enquiry sent:", {
+      adminMessageId: adminData?.id,
+      autoReplyMessageId: replyData?.id,
+    });
+
     return NextResponse.json({
       success: true,
-      message: 'Message sent successfully',
-    })
+      message: "Message sent successfully",
+    });
   } catch (error) {
-    console.error('Email error:', error)
+    console.error("Contact form error:", error);
 
     return NextResponse.json(
-      { error: 'Failed to send message. Please try again later.' },
-      { status: 500 }
-    )
+      {
+        error: "Failed to send message. Please try again later.",
+      },
+      { status: 500 },
+    );
   }
 }
