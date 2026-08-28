@@ -17,7 +17,8 @@ interface SpeakersProps {
 }
 
 export function Speakers({ speakers }: SpeakersProps) {
-  console.log("Speakers:", speakers)
+  // Hide the complete speaker section when no valid speaker references were returned.
+  if (!speakers?.some((speaker) => speaker?.name?.trim())) return null
 
   return (
     <section className="container mx-auto px-4 py-20 lg:px-20">

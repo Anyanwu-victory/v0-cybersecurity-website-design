@@ -26,6 +26,17 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
     )
   }
 
+  // Treat arrays containing only empty Sanity strings as sections without content.
+  const hasLearningOutcomes = event.learningOutcomes?.some((outcome) => outcome?.trim()) ?? false
+  // Require at least one meaningful agenda value before showing its section and heading.
+  const hasAgenda = event.agenda?.some((item) =>
+    Boolean(item?.time?.trim() || item?.title?.trim() || item?.duration?.trim() || item?.description?.trim()),
+  ) ?? false
+  // Require a usable speaker record rather than rendering an empty Speakers section.
+  const hasSpeakers = event.speakers?.some((speaker) => speaker?.name?.trim()) ?? false
+  // Treat empty role entries as missing Who Should Attend content.
+  const hasRoles = event.roles?.some((role) => role?.trim()) ?? false
+
   const handleAddCalendar = () => {
     // Prefer Sanity's exact start timestamp and fall back to the event date.
     const startDate = event.startDateTime || event.date
@@ -59,16 +70,28 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Back button */}
-      <div className="container mx-auto px-4 py-6 lg:px-20">
-        <Link
-          href="/events"
-          className="inline-flex items-center gap-2 text-muted-foreground hover:text-[#E11D2E] transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Back to Events
-        </Link>
-      </div>
+
+
+      {/* Breadcrumb: Home · Events · Event Title */}
+      <nav aria-label="Breadcrumb" className="mb-8 pl-4 lg:pl-20 mt-12">
+        <ol className="inline-flex items-center gap-2 text-sm text-muted-foreground">
+          <li>
+            <Link href="/" className="hover:text-[#E11D2E]">
+              Home
+            </Link>
+          </li>
+          <li aria-hidden>·</li>
+          <li>
+            <Link href="/events" className="hover:text-[#E11D2E]">
+              Events
+            </Link>
+          </li>
+          <li aria-hidden>·</li>
+          <li className="max-w-[20ch] md:max-w-[60ch] truncate text-white/90">
+            {event.title}
+          </li>
+        </ol>
+      </nav>
 
       {/* Hero Section */}
       <EventHero
@@ -78,16 +101,18 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
       />
 
       {/* Learning Outcomes */}
-      <LearningOutcomes outcomes={event.learningOutcomes} />
+      {hasLearningOutcomes && (
+        <LearningOutcomes outcomes={event.learningOutcomes} />
+      )}
 
       {/* Agenda */}
-      <Agenda items={event.agenda ?? []} />
+      {hasAgenda && <Agenda items={event.agenda} />}
 
       {/* Speakers */}
-      {event.speakers.length > 0 && <Speakers speakers={event.speakers} />}
+      {hasSpeakers && <Speakers speakers={event.speakers} />}
 
       {/* Who Should Attend */}
-      <RolesCard roles={event.roles} />
+      {hasRoles && <RolesCard roles={event.roles} />}
 
       {/* Final CTA */}
       <CTASection
@@ -104,5 +129,5 @@ export default function EventDetailsClient({ event, params }: { event: Event | u
         onCloseModal={() => setShowModal(false)}
       />
     </div>
-  )
+  );
 }

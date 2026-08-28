@@ -7,6 +7,9 @@ interface RolesProps {
 }
 
 export function RolesCard({ roles }: RolesProps) {
+  // Hide the complete audience section, including its heading, when roles are missing.
+  if (!roles?.some((role) => role?.trim())) return null
+
   return (
     <section className="container mx-auto px-4 py-20 lg:px-20">
       <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>

@@ -8,12 +8,15 @@ import { motion } from "framer-motion";
 import { IconUser, IconDeviceDesktop } from "@tabler/icons-react";
 import { sanity } from "@/lib/sanity";
 import HomepageCTA from "@/components/HomepageCTA";
+import InsightsSection from "@/components/insights-section";
 
 
 
 export default function Home() {
   const [services, setServices] = useState<any[]>([])
   const [siteSettings, setSiteSettings] = useState<any>(null)
+  // Store the latest Sanity articles used by the homepage insights section.
+  const [articles, setArticles] = useState<any[]>([])
 
   useEffect(() => {
     let mounted = true
@@ -27,8 +30,8 @@ export default function Home() {
     }
 
     // fetch services and site settings in parallel
-    Promise.all([sanity.fetchServices(), sanity.fetchSiteSettings()])
-      .then(([servicesRes, settings]: any) => {
+    Promise.all([sanity.fetchServices(), sanity.fetchSiteSettings(), sanity.fetchArticles(9)])
+      .then(([servicesRes, settings, articlesRes]: any) => {
         if (!mounted) return
         const mapped = (servicesRes || []).map((s: any) => ({
           ...s,
@@ -36,6 +39,8 @@ export default function Home() {
         }))
         setServices(mapped)
         setSiteSettings(settings)
+        // Retain enough recent articles for useful category filtering in the homepage section.
+        setArticles(articlesRes || [])
       })
 
     return () => {
@@ -76,23 +81,12 @@ export default function Home() {
           <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-8 py-4 text-lg font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-4 py-4 text-md font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
             >
               Connect With Us
               <ArrowRight className="h-5 w-5" />
             </Link>
 
-            {/* <div className="flex gap-4">
-              {socials.map((social, idx) => (
-                <Link
-                  key={idx}
-                  href={social.href}
-                  className="flex h-12 w-12 items-center justify-center rounded-lg border border-white/10 bg-white/5 transition-all hover:bg-white/10"
-                >
-                  <social.icon className="h-6 w-6 text-white" />
-                </Link>
-              ))}
-            </div> */}
           </div>
         </motion.div>
 
@@ -151,7 +145,7 @@ export default function Home() {
       </section>
 
       {/* Intro section */}
-      <section className="relative pt-20 pb-[500px] md:p-0">
+      {/* <section className="relative pt-20 pb-[500px] md:p-0">
         <div className="relative">
           <img
             src="/images/logo_design_1.png"
@@ -180,7 +174,10 @@ export default function Home() {
             </div>
           </motion.div>
         </div>
-      </section>
+      </section> */}
+
+      {/* Show the latest CMS-managed security articles before the closing CTA. */}
+      <InsightsSection articles={articles} />
 
       {/* Featured CTA */}
  <HomepageCTA />

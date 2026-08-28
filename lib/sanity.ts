@@ -140,6 +140,42 @@ export const sanity = {
     }))
   },
 
+  // Fetch published article summaries for the homepage and Insights index.
+  async fetchArticles(limit?: number) {
+    const limitClause = typeof limit === "number" ? `[0...${Math.max(0, limit)}]` : ""
+    const res = await client.fetch(
+      `*[_type == "article" && defined(slug.current) && publishedAt <= now()]
+        | order(featured desc, publishedAt desc) ${limitClause} {
+          _id, title, "slug": slug.current, category, excerpt, author,
+          publishedAt, featured, featuredImage
+        }`
+    )
+    // Convert Sanity images into URLs while preserving their accessible labels.
+    return (res || []).map((article: any) => ({
+      ...article,
+      imageUrl: article.featuredImage ? toUrl(article.featuredImage) : "/placeholder.svg",
+      imageAlt: article.featuredImage?.alt || article.title,
+    }))
+  },
+
+  // Fetch one complete published article for its dynamic detail page.
+  async fetchArticleBySlug(slug: string) {
+    const article = await client.fetch(
+      `*[_type == "article" && slug.current == $slug && publishedAt <= now()][0] {
+        _id, title, "slug": slug.current, category, excerpt, body, author,
+        publishedAt, featuredImage, seoTitle, seoDescription
+      }`,
+      {slug}
+    )
+    // Return null for unknown or unpublished slugs so Next.js can show its 404 page.
+    if (!article) return null
+    return {
+      ...article,
+      imageUrl: article.featuredImage ? toUrl(article.featuredImage) : "/placeholder.svg",
+      imageAlt: article.featuredImage?.alt || article.title,
+    }
+  },
+
   
 }
 // ...existing code...
