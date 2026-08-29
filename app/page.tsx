@@ -78,7 +78,7 @@ export default function Home() {
             early and building security into everything they create
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="inline-flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-4 py-4 text-md font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"

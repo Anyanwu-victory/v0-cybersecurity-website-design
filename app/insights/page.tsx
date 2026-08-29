@@ -4,7 +4,7 @@ import {sanity} from "@/lib/sanity"
 
 // Give the Insights archive a focused search-engine description.
 export const metadata: Metadata = {
-  title: "Security Insights | RT-DS",
+  title: "Security Insights",
   description: "Expert perspectives on cybersecurity, digital forensics, technology, and practical protection.",
 }
 

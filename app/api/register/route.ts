@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
         amount: 0,
       });
     } catch (emailError) {
-      console.error("Registration saved but confirmation email failed:", emailError);
+      //console.error("Registration saved but confirmation email failed:", emailError);
     }
 
     // Reminder failure is isolated so a saved free registration still succeeds.
@@ -85,7 +85,7 @@ export async function POST(request: NextRequest) {
       registrantName: body.fullName.trim(),
       event,
     }).catch((reminderError) => {
-      console.error("Registration saved but reminder scheduling failed:", reminderError);
+      //console.error("Registration saved but reminder scheduling failed:", reminderError);
     });
 
     return NextResponse.json({
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       emailSent,
     });
   } catch (error) {
-    console.error("Registration error:", error);
+    //console.error("Registration error:", error);
     return NextResponse.json(
       { success: false, message: "Failed to process registration" },
       { status: 500 },

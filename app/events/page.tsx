@@ -6,11 +6,6 @@ import {
   MapPin,
   ArrowUpRight,
   Shield,
-  Search,
-  X,
-  ChevronDown,
-  ChevronUp,
-  SlidersHorizontal,
 } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -47,7 +42,7 @@ export default function Events() {
           setEvents(res);
         })
         .catch((err) => {
-          console.error("Sanity fetch events error:", err);
+          //console.error("Sanity fetch events error:", err);
         });
     };
 

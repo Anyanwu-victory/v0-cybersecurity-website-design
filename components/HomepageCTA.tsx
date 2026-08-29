@@ -21,7 +21,7 @@ const HomepageCTA = () => {
                   </p>
                 </div>
     
-                <div className="w-full flex justify-center md:justify-end mt-8 md:mt-12">
+                <div className="w-full inline-flex justify-center md:justify-end mt-8 md:mt-12">
                   <Link
                     href="/contact"
                     className="flex w-full items-center justify-center gap-2 rounded-lg

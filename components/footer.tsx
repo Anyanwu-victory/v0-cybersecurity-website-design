@@ -16,7 +16,11 @@ const socialIconMap: Record<string, any> = {
 };
 
 export default async function Footer() {
-  const contact = await sanity.fetchContact();
+  // Keep the global footer available when Sanity is temporarily unreachable.
+  const contact = await sanity.fetchContact().catch((error) => {
+    console.error("Footer contact fetch failed:", error);
+    return { contactMethods: [], socials: [] };
+  });
   const socials = contact.socials || [];
   const contactMethods = contact.contactMethods || [];
   const emailMethod = contactMethods.find((c: any) =>
@@ -95,8 +99,15 @@ export default async function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 text-center text-[10px] text-muted-foreground/30 uppercase tracking-[0.3em]">
-          © 2026 RT-DS GLOBAL SECURITY OPERATIONS. ALL RIGHTS RESERVED.
+        {/* Keep legal destinations discoverable from every public page. */}
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 text-center sm:flex-row">
+          <p className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground/50">
+            © {new Date().getFullYear()} RT-DS Global Security Operations. All rights reserved.
+          </p>
+          <nav aria-label="Legal" className="flex items-center gap-5 text-xs text-muted-foreground">
+            <Link href="/privacy" className="transition-colors hover:text-white">Privacy Policy</Link>
+            <Link href="/terms" className="transition-colors hover:text-white">Terms of Use</Link>
+          </nav>
         </div>
       </div>
     </footer>

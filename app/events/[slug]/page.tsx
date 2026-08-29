@@ -22,7 +22,7 @@ export const generateMetadata = async ({
       description: event?.description || "The requested event could not be found.",
     }
   } catch (error) {
-    console.error("Event metadata fetch failed:", error)
+    //console.error("Event metadata fetch failed:", error)
     return { title: "Event", description: "Event details" }
   }
 }

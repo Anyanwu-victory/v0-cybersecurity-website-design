@@ -366,8 +366,10 @@ export default function Contact() {
               )}
             </button>
             <p className="text-center text-xs text-muted-foreground">
-              By sending, you agree to our strict non-disclosure terms and
-              privacy policy.
+              By sending, you accept our{" "}
+              <Link href="/privacy" className="underline transition-colors hover:text-white">Privacy Policy</Link>
+              {" "}and{" "}
+              <Link href="/terms" className="underline transition-colors hover:text-white">Terms of Use</Link>.
             </p>
           </form>
         </motion.div>
