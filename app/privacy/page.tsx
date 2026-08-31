@@ -3,7 +3,7 @@ import Link from "next/link"
 
 // Describe the policy accurately in search results without exposing operational details.
 export const metadata: Metadata = {
-  title: "Privacy Policy",
+  title: {absolute: "Privacy Policy | RedTrace-D Sentinel"},
   description: "How RedTrace-D Sentinel collects, uses, and protects information submitted through this website.",
   alternates: {canonical: "/privacy"},
 }
