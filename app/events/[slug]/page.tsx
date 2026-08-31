@@ -1,43 +1,58 @@
-import { notFound } from "next/navigation"
-import EventDetailsClient from "./event-details-client"
-import { sanity } from "@/lib/sanity"
+// app/events/[slug]/page.tsx
+import { notFound } from "next/navigation";
+import { cache } from "react";
+import EventDetailsClient from "./event-details-client";
+import { EventStructuredData } from "@/components/EventStructuredData"; // ← add this import
+import { sanity } from "@/lib/sanity";
+import type { Metadata } from "next";
 
-// Fetch fresh event documents instead of serving a stale static event page.
-export const dynamic = "force-dynamic"
+export const dynamic = "force-dynamic";
 
-// Build page metadata from the same Sanity event slug used by the route.
-export const generateMetadata = async ({
+const getEvent = cache(async (slug: string) => {
+  return sanity.client.fetch(
+    `*[_type == "event" && slug.current == $slug][0]{
+      title, description, "image": image.asset->url
+    }`,
+    { slug },
+  );
+});
+
+export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
-}) => {
-  try {
-    const { slug } = await params
-    const event = await sanity.client.fetch(
-      `*[_type == "event" && slug.current == $slug][0]{title, description}`,
-      { slug },
-    )
-    return {
-      title: event?.title || "Event not found",
-      description: event?.description || "The requested event could not be found.",
-    }
-  } catch (error) {
-    console.error("Event metadata fetch failed:", error)
-    return { title: "Event", description: "Event details" }
-  }
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const event = await getEvent(slug);
+
+  if (!event) return { title: "Event not found" };
+
+  return {
+    title: event.title,
+    description: event.description,
+    openGraph: {
+      title: event.title,
+      description: event.description,
+      url: `https://rtdsentinel.com/events/${slug}`,
+      images: [{ url: event.image || "/og-image.jpg" }],
+    },
+  };
 }
 
-// Render an event or delegate unknown slugs to the application's custom 404 page.
 export default async function EventDetailsPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = await params
-  const event = await sanity.fetchEventBySlug(slug)
+  const { slug } = await params;
+  const event = await sanity.fetchEventBySlug(slug);
 
-  // This produces a real 404 response instead of a normal page containing an error message.
-  if (!event) notFound()
+  if (!event) notFound();
 
-  return <EventDetailsClient event={event} params={{ slug }} />
+  return (
+    <>
+      <EventStructuredData event={event} /> {/* ← add this line */}
+      <EventDetailsClient event={event} params={{ slug }} />
+    </>
+  );
 }

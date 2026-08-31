@@ -16,9 +16,9 @@ export async function generateMetadata({
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await sanity.fetchArticleBySlug(slug);
-  if (!article) return { title: "Insight not found | RT-DS" };
+  if (!article) return { title: "Insight not found" };
   return {
-    title: article.seoTitle || `${article.title} | RT-DS`,
+    title: article.seoTitle || article.title,
     description: article.seoDescription || article.excerpt,
     openGraph: { images: article.imageUrl ? [article.imageUrl] : [] },
   };

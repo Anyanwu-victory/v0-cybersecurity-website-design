@@ -99,7 +99,7 @@ export async function POST(request: NextRequest) {
   try {
     await sendRegistrationEmail({ email, fullName, eventTitle: event.title, amount, currency });
   } catch (error) {
-    console.error("Webhook registration saved but email failed:", error);
+    //console.error("Webhook registration saved but email failed:", error);
   }
 
   // Reminder failure is isolated so a saved paid registration remains confirmed.
@@ -110,7 +110,7 @@ export async function POST(request: NextRequest) {
     registrantName: fullName,
     event,
   }).catch((reminderError) => {
-    console.error("Paid registration saved but reminder scheduling failed:", reminderError);
+    //console.error("Paid registration saved but reminder scheduling failed:", reminderError);
   });
 
   return NextResponse.json({ received: true, registrationId });

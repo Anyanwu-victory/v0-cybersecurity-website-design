@@ -88,8 +88,6 @@ export default function CheckoutContent() {
       alert('Paystack did not return a payment reference. Please contact support.')
       return
     }
-    console.log('✅ Payment successful:', reference)
-
     const registrationKey = `event-registration:${config.metadata.eventId}`
     sessionStorage.removeItem(registrationKey)
     const successUrl = new URL('/events/register/success', window.location.origin)
@@ -101,7 +99,6 @@ export default function CheckoutContent() {
   }
 
   const handleClose = () => {
-    console.log('❌ Payment closed')
     // User closed the payment modal
     const cancelUrl = new URL('/events/register/cancelled', window.location.origin)
     // Cancellation returns to the public event slug rather than the internal business ID.

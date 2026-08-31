@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "RedTrace D Sentinel",
+    "short_name": "RTDS",
     "icons": [
         {
             "src": "/android-chrome-192x192.png",

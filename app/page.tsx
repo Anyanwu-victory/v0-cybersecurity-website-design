@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
-import {ArrowRight, Shield, Lock, Search, Presentation } from "lucide-react";
+import { ArrowRight, Shield, Lock, Search, Presentation } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { IconUser, IconDeviceDesktop } from "@tabler/icons-react";
@@ -10,16 +10,14 @@ import { sanity } from "@/lib/sanity";
 import HomepageCTA from "@/components/HomepageCTA";
 import InsightsSection from "@/components/insights-section";
 
-
-
 export default function Home() {
-  const [services, setServices] = useState<any[]>([])
-  const [siteSettings, setSiteSettings] = useState<any>(null)
+  const [services, setServices] = useState<any[]>([]);
+  const [siteSettings, setSiteSettings] = useState<any>(null);
   // Store the latest Sanity articles used by the homepage insights section.
-  const [articles, setArticles] = useState<any[]>([])
+  const [articles, setArticles] = useState<any[]>([]);
 
   useEffect(() => {
-    let mounted = true
+    let mounted = true;
     const ICON_MAP: Record<string, any> = {
       Shield,
       Presentation,
@@ -27,29 +25,32 @@ export default function Home() {
       Lock,
       IconUser,
       IconDeviceDesktop,
-    }
+    };
 
     // fetch services and site settings in parallel
-    Promise.all([sanity.fetchServices(), sanity.fetchSiteSettings(), sanity.fetchArticles(9)])
-      .then(([servicesRes, settings, articlesRes]: any) => {
-        if (!mounted) return
-        const mapped = (servicesRes || []).map((s: any) => ({
-          ...s,
-          icon: ICON_MAP[s.icon] || Shield,
-        }))
-        setServices(mapped)
-        setSiteSettings(settings)
-        // Retain enough recent articles for useful category filtering in the homepage section.
-        setArticles(articlesRes || [])
-      })
+    Promise.all([
+      sanity.fetchServices(),
+      sanity.fetchSiteSettings(),
+      sanity.fetchArticles(9),
+    ]).then(([servicesRes, settings, articlesRes]: any) => {
+      if (!mounted) return;
+      const mapped = (servicesRes || []).map((s: any) => ({
+        ...s,
+        icon: ICON_MAP[s.icon] || Shield,
+      }));
+      setServices(mapped);
+      setSiteSettings(settings);
+      // Retain enough recent articles for useful category filtering in the homepage section.
+      setArticles(articlesRes || []);
+    });
 
     return () => {
-      mounted = false
-    }
-  }, [])
+      mounted = false;
+    };
+  }, []);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative overflow-x-hidden">
       {/* Hero Section */}
       <section className="cyber-grid relative flex min-h-[90vh] flex-col items-center justify-center px-4 py-24 text-center">
         <div className="absolute  inset-0 z-0 bg-gradient-to-b from-transparent via-background/50 to-[#0B0E14]" />
@@ -78,15 +79,14 @@ export default function Home() {
             early and building security into everything they create
           </p>
 
-          <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="inline-flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
               className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-4 py-4 text-md font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
             >
-              Connect With Us
+              Contact Us
               <ArrowRight className="h-5 w-5" />
             </Link>
-
           </div>
         </motion.div>
 
@@ -122,15 +122,17 @@ export default function Home() {
                 className={cn(
                   "mb-6 flex h-14 w-14 items-center justify-center rounded-xl bg-muted transition-all group-hover:scale-110",
                   // only include as a Tailwind class when it's already a valid class (eg. starts with "text-")
-                  service.color && !/#/.test(String(service.color)) ? service.color : undefined,
+                  service.color && !/#/.test(String(service.color))
+                    ? service.color
+                    : undefined,
                 )}
                 // if a raw hex was stored (eg. "#E11D2E" or "[#E11D2E]"), extract and apply as inline color
                 style={(() => {
-                  const col = service.color
-                  if (!col) return undefined
-                  const m = String(col).match(/#([0-9A-Fa-f]{3,8})/)
-                  if (m) return { color: `#${m[1]}` }
-                  return undefined
+                  const col = service.color;
+                  if (!col) return undefined;
+                  const m = String(col).match(/#([0-9A-Fa-f]{3,8})/);
+                  if (m) return { color: `#${m[1]}` };
+                  return undefined;
                 })()}
               >
                 <service.icon className="h-7 w-7" />
@@ -144,43 +146,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Intro section */}
-      {/* <section className="relative pt-20 pb-[500px] md:p-0">
-        <div className="relative">
-          <img
-            src="/images/logo_design_1.png"
-            alt="logo Image"
-            loading="lazy"
-            className="w-full h-auto object-center object-cover  opacity-20"
-          />
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }} // Not in view
-            whileInView={{ opacity: 1, y: 0 }} // In view
-            viewport={{ once: true, amount: 0.3 }} // Trigger when 30% is visible
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="absolute top-96 inset-0 flex items-center justify-center md:top-0"
-          >
-            <div
-              className="bg-gradient-to-b from-transparent via-background/50 to-[#0B0E14] 
-                    backdrop-blur-sm rounded-lg p-8 max-w-sm text-center md:p-12 
-                    md:max-w-3xl mx-auto "
-            >
-              <div className="text-[#E11D2E] text-6xl mb-4"> "</div>
-              <p className="text-white text-lg md:text-xl leading-relaxed mb-8 ">
-                {siteSettings?.homePageIntroSectionText}
-              </p>
-              <div className="text-[#E11D2E] text-6xl mt-4"> " </div>
-            </div>
-          </motion.div>
-        </div>
-      </section> */}
-
       {/* Show the latest CMS-managed security articles before the closing CTA. */}
       <InsightsSection articles={articles} />
 
       {/* Featured CTA */}
- <HomepageCTA />
+      <HomepageCTA />
     </div>
   );
 }

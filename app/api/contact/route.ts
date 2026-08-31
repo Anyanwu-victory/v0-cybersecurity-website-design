@@ -15,7 +15,7 @@ const resend = new Resend(resendApiKey);
 export async function POST(request: Request) {
   try {
     if (!adminEmail) {
-      console.error("ADMIN_EMAIL is not configured");
+      // console.error("ADMIN_EMAIL is not configured");
 
       return NextResponse.json(
         { error: "Email service is not configured" },
@@ -49,7 +49,7 @@ export async function POST(request: Request) {
     }
 
     // 1. Send website enquiry to RTD Sentinel
-    const { data: adminData, error: adminError } = await resend.emails.send({
+    const { error: adminError } = await resend.emails.send({
       from: "RedTrace-D Sentinel Website <website@mail.rtdsentinel.com>",
       to: [adminEmail],
 
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
     });
 
     if (adminError) {
-      console.error("Admin notification failed:", adminError);
+      // console.error("Admin notification failed:", adminError);
 
       return NextResponse.json(
         {
@@ -78,7 +78,7 @@ export async function POST(request: Request) {
     }
 
     // 2. Confirmation email to visitor
-    const { data: replyData, error: replyError } = await resend.emails.send({
+    const { error: replyError } = await resend.emails.send({
       from: "RedTrace-D Sentinel <contact@mail.rtdsentinel.com>",
       to: [email],
 
@@ -93,20 +93,15 @@ export async function POST(request: Request) {
     // The enquiry was already received, so don't fail the
     // entire submission if only the acknowledgement fails.
     if (replyError) {
-      console.error("Auto-reply failed:", replyError);
+      // console.error("Auto-reply failed:", replyError);
     }
-
-    console.log("Contact enquiry sent:", {
-      adminMessageId: adminData?.id,
-      autoReplyMessageId: replyData?.id,
-    });
 
     return NextResponse.json({
       success: true,
       message: "Message sent successfully",
     });
   } catch (error) {
-    console.error("Contact form error:", error);
+    //  console.error("Contact form error:", error);
 
     return NextResponse.json(
       {

@@ -72,16 +72,14 @@ export default function NavbarGlass() {
             aria-label="RT-DS home"
           >
             <Image
-              src="/images/logo_design_1.png"
+              src="/images/RedTrace_Footer_logo.png"
               alt="RT-DS Logo"
-              width={56}
-              height={56}
+              width={0}
+              height={0}
               priority
-              className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-105 lg:h-14 lg:w-14"
+              className="h-30 w-30 object-contain  lg:h-40 lg:w-40"
             />
-            <span className="text-lg font-bold tracking-[-0.04em] text-white sm:text-xl">
-              RT-DS
-            </span>
+          
           </Link>
 
 
@@ -120,7 +118,7 @@ export default function NavbarGlass() {
             href="/contact"
             className="group hidden items-center gap-2 rounded-full bg-[#E11D2E] px-6 py-3 text-sm font-bold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-[#c91828] hover:shadow-[0_10px_30px_rgba(225,29,46,0.3)] lg:inline-flex"
           >
-            Connect
+            Contact
             <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
           </Link>
 

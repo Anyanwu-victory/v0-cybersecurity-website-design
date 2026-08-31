@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AlertCircle, CheckCircle, Loader2, X } from "lucide-react";
 
 
@@ -114,15 +115,6 @@ export function EventRegistrationForm({
         router.push(checkoutUrl.toString());
         return;
       }
-      console.log("📤 Sending registration data:", {
-        eventId,
-        fullName: formData.fullName,
-        email: formData.email,
-        phone: formData.phone,
-        company: formData.company,
-        profession: formData.profession,
-      });
-
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
@@ -138,11 +130,7 @@ export function EventRegistrationForm({
         }),
       });
 
-      // Log response status
-      console.log("📥 Response status:", response.status);
-
       const data = await response.json();
-      console.log("📥 Response data:", data);
 
       if (!response.ok) {
         // Show specific error message from API
@@ -174,7 +162,6 @@ export function EventRegistrationForm({
         checkoutUrl.searchParams.set("eventTitle", eventTitle || "");
         checkoutUrl.searchParams.set("fullName", formData.fullName);
 
-        console.log("💳 Redirecting to checkout:", checkoutUrl.toString());
         router.push(checkoutUrl.toString());
       } else {
         // Free event - redirect to success page
@@ -187,7 +174,6 @@ export function EventRegistrationForm({
         // Free registrations can safely use a standard confirmation-error message.
         successUrl.searchParams.set("type", "free");
 
-        console.log("✅ Redirecting to success page:", successUrl.toString());
         router.push(successUrl.toString());
       }
 
@@ -384,7 +370,10 @@ export function EventRegistrationForm({
         </button>
 
         <p className="text-xs text-muted-foreground text-center mt-4">
-          By registering, you agree to receive event-related emails.
+          By registering, you agree to receive event-related emails and accept our{" "}
+          <Link href="/privacy" className="underline transition-colors hover:text-white">Privacy Policy</Link>
+          {" "}and{" "}
+          <Link href="/terms" className="underline transition-colors hover:text-white">Terms of Use</Link>.
         </p>
       </form>
     </div>

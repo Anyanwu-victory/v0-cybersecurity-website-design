@@ -37,12 +37,13 @@ export default function InsightsSection({articles}: InsightsSectionProps) {
         <div className="absolute -right-32 bottom-0 h-72 w-72 rounded-full bg-[#38BDF8]/5 blur-3xl" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl ">
+      {/* Use the outer homepage container as the single desktop width constraint. */}
+      <div className="relative w-full">
         {/* Introduce the section and provide a clear route to the complete archive. */}
         <div className="mb-12 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-3xl">
             <p className="mb-3 font-mono text-xs font-semibold uppercase tracking-[0.28em] text-[#E11D2E]">
-              Intelligence &amp; Insights
+              Blogs
             </p>
             <h2 className="text-2xl font-bold leading-tight md:text-4xl">
               Expert Insights on Security, Technology &amp; Protection
