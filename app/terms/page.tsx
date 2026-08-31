@@ -3,10 +3,11 @@ import Link from "next/link"
 
 // Give the public terms page its own canonical search metadata.
 export const metadata: Metadata = {
-  title: "Terms of Use",
+  title: {absolute: "Terms of Use | RedTrace-D Sentinel"},
   description: "Terms governing use of the RedTrace-D Sentinel website and event-registration services.",
   alternates: {canonical: "/terms"},
 }
+
 
 // State the website's core usage and event-registration conditions in plain language.
 export default function TermsPage() {
