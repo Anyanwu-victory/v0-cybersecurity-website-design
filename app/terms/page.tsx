@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   alternates: {canonical: "/terms"},
 }
 
+
 // State the website's core usage and event-registration conditions in plain language.
 export default function TermsPage() {
   return (
