@@ -25,7 +25,7 @@ export default function ArticleCard({article}: ArticleCardProps) {
         <div className="absolute inset-0 bg-black/40" />
         {/* Title on top of image */}
         <div className="absolute left-0 right-0 bottom-0 p-6">
-          <h3 className="text-2xl font-bold leading-tight text-white drop-shadow-sm">
+          <h3 className="text-xl font-semibold leading-tight text-white drop-shadow-sm md:text-sm xl:text-xl">
             <span className="inline-block">
               {article.title}
             </span>

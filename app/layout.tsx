@@ -1,9 +1,9 @@
 import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
-import "./globals.css"
+import "./globals.css";
 import Footer from "@/components/footer"
-import NavbarGlass from "@/components/navbarGlass"  
+import NavbarGlass from "@/components/navbarGlass"
 import SiteShell from "@/components/site-shell"
 import { Inter, JetBrains_Mono } from "next/font/google"
 
@@ -20,23 +20,24 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   // Resolve canonical and social URLs against the deployed production origin.
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://rtdsentinel.com"),
-  title: { default: "RT-DS | Cybersecurity & Digital Forensics", template: "%s | RT-DS" },
-  description: "Securing the Future, One Trace at a Time. Enterprise-grade threat detection and response.",
+  title: { default: "Home | RedTrace-D Sentinel", template: "%s | RedTrace-D Sentinel" },
+  description: "Securing the Future, One Trace at a Time. Enterprise-grade threat detection and response tea.",
   applicationName: "RedTrace-D Sentinel",
-  keywords: ["cybersecurity", "digital forensics", "security awareness", "vulnerability management"],
+  keywords: ["cybersecurity", "digital forensics", "security awareness", "Red Trace","rtds","sentinel","rtd"],
   authors: [{ name: "RedTrace-D Sentinel" }],
   creator: "RedTrace-D Sentinel",
   publisher: "RedTrace-D Sentinel",
   openGraph: {
     type: "website", locale: "en_NG", siteName: "RedTrace-D Sentinel",
-    title: "RT-DS | Cybersecurity & Digital Forensics",
+    title: "Home | RedTrace-D Sentinel",
     description: "Securing the Future, One Trace at a Time.",
     images: [{ url: "/images/redtraced_logo.jpeg", alt: "RedTrace-D Sentinel" }],
   },
   twitter: {
-    card: "summary_large_image", title: "RT-DS | Cybersecurity & Digital Forensics",
+    card: "summary_large_image", title: "Home | RedTrace-D Sentinel",
     description: "Securing the Future, One Trace at a Time.", images: ["/images/redtraced_logo.jpeg"],
   },
+
   icons: {
     icon: [
       {
