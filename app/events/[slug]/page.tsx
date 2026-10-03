@@ -1,20 +1,15 @@
-// app/events/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import EventDetailsClient from "./event-details-client";
-import { EventStructuredData } from "@/components/EventStructuredData"; // ← add this import
+import { EventStructuredData } from "@/components/EventStructuredData";
+import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { sanity } from "@/lib/sanity";
 import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
 const getEvent = cache(async (slug: string) => {
-  return sanity.client.fetch(
-    `*[_type == "event" && slug.current == $slug][0]{
-      title, description, "image": image.asset->url
-    }`,
-    { slug },
-  );
+  return sanity.fetchEventBySlug(slug);
 });
 
 export async function generateMetadata({
@@ -25,16 +20,29 @@ export async function generateMetadata({
   const { slug } = await params;
   const event = await getEvent(slug);
 
-  if (!event) return { title: "Event not found" };
+  if (!event) return { title: "Event Not Found" };
+
+  const pageUrl = `https://www.rtdsentinel.com/events/${slug}`;
+  const imageUrl = event.imageUrl || "https://www.rtdsentinel.com/images/redtraced_logo.jpeg";
 
   return {
-    title: event.title,
-    description: event.description,
+    title: `${event.title} | Cybersecurity Event`,
+    description: event.description || "Join RedTrace-D Sentinel for this exclusive cybersecurity briefing.",
+    alternates: {
+      canonical: pageUrl,
+    },
     openGraph: {
-      title: event.title,
+      title: `${event.title} | Cybersecurity Event`,
       description: event.description,
-      url: `https://rtdsentinel.com/events/${slug}`,
-      images: [{ url: event.image || "/og-image.jpg" }],
+      url: pageUrl,
+      type: "website",
+      images: [{ url: imageUrl, alt: event.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${event.title} | Cybersecurity Event`,
+      description: event.description,
+      images: [imageUrl],
     },
   };
 }
@@ -45,14 +53,22 @@ export default async function EventDetailsPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const event = await sanity.fetchEventBySlug(slug);
+  const event = await getEvent(slug);
 
   if (!event) notFound();
 
   return (
     <>
-      <EventStructuredData event={event} /> {/* ← add this line */}
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://www.rtdsentinel.com" },
+          { name: "Events", url: "https://www.rtdsentinel.com/events" },
+          { name: event.title, url: `https://www.rtdsentinel.com/events/${slug}` },
+        ]}
+      />
+      <EventStructuredData event={event} />
       <EventDetailsClient event={event} params={{ slug }} />
     </>
   );
 }
+

@@ -5,22 +5,45 @@ import { notFound } from "next/navigation";
 import { CalendarDays, UserRound } from "lucide-react";
 import { formatArticleCategory, formatArticleDate } from "@/lib/articles";
 import { sanity } from "@/lib/sanity";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
 }
 
-// Build page-specific SEO metadata from the corresponding Sanity article.
 export async function generateMetadata({
   params,
 }: ArticlePageProps): Promise<Metadata> {
   const { slug } = await params;
   const article = await sanity.fetchArticleBySlug(slug);
-  if (!article) return { title: {absolute: "Insight not found | RedTrace-D Sentinel"} };
+  if (!article) return { title: { absolute: "Insight Not Found | RedTrace-D Sentinel" } };
+
+  const pageUrl = `https://www.rtdsentinel.com/insights/${slug}`;
+  const titleText = `${article.seoTitle || article.title} | RedTrace-D Sentinel`;
+  const descText = article.seoDescription || article.excerpt;
+  const imageUrl = article.imageUrl || "https://www.rtdsentinel.com/images/redtraced_logo.jpeg";
+
   return {
-    title: {absolute: `${article.seoTitle || article.title} | RedTrace-D Sentinel`},
-    description: article.seoDescription || article.excerpt,
-    openGraph: { images: article.imageUrl ? [article.imageUrl] : [] },
+    title: { absolute: titleText },
+    description: descText,
+    alternates: {
+      canonical: pageUrl,
+    },
+    openGraph: {
+      title: titleText,
+      description: descText,
+      url: pageUrl,
+      type: "article",
+      publishedTime: article.publishedAt,
+      authors: [article.author || "RedTrace-D Sentinel Team"],
+      images: [{ url: imageUrl, alt: article.title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: titleText,
+      description: descText,
+      images: [imageUrl],
+    },
   };
 }
 
@@ -96,6 +119,14 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   return (
     <main className="min-h-screen pb-24 pt-20 lg:px-8">
+      <ArticleJsonLd article={article} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "https://www.rtdsentinel.com" },
+          { name: "Insights", url: "https://www.rtdsentinel.com/insights" },
+          { name: article.title, url: `https://www.rtdsentinel.com/insights/${slug}` },
+        ]}
+      />
       {/* Breadcrumb: Home · Insights · Article Title */}
       <nav aria-label="Breadcrumb" className="mb-8 pl-8">
         <ol className="inline-flex items-center gap-2 text-sm text-muted-foreground">
