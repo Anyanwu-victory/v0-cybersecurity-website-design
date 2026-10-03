@@ -106,10 +106,10 @@ export default async function Footer() {
                 About
               </Link>
               <Link
-                href="/blog"
+                href="/insights"
                 className="text-md text-muted-foreground hover:text-[#E11D2E] transition-colors"
               >
-                Blog
+                Insights
               </Link>
               
               <Link
@@ -122,7 +122,7 @@ export default async function Footer() {
           </div>
 
           <div className="flex flex-col gap-4">
-            <h1 className="font-bold text-lg text-white ">Contact Us</h1>
+            <h3 className="font-bold text-lg text-white">Contact Us</h3>
             <p className="text-md text-muted-foreground">
               email:{" "}
               {emailMethod ? (

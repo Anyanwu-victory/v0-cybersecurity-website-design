@@ -1,11 +1,12 @@
 import type { MetadataRoute } from "next";
 import { sanity } from "@/lib/sanity";
+import { servicesDetail } from "@/lib/servicesDetailsData";
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://rtdsentinel.com"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.rtdsentinel.com"
   ).replace(/\/$/, "");
 
   const staticPaths = [
@@ -17,6 +18,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/privacy",
     "/terms",
   ];
+
+  const serviceEntries: MetadataRoute.Sitemap = servicesDetail.map((service) => ({
+    url: `${siteUrl}/services/${service.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.8,
+  }));
+
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: `${siteUrl}${path}`,
     lastModified: new Date(),
@@ -47,7 +56,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${siteUrl}/events/${event.slug}`,
         lastModified: new Date(event._updatedAt),
         changeFrequency: "weekly" as const,
-        // Upcoming events ranked higher than past ones
         priority: new Date(event.date) > now ? 0.9 : 0.6,
       })),
       ...articles.map((article) => ({
@@ -58,9 +66,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })),
     ];
 
-    return [...staticEntries, ...dynamicEntries];
+    return [...staticEntries, ...serviceEntries, ...dynamicEntries];
   } catch (error) {
-   //console.error("Dynamic sitemap content fetch failed:", error);
-    return staticEntries;
+    return [...staticEntries, ...serviceEntries];
   }
 }
+
