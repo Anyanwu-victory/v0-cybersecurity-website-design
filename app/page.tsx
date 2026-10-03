@@ -67,7 +67,7 @@ export default function Home() {
           </div> */}
 
           <h1 className="text-5xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.08] sm:leading-[1.08]">
-            Securing the <span className="text-[#E11D2E]">Future</span>,
+            Securing the <span className="text-[#E11D2E]">Future</span>
             <br />
             One Trace at a Time
           </h1>
