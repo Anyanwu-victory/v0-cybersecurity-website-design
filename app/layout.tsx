@@ -38,6 +38,12 @@ export const metadata: Metadata = {
     "incident response",
     "RedTrace-D Sentinel",
     "RTDS",
+    "rtdsentinel",
+    "rtdsentinel.com",
+    "rtds",
+    "redtrace-d",
+    "redtrace-d-sentinel",
+
   ],
   authors: [{ name: "RedTrace-D Sentinel", url: siteUrl }],
   creator: "RedTrace-D Sentinel",
