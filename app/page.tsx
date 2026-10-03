@@ -59,40 +59,40 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="relative z-10 mx-auto max-w-4xl space-y-2"
+          className="relative z-10 mx-auto max-w-5xl space-y-6"
         >
-          {/* <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-[#E11D2E]/30 bg-[#E11D2E]/10 px-4 py-1.5 text-xs font-semibold tracking-wider text-[#E11D2E] uppercase">
-            <Zap className="h-3 w-3" />
-            Vulnerability Insight & Response
+          {/* <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.03] px-4 py-1.5 text-xs font-mono font-medium tracking-wider text-slate-300 backdrop-blur-md">
+            <span className="h-2 w-2 rounded-full bg-[#E11D2E] animate-pulse" />
+            REDTRACE-D SENTINEL // INTELLIGENCE & DEFENSE
           </div> */}
-          <h1 className="mb-6 text-5xl font-extrabold tracking-wide sm:text-7xl md:text-7xl">
-            Securing the{" "}
-            <span className="bg-gradient-to-r from-[#E11D2E] to-[#38BDF8] bg-clip-text text-transparent">
-              Future
-            </span>
+
+          <h1 className="text-5xl font-bold tracking-tight text-white md:text-6xl lg:text-7xl leading-[1.08] sm:leading-[1.08]">
+            Securing the <span className="text-[#E11D2E]">Future</span>,
             <br />
             One Trace at a Time
           </h1>
-          <p className="mx-auto mb-10 max-w-2xl text-lg text-muted-foreground md:text-xl leading-9">
+
+
+          <p className="mx-auto max-w-xl md:max-w-md lg:max-w-xl text-base text-slate-400 text-sm md:text-md font-normal leading-relaxed">
             RTDS (RedTrace-D Sentinel) helps individuals, startups, and
             organizations stay ahead of cyber threats by finding vulnerabilities
-            early and building security into everything they create
+            early and building security into everything they create.
           </p>
 
-          <div className="inline-flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <div className="pt-4 inline-flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link
               href="/contact"
-              className="flex w-full items-center justify-center gap-2 rounded-lg bg-[#E11D2E] px-4 py-4 text-md font-bold text-white transition-all hover:bg-[#E11D2E]/90 hover:neon-glow-red sm:w-auto"
+              className="flex w-full items-center justify-center gap-2 rounded-xl bg-[#E11D2E] px-6 py-3.5 text-base font-semibold text-white shadow-lg transition-all hover:bg-[#c81625] sm:w-auto"
             >
               Contact Us
-              <ArrowRight className="h-5 w-5" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </motion.div>
 
-        {/* Decorative Circuit Lines */}
-        <div className="hidden md:flex pointer-events-none absolute left-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/50 to-transparent" />
-        <div className="hidden md:flex pointer-events-none absolute right-0 top-1/2 h-px w-64 -translate-y-1/2 bg-gradient-to-l from-[#38BDF8]/50 to-transparent" />
+        {/* Decorative subtle ambient accents */}
+        <div className="hidden md:block pointer-events-none absolute left-0 top-1/2 h-px w-48 -translate-y-1/2 bg-gradient-to-r from-[#E11D2E]/20 to-transparent" />
+        <div className="hidden md:block pointer-events-none absolute right-0 top-1/2 h-px w-48 -translate-y-1/2 bg-gradient-to-l from-white/10 to-transparent" />
       </section>
 
       {/* Features Grid */}
