@@ -3,7 +3,6 @@ import { IconUser, IconDeviceDesktop } from "@tabler/icons-react"
 
 export const servicesDetail = [
   {
-    slug: "penetration-testing",
     title: "Penetration Testing & Ethical Hacking",
     description: "We simulate real-world attacks to uncover vulnerabilities before malicious actors do.",
     subtitle: "Simulate real-world attacks to find vulnerabilities early",
@@ -49,7 +48,6 @@ export const servicesDetail = [
     ],
   },
   {
-    slug: "vulnerability-assessment",
     title: "Vulnerability Assessment & Risk Analysis",
     description: "Identify security gaps, assess impact, and get clear recommendations to reduce risk.",
     subtitle: "Find security gaps and assess their business impact",
@@ -95,7 +93,6 @@ export const servicesDetail = [
     ],
   },
   {
-    slug: "secure-software-development",
     title: "Secure Software Development",
     description: "We design and build software with security baked in—from architecture to deployment.",
     subtitle: "Build secure applications from the ground up",
@@ -141,7 +138,6 @@ export const servicesDetail = [
     ],
   },
   {
-    slug: "product-design",
     title: "Product Design (UI/UX & Security-First Design)",
     description: "Creating user-friendly, secure digital products that balance usability with protection.",
     subtitle: "Design beautiful products that are secure by default",
@@ -187,7 +183,6 @@ export const servicesDetail = [
     ],
   },
   {
-    slug: "training-webinars",
     title: "Cybersecurity Training & Webinars",
     description: "Practical training for students, developers, and professionals—from beginner to advanced levels.",
     subtitle: "Learn cybersecurity from industry experts",
@@ -278,7 +273,6 @@ export const servicesDetail = [
     ],
   },
   {
-    slug: "security-consulting",
     title: "Security Consulting & Advisory",
     description: "Expert guidance to help organizations make smart security decisions and build resilient systems.",
     subtitle: "Strategic security guidance for your organization",

@@ -128,10 +128,9 @@ export const sanity = {
 
   async fetchServices() {
     const res = await client.fetch(
-      `*[_type == "service"] | order(title asc){..., "slug": slug.current}`
+      `*[_type == "service"] | order(title asc){...}`
     )
     return (res || []).map((s: any) => ({
-      slug: s.slug,
       title: s.title,
       description: s.description,
       icon: s.icon,

@@ -1,6 +1,5 @@
 import React from "react";
-
-const siteUrl = "https://www.rtdsentinel.com";
+import { siteUrl } from "@/lib/site";
 
 export function OrganizationJsonLd() {
   const schema = {

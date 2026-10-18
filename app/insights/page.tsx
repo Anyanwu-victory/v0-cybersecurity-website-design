@@ -6,6 +6,18 @@ import {sanity} from "@/lib/sanity"
 export const metadata: Metadata = {
   title: {absolute: "Security Insights | RedTrace-D Sentinel"},
   description: "Expert perspectives on cybersecurity, digital forensics, technology, and practical protection.",
+  alternates: {canonical: "/insights"},
+  openGraph: {
+    title: "Security Insights | RedTrace-D Sentinel",
+    description: "Expert perspectives on cybersecurity, digital forensics, technology, and practical protection.",
+    url: "https://www.rtdsentinel.com/insights",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Security Insights | RedTrace-D Sentinel",
+    description: "Expert perspectives on cybersecurity, digital forensics, technology, and practical protection.",
+  },
 }
 
 // Render every published Sanity article in a responsive archive.

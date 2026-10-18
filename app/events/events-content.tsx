@@ -13,13 +13,13 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import { sanity } from "@/lib/sanity";
 
-export default function Events() {
+export default function Events({ initialEvents = [] }: { initialEvents?: any[] }) {
  
   const [filterMenuOpen, setFilterMenuOpen] = useState(false);
   const [typeOpen, setTypeOpen] = useState(true);
 
   const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
-  const [events, setEvents] = useState<any[]>([]);
+  const [events, setEvents] = useState<any[]>(initialEvents);
 
   // Prevent body scroll when mobile filter menu is open
   useEffect(() => {
