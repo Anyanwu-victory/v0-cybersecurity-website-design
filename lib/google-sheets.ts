@@ -9,11 +9,12 @@ const EVENT_HEADERS = [
 const REGISTRATION_HEADERS = [
   "Registration ID", "Name", "Email", "Phone", "Profession", "Company",
   "Registration Type", "Amount", "Currency", "Payment Status", "Payment Reference", "Registered At",
-  "Reminder Scheduled At", "Resend Reminder ID", "Reminder Status",
+  "Reminder Scheduled At", "Resend Reminder ID", "Reminder Status", "Confirmation Email Status",
 ];
 
 // Reminder states persisted with each registration for idempotent scheduling.
 export type ReminderStatus = "PENDING" | "SCHEDULED" | "CANCELLED" | "FAILED";
+export type ConfirmationEmailStatus = "PENDING" | "ACCEPTED" | "FAILED" | "UNKNOWN";
 
 // Server-resolved Sanity metadata required to locate and describe an event tab.
 export interface EventSheetInfo {
@@ -36,7 +37,7 @@ export interface EventSheetInfo {
   updatedAt?: string;
 }
 
-// Standard A:L record written to every event registration tab.
+// Standard registration record written through column P in every event tab.
 export interface RegistrationRow {
   registrationId: string;
   fullName: string;
@@ -53,6 +54,7 @@ export interface RegistrationRow {
   reminderScheduledAt?: string;
   resendReminderId?: string;
   reminderStatus?: ReminderStatus;
+  confirmationEmailStatus?: ConfirmationEmailStatus;
 }
 
 // Build an authenticated Sheets client from the service-account JSON environment variable.
@@ -138,7 +140,7 @@ export async function ensureEventTab(event: EventSheetInfo) {
         },
         {
           setBasicFilter: {
-            filter: { range: { sheetId, startRowIndex: 0, startColumnIndex: 0, endColumnIndex: 15 } },
+            filter: { range: { sheetId, startRowIndex: 0, startColumnIndex: 0, endColumnIndex: 16 } },
           },
         },
       ],
@@ -204,7 +206,7 @@ export async function appendRegistration(event: EventSheetInfo, row: Registratio
   const sheets = await getSheetClient();
   await sheets.spreadsheets.values.append({
     spreadsheetId: getSpreadsheetId(),
-    range: `${quotedTab(event.sheetTabName)}!A:L`,
+    range: `${quotedTab(event.sheetTabName)}!A:P`,
     valueInputOption: "RAW",
     insertDataOption: "INSERT_ROWS",
     requestBody: {
@@ -213,6 +215,7 @@ export async function appendRegistration(event: EventSheetInfo, row: Registratio
         row.company || "", row.registrationType, row.amount, row.currency || "",
         row.paymentStatus, row.paymentReference || "", row.registeredAt,
         row.reminderScheduledAt || "", row.resendReminderId || "", row.reminderStatus || "",
+        "PENDING",
       ]],
     },
   });
@@ -226,7 +229,7 @@ async function readRegistrationRows(event: EventSheetInfo) {
   if (!tab) return [];
   const response = await sheets.spreadsheets.values.get({
     spreadsheetId: getSpreadsheetId(),
-    range: `${quotedTab(event.sheetTabName)}!A:O`,
+    range: `${quotedTab(event.sheetTabName)}!A:P`,
   });
   return (response.data.values || []).slice(1);
 }
@@ -264,6 +267,7 @@ export async function findRegistration(event: EventSheetInfo, registrationId: st
     reminderScheduledAt: row[12] || "",
     resendReminderId: row[13] || "",
     reminderStatus: (row[14] || undefined) as ReminderStatus | undefined,
+    confirmationEmailStatus: (row[15] || "UNKNOWN") as ConfirmationEmailStatus,
   };
 }
 
@@ -297,6 +301,25 @@ async function getRegistrationRowNumber(
   const rowIndex = (response.data.values || []).slice(1).findIndex((row) => row[0] === registrationId);
   if (rowIndex < 0) throw new Error(`Registration ${registrationId} was not found`);
   return rowIndex + 2;
+}
+
+// Persist the outcome of the confirmation email independently from registration success.
+export async function updateConfirmationEmailStatus(
+  eventId: string,
+  registrationId: string,
+  status: ConfirmationEmailStatus,
+) {
+  const sheets = await getSheetClient();
+  const spreadsheetId = getSpreadsheetId();
+  const tabName = await getEventTabNameById(sheets, spreadsheetId, eventId);
+  const rowNumber = await getRegistrationRowNumber(sheets, spreadsheetId, tabName, registrationId);
+
+  await sheets.spreadsheets.values.update({
+    spreadsheetId,
+    range: `${quotedTab(tabName)}!P${rowNumber}`,
+    valueInputOption: "RAW",
+    requestBody: { values: [[status]] },
+  });
 }
 
 // Persist Resend scheduling details in columns M, N, and O for one registration.

@@ -300,12 +300,12 @@ export const eventType = defineType({
       ],
     }),
 
-    // defineField({
-    //   name: "roles",
-    //   title: "Suitable Roles",
-    //   type: "array",
-    //   of: [{ type: "string" }],
-    // }),
+    defineField({
+      name: "roles",
+      title: "Suitable Roles",
+      type: "array",
+      of: [{ type: "string" }],
+    }),
 
     defineField({
       name: "calendarLink",

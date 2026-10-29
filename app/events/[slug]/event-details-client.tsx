@@ -65,7 +65,7 @@ Event details:
 ${event.description}
   `,
 
-    location: event.eventType === "virtual" ? event.meetingLink || "Virtual Event" : event.location,
+    location: event.eventType === "online" ? event.meetingLink || "Online Event" : event.location,
   });
 
   return (

@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import {
   Calendar,
   MapPin,
+  Video,
   ArrowUpRight,
   Shield,
 } from "lucide-react";
@@ -122,7 +123,7 @@ export default function Events({ initialEvents = [] }: { initialEvents?: any[] }
                   <h3 className="mb-4 text-2xl font-bold group-hover:text-glow-red transition-all">
                     {event.title}
                   </h3>
-                  <p className="mb-8 flex-1 text-muted-foreground line-clamp-3">
+                  <p className="mb-8 flex-1 text-muted-foreground line-clamp-4">
                     {event.description}
                   </p>
 
@@ -132,8 +133,12 @@ export default function Events({ initialEvents = [] }: { initialEvents?: any[] }
                       {event.duration}
                     </div>
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                      <MapPin className="h-4 w-4 text-[#38BDF8]" />
-                      {event.location}
+                      {event.eventType === "online" ? (
+                        <Video className="h-4 w-4 text-[#38BDF8]" />
+                      ) : (
+                        <MapPin className="h-4 w-4 text-[#38BDF8]" />
+                      )}
+                      {event.eventType === "online" ? "Online" : event.location}
                     </div>
                   </div>
 

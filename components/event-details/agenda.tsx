@@ -45,8 +45,8 @@ export function Agenda({ items = [] }: AgendaProps) {
                     {item.duration}
                   </span>
                 </div>
-                {/* <h3 className="mb-2 text-xl font-bold">{item.title}</h3> */}
-                {/* {item.description && <p className="text-muted-foreground">{item.description}</p>} */}
+                <h3 className="mb-2 text-xl font-bold">{item.title}</h3> 
+                {item.description && <p className="text-muted-foreground">{item.description}</p>} 
                 {item.resourcesList && (
                   <div className="mt-4">
                     <h4 className="mb-2 text-lg font-semibold">Resources:</h4>

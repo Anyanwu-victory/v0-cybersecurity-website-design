@@ -14,6 +14,7 @@ interface RegistrationStatus {
   amount: number
   currency: string
   paymentReference: string | null
+  confirmationEmailStatus: 'PENDING' | 'ACCEPTED' | 'FAILED' | 'UNKNOWN'
 }
 
 function SuccessPageContent() {
@@ -47,6 +48,10 @@ function SuccessPageContent() {
 
         if (response.status === 200) {
           setRegistration(data)
+          if (data.confirmationEmailStatus === 'PENDING' && attempts < 12) {
+            attempts += 1
+            timer = setTimeout(loadRegistration, 2500)
+          }
           return
         }
 
@@ -100,7 +105,7 @@ function SuccessPageContent() {
           <div className="flex flex-col justify-center gap-3 sm:flex-row">
             {isPaidAttempt && (
               <a
-                href={`mailto:support@rtds.com?subject=${encodeURIComponent(`Unconfirmed registration ${id || ''}`)}`}
+                href={`mailto:support@rtdsentinel.com?subject=${encodeURIComponent(`Unconfirmed registration ${id || ''}`)}`}
                 className="rounded-lg bg-[#E11D2E] px-5 py-3 font-semibold text-white"
               >
                 Contact support
@@ -153,7 +158,13 @@ function SuccessPageContent() {
             <Mail className="h-5 w-5 text-[#38BDF8]" /> Confirmation email
           </div>
           <p className="text-sm text-muted-foreground">
-            A confirmation email is being sent to {registration.email}.
+            {registration.confirmationEmailStatus === 'ACCEPTED'
+              ? `The confirmation email was accepted for delivery to ${registration.email}.`
+              : registration.confirmationEmailStatus === 'FAILED'
+                ? `Your registration is confirmed, but the confirmation email could not be sent to ${registration.email}. Please contact support if you need assistance.`
+                : registration.confirmationEmailStatus === 'UNKNOWN'
+                  ? `Your registration is confirmed, but we could not verify the confirmation email status for ${registration.email}. Please contact support if you need assistance.`
+                  : `Your registration is confirmed. The email provider is still processing the confirmation for ${registration.email}.`}
           </p>
         </div>
 

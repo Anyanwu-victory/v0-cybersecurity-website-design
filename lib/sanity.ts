@@ -2,6 +2,8 @@
 import { client } from "@/sanity/lib/client"
 import { urlFor } from "@/sanity/lib/image"
 
+const EVENT_TIME_ZONE = "Africa/Lagos"
+
 const toUrl = (img: any) => (img ? urlFor(img).url() : "/placeholder.svg")
 
 const normalizeEventPayment = (event: any) => {
@@ -23,23 +25,33 @@ const normalizeEventPayment = (event: any) => {
 const formatDate = (dateString: string | Date): string => {
   if (!dateString) return ""
   const date = new Date(dateString)
-  return date.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })
+  return date.toLocaleDateString("en-NG", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    timeZone: EVENT_TIME_ZONE,
+  })
 }
 
 const formatTime = (dateString: string | Date): string => {
   if (!dateString) return ""
   const date = new Date(dateString)
-  return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", hour12: true })
+  return date.toLocaleTimeString("en-NG", {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+    timeZone: EVENT_TIME_ZONE,
+  }).toUpperCase()
 }
 
 const formatTimeRange = (startDateTime?: string | Date, endDateTime?: string | Date): string => {
   if (!startDateTime && !endDateTime) return ""
-  if (!endDateTime && startDateTime) return formatTime(startDateTime)
-  if (!startDateTime && endDateTime) return formatTime(endDateTime)
+  if (!endDateTime && startDateTime) return `${formatTime(startDateTime)} WAT`
+  if (!startDateTime && endDateTime) return `${formatTime(endDateTime)} WAT`
   if (startDateTime && endDateTime) {
     const start = formatTime(startDateTime)
     const end = formatTime(endDateTime)
-    return `${start} - ${end}`
+    return `${start} - ${end} WAT`
   }
   return ""
 }

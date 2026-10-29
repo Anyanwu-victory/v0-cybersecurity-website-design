@@ -35,5 +35,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     amount: isPaid ? registration.amount : 0,
     currency: isPaid ? registration.currency || event.currency || "NGN" : "",
     paymentReference: isPaid ? registration.paymentReference : null,
+    confirmationEmailStatus: registration.confirmationEmailStatus || "UNKNOWN",
   });
 }
