@@ -22,7 +22,8 @@ export function RolesCard({ roles }: RolesProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: idx * 0.1 }}
-              className="rounded-xl border border-[#38BDF8]/30 bg-[#38BDF8]/10 px-4 py-3 text-center font-semibold text-[#38BDF8] hover:border-[#38BDF8]/60 hover:bg-[#38BDF8]/20 transition-all"
+              className="rounded-xl border border-[#38BDF8]/30 bg-[#38BDF8]/10 px-4 py-3 text-center
+               font-semibold text-[#38BDF8] "
             >
               {role}
             </motion.div>

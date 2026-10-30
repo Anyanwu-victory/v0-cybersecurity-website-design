@@ -15,6 +15,7 @@ export interface Event {
   location?: string
   meetingLink?: string
   eventType: "online" | "in-person"
+  heroTexture?: "grain" | "grid" | "waveform" | "circuit"
   registrationDeadline: string
   registrationStatus: "draft" | "active" | "closed" | "archived"
   audience: string

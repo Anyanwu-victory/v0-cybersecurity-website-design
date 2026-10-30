@@ -60,6 +60,23 @@ export const eventType = defineType({
       validation: (Rule) => Rule.required(),
     }),
 
+    defineField({
+      name: "heroTexture",
+      title: "Hero Background Texture",
+      description: "Choose the subtle texture shown behind this event's title and details.",
+      type: "string",
+      initialValue: "grain",
+      options: {
+        list: [
+          { title: "Grain", value: "grain" },
+          { title: "Grid", value: "grid" },
+          { title: "Waveform", value: "waveform" },
+          { title: "Circuit", value: "circuit" },
+        ],
+        layout: "radio",
+      },
+    }),
+
     // Online events need a remote-access link.
     defineField({
       name: "meetingLink",
