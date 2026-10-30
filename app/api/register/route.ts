@@ -1,6 +1,10 @@
 import { randomUUID } from "crypto";
 import { type NextRequest, NextResponse } from "next/server";
-import { appendRegistration, registrationExists } from "@/lib/google-sheets";
+import {
+  appendRegistration,
+  registrationExists,
+  updateConfirmationEmailStatus,
+} from "@/lib/google-sheets";
 import { assertEventSheetConfiguration, getEventBySlug, registrationIsOpen } from "@/lib/event-record";
 import { eventRequiresPayment, sendRegistrationEmail } from "@/lib/event-registration";
 import { scheduleRegistrationReminder } from "@/lib/reminder-scheduler";
@@ -76,6 +80,11 @@ export async function POST(request: NextRequest) {
     } catch (emailError) {
       //console.error("Registration saved but confirmation email failed:", emailError);
     }
+    await updateConfirmationEmailStatus(
+      event.eventId,
+      registrationId,
+      emailSent ? "ACCEPTED" : "FAILED",
+    ).catch(() => undefined);
 
     // Reminder failure is isolated so a saved free registration still succeeds.
     await scheduleRegistrationReminder({

@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import { PaystackButton } from 'react-paystack'
-import { Loader2, CreditCard, User, Mail, DollarSign } from 'lucide-react'
+import { Loader2, CreditCard, User, Mail } from 'lucide-react'
+
+const SUPPORTED_CURRENCIES = new Set(['NGN', 'USD', 'GHS'])
 
 export default function CheckoutContent() {
   const searchParams = useSearchParams()
@@ -42,6 +44,13 @@ export default function CheckoutContent() {
 
     const registration = JSON.parse(storedRegistration)
     const parsedAmount = Number(registration.eventPrice)
+    const currency = String(registration.eventCurrency || 'NGN').toUpperCase()
+
+    if (!SUPPORTED_CURRENCIES.has(currency)) {
+      setConfigurationError('This event currency is not supported for checkout. Please contact support.')
+      setLoading(false)
+      return
+    }
 
     if (!Number.isFinite(parsedAmount) || parsedAmount <= 0) {
       setConfigurationError('The payment amount is invalid. Please return to the event and try again.')
@@ -55,7 +64,7 @@ export default function CheckoutContent() {
       email: registration.email,
       amount: parsedAmount * 100, // Convert to kobo (Paystack uses smallest currency unit)
       publicKey,
-      currency: registration.eventCurrency || 'NGN',
+      currency,
       metadata: {
         eventId,
         eventSlug,
@@ -173,12 +182,14 @@ export default function CheckoutContent() {
             </div>
 
             <div className="flex items-center gap-3 pt-4 border-t border-white/10">
-              {/* <DollarSign className="w-5 h-5 text-[#E11D2E]" /> */}
-              <h1 className="w-5 h-5 text-[#E11D2E]"> ₦</h1>
+              <CreditCard className="w-5 h-5 text-[#E11D2E]" />
               <div>
                 <p className="text-sm text-muted-foreground">Amount</p>
                 <p className="text-2xl font-bold">
-                  ₦{(config.amount / 100).toLocaleString()}
+                  {new Intl.NumberFormat('en-NG', {
+                    style: 'currency',
+                    currency: config.currency,
+                  }).format(config.amount / 100)}
                 </p>
               </div>
             </div>

@@ -5,6 +5,7 @@ import { EventStructuredData } from "@/components/EventStructuredData";
 import { BreadcrumbJsonLd } from "@/components/JsonLd";
 import { sanity } from "@/lib/sanity";
 import type { Metadata } from "next";
+import { siteUrl } from "@/lib/site";
 
 export const dynamic = "force-dynamic";
 
@@ -22,8 +23,8 @@ export async function generateMetadata({
 
   if (!event) return { title: "Event Not Found" };
 
-  const pageUrl = `https://www.rtdsentinel.com/events/${slug}`;
-  const imageUrl = event.imageUrl || "https://www.rtdsentinel.com/images/redtraced_logo.jpeg";
+  const pageUrl = `${siteUrl}/events/${slug}`;
+  const imageUrl = event.imageUrl || `${siteUrl}/images/redtraced_logo.jpeg`;
 
   return {
     title: `${event.title} | Cybersecurity Event`,
@@ -61,9 +62,9 @@ export default async function EventDetailsPage({
     <>
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", url: "https://www.rtdsentinel.com" },
-          { name: "Events", url: "https://www.rtdsentinel.com/events" },
-          { name: event.title, url: `https://www.rtdsentinel.com/events/${slug}` },
+          { name: "Home", url: siteUrl },
+          { name: "Events", url: `${siteUrl}/events` },
+          { name: event.title, url: `${siteUrl}/events/${slug}` },
         ]}
       />
       <EventStructuredData event={event} />

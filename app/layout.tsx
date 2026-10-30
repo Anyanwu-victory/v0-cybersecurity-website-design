@@ -7,6 +7,7 @@ import NavbarGlass from "@/components/navbarGlass"
 import SiteShell from "@/components/site-shell"
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/JsonLd"
 import { Inter, JetBrains_Mono } from "next/font/google"
+import { siteUrl } from "@/lib/site"
 
 const inter = Inter({
   variable: "--font-sans",
@@ -17,8 +18,6 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   subsets: ["latin"],
 })
-
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://www.rtdsentinel.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -49,7 +48,7 @@ export const metadata: Metadata = {
   creator: "RedTrace-D Sentinel",
   publisher: "RedTrace-D Sentinel",
   alternates: {
-    canonical: siteUrl,
+    canonical: "/",
   },
   openGraph: {
     type: "website",

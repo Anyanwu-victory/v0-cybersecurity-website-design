@@ -1,16 +1,12 @@
 import type { MetadataRoute } from "next";
 import { sanity } from "@/lib/sanity";
-import { servicesDetail } from "@/lib/servicesDetailsData";
+import { siteUrl } from "@/lib/site";
 
 export const revalidate = 3600;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://www.rtdsentinel.com"
-  ).replace(/\/$/, "");
-
   const staticPaths = [
-    "",
+    "/",
     "/about",
     "/contact",
     "/events",
@@ -19,18 +15,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     "/terms",
   ];
 
-  const serviceEntries: MetadataRoute.Sitemap = servicesDetail.map((service) => ({
-    url: `${siteUrl}/services/${service.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
-
   const staticEntries: MetadataRoute.Sitemap = staticPaths.map((path) => ({
     url: `${siteUrl}${path}`,
-    lastModified: new Date(),
-    changeFrequency: path === "" ? "weekly" : "monthly",
-    priority: path === "" ? 1 : 0.7,
+    changeFrequency: path === "/" ? "weekly" : "monthly",
+    priority: path === "/" ? 1 : 0.7,
   }));
 
   try {
@@ -66,9 +54,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })),
     ];
 
-    return [...staticEntries, ...serviceEntries, ...dynamicEntries];
+    return [...staticEntries, ...dynamicEntries];
   } catch (error) {
-    return [...staticEntries, ...serviceEntries];
+    return staticEntries;
   }
 }
 

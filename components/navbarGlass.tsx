@@ -75,10 +75,11 @@ export default function NavbarGlass() {
             <Image
               src="/images/RedTrace_Footer_logo.png"
               alt="RT-DS Logo"
-              width={0}
-              height={0}
+              width={552}
+              height={232}
               priority
-              className="h-30 w-30 object-contain  lg:h-40 lg:w-40"
+              sizes="(max-width: 1024px) 120px, 160px"
+              className="h-12 w-auto object-contain lg:h-16"
             />
           
           </Link>

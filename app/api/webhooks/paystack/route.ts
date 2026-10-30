@@ -1,6 +1,11 @@
 import { createHmac, randomUUID, timingSafeEqual } from "crypto";
 import { NextRequest, NextResponse } from "next/server";
-import { appendRegistration, findRegistration, registrationExists } from "@/lib/google-sheets";
+import {
+  appendRegistration,
+  findRegistration,
+  registrationExists,
+  updateConfirmationEmailStatus,
+} from "@/lib/google-sheets";
 import { assertEventSheetConfiguration, getEventById } from "@/lib/event-record";
 import { eventRequiresPayment, parseEventPrice, sendRegistrationEmail } from "@/lib/event-registration";
 import { scheduleRegistrationReminder } from "@/lib/reminder-scheduler";
@@ -97,7 +102,12 @@ export async function POST(request: NextRequest) {
 
   // Email failure must not undo an already recorded payment registration.
   try {
-    await sendRegistrationEmail({ email, fullName, eventTitle: event.title, amount, currency });
+    const emailSent = await sendRegistrationEmail({ email, fullName, eventTitle: event.title, amount, currency });
+    await updateConfirmationEmailStatus(
+      event.eventId,
+      registrationId,
+      emailSent ? "ACCEPTED" : "FAILED",
+    ).catch(() => undefined);
   } catch (error) {
     //console.error("Webhook registration saved but email failed:", error);
   }

@@ -1,4 +1,6 @@
 // components/EventStructuredData.tsx
+import { siteUrl } from "@/lib/site";
+
 export function EventStructuredData({ event }: { event: any }) {
   const structured = {
     "@context": "https://schema.org",
@@ -26,14 +28,14 @@ export function EventStructuredData({ event }: { event: any }) {
     organizer: {
       "@type": "Organization",
       name: "RedTrace-D Sentinel",
-      url: "https://rtdsentinel.com",
+      url: siteUrl,
     },
     offers: {
       "@type": "Offer",
       price: event.eventCategory === "free" ? "0" : event.price,
       priceCurrency: event.currency || "NGN",
       availability: "https://schema.org/InStock",
-      url: `https://rtdsentinel.com/events/${event.slug.current}`,
+      url: `${siteUrl}/events/${event.slug}`,
       validFrom: new Date().toISOString(),
     },
   };

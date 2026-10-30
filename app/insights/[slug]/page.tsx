@@ -6,6 +6,7 @@ import { CalendarDays, UserRound } from "lucide-react";
 import { formatArticleCategory, formatArticleDate } from "@/lib/articles";
 import { sanity } from "@/lib/sanity";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/JsonLd";
+import { siteUrl } from "@/lib/site";
 
 interface ArticlePageProps {
   params: Promise<{ slug: string }>;
@@ -18,10 +19,10 @@ export async function generateMetadata({
   const article = await sanity.fetchArticleBySlug(slug);
   if (!article) return { title: { absolute: "Insight Not Found | RedTrace-D Sentinel" } };
 
-  const pageUrl = `https://www.rtdsentinel.com/insights/${slug}`;
+  const pageUrl = `${siteUrl}/insights/${slug}`;
   const titleText = `${article.seoTitle || article.title} | RedTrace-D Sentinel`;
   const descText = article.seoDescription || article.excerpt;
-  const imageUrl = article.imageUrl || "https://www.rtdsentinel.com/images/redtraced_logo.jpeg";
+  const imageUrl = article.imageUrl || `${siteUrl}/images/redtraced_logo.jpeg`;
 
   return {
     title: { absolute: titleText },
@@ -122,9 +123,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
       <ArticleJsonLd article={article} />
       <BreadcrumbJsonLd
         items={[
-          { name: "Home", url: "https://www.rtdsentinel.com" },
-          { name: "Insights", url: "https://www.rtdsentinel.com/insights" },
-          { name: article.title, url: `https://www.rtdsentinel.com/insights/${slug}` },
+          { name: "Home", url: siteUrl },
+          { name: "Insights", url: `${siteUrl}/insights` },
+          { name: article.title, url: `${siteUrl}/insights/${slug}` },
         ]}
       />
       {/* Breadcrumb: Home · Insights · Article Title */}
