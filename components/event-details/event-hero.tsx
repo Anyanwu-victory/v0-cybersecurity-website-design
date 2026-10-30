@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Calendar, MapPin, Clock, Users } from "lucide-react"
 import { useMemo } from "react";
 import type { Event as EventType } from "../../lib/types";
+import { EventHeroTexture } from "./event-hero-texture";
 
 interface EventHeroProps {
   event: EventType
@@ -33,8 +34,7 @@ export function EventHero({
 
   return (
     <div className="relative overflow-hidden">
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-linear-to-r from-[#E11D2E]/20 to-[#38BDF8]/20" />
+      <EventHeroTexture texture={event.heroTexture} />
 
       <div className="relative container mx-auto px-4 py-24 lg:px-20">
         <motion.div
